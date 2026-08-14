@@ -1,0 +1,977 @@
+ 
+    <style>
+        :root {
+            --bg: #f3f6fb;
+            --panel: #ffffff;
+            --border: #d9e2f0;
+            --text: #183153;
+            --muted: #5f7593;
+            --primary: #2f6fdd;
+            --primary-soft: #e8f0ff;
+            --highlight: #fff4bf;
+            --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            color: var(--text);
+            background: var(--bg);
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow: auto;
+            border-right: 1px solid var(--border);
+            background: var(--panel);
+            box-shadow: var(--shadow);
+        }
+
+        .sidebar__header {
+            padding: 20px 18px 14px;
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+        }
+
+        .sidebar__title {
+            margin: 0 0 6px;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .sidebar__subtitle {
+            margin: 0 0 14px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .law-selector {
+            width: 100%;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 14px;
+            font: inherit;
+            color: var(--text);
+            background: #ffffff;
+            outline: none;
+        }
+
+        .law-selector:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(47, 111, 221, 0.15);
+        }
+
+        .menu {
+            padding: 12px;
+        }
+
+        .menu__item {
+            width: 100%;
+            display: block;
+            border: 1px solid transparent;
+            border-radius: 12px;
+            padding: 12px 14px;
+            margin-bottom: 8px;
+            text-align: left;
+            background: transparent;
+            color: var(--text);
+            cursor: pointer;
+            transition: 0.18s ease;
+        }
+
+        .menu__item:hover {
+            background: #f7faff;
+            border-color: var(--border);
+        }
+
+        .menu__item.is-active {
+            background: var(--primary);
+            color: #ffffff;
+            box-shadow: 0 8px 20px rgba(47, 111, 221, 0.25);
+        }
+
+        .menu__number {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .menu__title {
+            display: block;
+            line-height: 1.35;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 32px;
+        }
+
+        .status,
+        .law-summary,
+        .references,
+        .article {
+            max-width: 980px;
+            margin: 0 auto 20px;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .status {
+            padding: 14px 16px;
+            border-radius: 12px;
+        }
+
+        .status.is-error {
+            color: #a61b1b;
+            border-color: #f1c0c0;
+            background: #fff6f6;
+        }
+
+        .law-summary {
+            border-radius: 18px;
+            padding: 24px 28px;
+        }
+
+        .law-summary__eyebrow {
+            margin: 0 0 8px;
+            color: var(--muted);
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .law-summary__title {
+            margin: 0 0 8px;
+            font-size: 32px;
+            line-height: 1.18;
+        }
+
+        .law-summary__subtitle {
+            margin: 0;
+            color: var(--muted);
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .references {
+            border-radius: 18px;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .references__details {
+            padding: 0;
+        }
+
+        .references__summary {
+            list-style: none;
+            cursor: pointer;
+            padding: 18px 22px;
+            font-weight: 700;
+            user-select: none;
+            background: #f8fbff;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .references__summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .references__summary::after {
+            content: "▾";
+            float: right;
+            color: var(--muted);
+        }
+
+        .references__details[open] .references__summary::after {
+            content: "▴";
+        }
+
+        .references__body {
+            padding: 18px 22px 20px;
+        }
+
+        .references__list {
+            margin: 0;
+            padding-left: 24px;
+        }
+
+        .references__item {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .references__item a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .references__item a:hover {
+            text-decoration: underline;
+        }
+
+        .article {
+            border-radius: 18px;
+            padding: 36px 40px;
+        }
+
+        .article__number {
+            margin: 0;
+            font-size: 20px;
+            color: var(--muted);
+        }
+
+        .article__title {
+            margin: 8px 0 20px;
+            font-size: 44px;
+            line-height: 1.12;
+        }
+
+        .article__body {
+            border-top: 1px solid var(--border);
+            padding-top: 20px;
+        }
+
+        .article__body p {
+            margin: 0 0 16px;
+            font-size: 21px;
+            line-height: 1.42;
+        }
+
+        .article__table-wrap {
+            overflow-x: auto;
+            margin: 20px 0;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: #ffffff;
+        }
+
+        .article__table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .article__table th,
+        .article__table td {
+            border-bottom: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+            padding: 12px 14px;
+            text-align: left;
+            vertical-align: top;
+            font-size: 18px;
+            line-height: 1.45;
+        }
+
+        .article__table th:last-child,
+        .article__table td:last-child {
+            border-right: 0;
+        }
+
+        .article__table tr:last-child td {
+            border-bottom: 0;
+        }
+
+        .article__table th {
+            background: #f7faff;
+            font-weight: 700;
+        }
+
+        .footnotes {
+            margin-top: 32px;
+            padding-top: 22px;
+            border-top: 1px solid var(--border);
+        }
+
+        .footnotes__title {
+            margin: 0 0 12px;
+            font-size: 22px;
+        }
+
+        .footnotes__list {
+            margin: 0;
+            padding-left: 26px;
+        }
+
+        .footnote-item {
+            margin-bottom: 12px;
+            line-height: 1.7;
+            font-size: 20px;
+        }
+
+        .footnote-number,
+        .footnote-ref {
+            font-size: 0.72em;
+            line-height: 0;
+            vertical-align: super;
+        }
+
+        .footnote-ref {
+            color: var(--primary);
+            cursor: pointer;
+            font-weight: 700;
+            margin-left: 2px;
+        }
+
+        .footnote-ref:hover {
+            text-decoration: underline;
+        }
+
+        .footnote-backlink {
+            margin-left: 8px;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 13px;
+            vertical-align: middle;
+        }
+
+        .footnote-backlink:hover {
+            text-decoration: underline;
+        }
+
+        .is-highlighted {
+            background: var(--highlight);
+            border-radius: 4px;
+            transition: background-color 1.2s ease;
+        }
+
+        .is-hidden {
+            display: none;
+        }
+
+        @media (max-width: 1100px) {
+            .layout {
+                grid-template-columns: 280px 1fr;
+            }
+
+            .article {
+                padding: 28px;
+            }
+
+            .article__title {
+                font-size: 36px;
+            }
+
+            .article__body p {
+                font-size: 20px;
+            }
+
+            .article__table th,
+            .article__table td {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 860px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: relative;
+                height: auto;
+                border-right: 0;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .content {
+                padding: 18px;
+            }
+
+            .article,
+            .law-summary {
+                padding: 20px;
+            }
+
+            .article__title {
+                font-size: 30px;
+            }
+
+            .article__body p {
+                font-size: 19px;
+            }
+        }
+    </style>
+ 
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="sidebar__header">
+                <h1 id="sidebarTitle" class="sidebar__title">Νόμος</h1>
+                <p id="sidebarSubtitle" class="sidebar__subtitle">Άρθρα και υποσημειώσεις</p>
+                <select id="lawSelector" class="law-selector" aria-label="Επιλογή νόμου"></select>
+            </div>
+            <nav id="articleMenu" class="menu" aria-label="Articles"></nav>
+        </aside>
+
+        <main class="content">
+            <div id="status" class="status">Loading...</div>
+            <section id="articleHost"></section>
+        </main>
+    </div>
+
+    <script>
+        const jsonUrl = "./law-library.json";
+
+        let laws = [];
+        let activeLawId = null;
+        let activeArticleId = null;
+
+        document.addEventListener("DOMContentLoaded", initialize);
+        window.addEventListener("hashchange", onHashChange);
+
+        async function initialize() {
+            try {
+                setStatus("Loading laws...");
+
+                const data = await loadLibrary();
+                laws = normalizeLibrary(data);
+
+                if (laws.length === 0) {
+                    setStatus("No laws found.", true);
+                    return;
+                }
+
+                renderLawSelector();
+
+                const requestedState = getRequestedState();
+                const initialLaw = laws.find(law => law.id === requestedState.lawId) ?? laws[0];
+				console.log(initialLaw.id);
+                selectLaw(initialLaw.id, requestedState.articleId, false);
+            }
+            catch (error) {
+                setStatus(error instanceof Error ? error.message : "Failed to load data.", true);
+            }
+        }
+
+έθηκε        async function loadLibrary() {
+            const response = await fetch(jsonUrl, { cache: "no-store" });
+
+            if (!response.ok) {
+                throw new Error(`Cannot load ${jsonUrl}. Serve the page from a local web server and place the JSON next to index.html.`);
+            }
+
+            return response.json();
+        }
+
+        function normalizeLibrary(data) {
+            if (Array.isArray(data)) {
+                return [normalizeLaw({ id: "law-1", shortTitle: "Νόμος", title: "Νόμος", articles: data }, 0)];
+            }
+
+            if (data && Array.isArray(data.laws)) {
+                return data.laws.map((law, index) => normalizeLaw(law, index));
+            }
+
+            if (data && Array.isArray(data.articles)) {
+                return [normalizeLaw(data, 0)];
+            }
+
+            throw new Error("Invalid JSON format.");
+        }
+
+        function normalizeLaw(law, index) {
+            return {
+                id: String(law.id || `law-${index + 1}`),
+                shortTitle: law.shortTitle || law.title || `Νόμος ${index + 1}`,
+                title: law.title || law.shortTitle || `Νόμος ${index + 1}`,
+                subtitle: law.subtitle || "",
+                referencesTitle: law.referencesTitle || "ΠΑΡΑΠΟΜΠΕΣ",
+                references: Array.isArray(law.references) ? law.references : [],
+                articles: Array.isArray(law.articles) ? law.articles : []
+            };
+        }
+
+        function renderLawSelector() {
+            const selector = document.getElementById("lawSelector");
+            selector.innerHTML = "";
+
+            for (const law of laws) {
+                const option = document.createElement("option");
+                option.value = law.id;
+                option.textContent = law.shortTitle;
+                selector.appendChild(option);
+            }
+
+            selector.addEventListener("change", event => {
+                selectLaw(event.target.value, null, true);
+            });
+        }
+
+        function selectLaw(lawId, preferredArticleId, updateHash) {
+            const law = laws.find(item => item.id === lawId);
+
+            if (!law) {
+                return;
+            }
+
+            activeLawId = law.id;
+            document.getElementById("lawSelector").value = law.id;
+
+            renderSidebarLawInfo(law);
+            renderMenu(law);
+
+            const nextArticle = law.articles.find(article => article.id === preferredArticleId) ?? law.articles[0];
+
+            if (!nextArticle) {
+                activeArticleId = null;
+                renderActiveMenuItem();
+                renderLawOnly(law);
+                setStatus("No articles found for the selected law.", true);
+
+                if (updateHash) {
+                    updateLocationHash();
+                }
+
+                return;
+            }
+
+            selectArticle(nextArticle.id, updateHash);
+        }
+
+        function renderSidebarLawInfo(law) {
+            document.getElementById("sidebarTitle").textContent = law.shortTitle;
+            document.getElementById("sidebarSubtitle").textContent = `${law.articles.length} άρθρα`;
+        }
+
+        function renderMenu(law) {
+            const menu = document.getElementById("articleMenu");
+            menu.innerHTML = "";
+
+            for (const article of law.articles) {
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = "menu__item";
+                button.dataset.articleId = article.id;
+
+                const number = document.createElement("span");
+                number.className = "menu__number";
+                number.textContent = article.number || "";
+
+                const title = document.createElement("span");
+                title.className = "menu__title";
+                title.textContent = article.title || "";
+
+                button.append(number, title);
+                button.addEventListener("click", () => selectArticle(article.id, true));
+
+                menu.appendChild(button);
+            }
+        }
+
+        function selectArticle(articleId, updateHash) {
+            const law = getActiveLaw();
+
+            if (!law) {
+                return;
+            }
+
+            const article = law.articles.find(item => item.id === articleId);
+
+            if (!article) {
+                return;
+            }
+
+            activeArticleId = article.id;
+            renderActiveMenuItem();
+            renderArticle(law, article);
+            setStatus("");
+
+            if (updateHash) {
+                updateLocationHash();
+            }
+        }
+
+        function renderActiveMenuItem() {
+            const items = document.querySelectorAll(".menu__item");
+
+            for (const item of items) {
+                item.classList.toggle("is-active", item.dataset.articleId === activeArticleId);
+            }
+        }
+
+        function renderLawOnly(law) {
+            const host = document.getElementById("articleHost");
+            host.innerHTML = "";
+
+            host.appendChild(createLawSummary(law));
+
+            if (law.references.length > 0) {
+                host.appendChild(createReferencesPanel(law));
+            }
+        }
+
+        function renderArticle(law, article) {
+            const host = document.getElementById("articleHost");
+            host.innerHTML = "";
+
+            host.appendChild(createLawSummary(law));
+
+            if (law.references.length > 0) {
+                host.appendChild(createReferencesPanel(law));
+            }
+
+            const articleElement = document.createElement("article");
+            articleElement.className = "article";
+
+            const number = document.createElement("p");
+            number.className = "article__number";
+            number.textContent = article.number || "";
+
+            const title = document.createElement("h2");
+            title.className = "article__title";
+            title.textContent = article.title || "";
+
+            const body = document.createElement("div");
+            body.className = "article__body";
+
+            for (const paragraphHtml of article.paragraphs ?? []) {
+                const paragraph = document.createElement("p");
+                paragraph.innerHTML = paragraphHtml;
+                body.appendChild(paragraph);
+            }
+
+            renderTables(body, article.tables ?? []);
+
+            articleElement.append(number, title, body);
+
+            const footnoteMap = renderFootnotes(articleElement, article);
+            const firstReferenceMap = wireFootnoteReferences(articleElement, article.id, footnoteMap);
+
+            wireFootnoteBackLinks(footnoteMap, firstReferenceMap);
+
+            host.appendChild(articleElement);
+        }
+
+        function createLawSummary(law) {
+            const section = document.createElement("section");
+            section.className = "law-summary";
+
+            const eyebrow = document.createElement("p");
+            eyebrow.className = "law-summary__eyebrow";
+            eyebrow.textContent = law.shortTitle || "Νόμος";
+
+            const title = document.createElement("h2");
+            title.className = "law-summary__title";
+            title.textContent = law.title || law.shortTitle || "Νόμος";
+
+            const subtitle = document.createElement("p");
+            subtitle.className = "law-summary__subtitle";
+            subtitle.textContent = law.subtitle || "";
+
+            section.append(eyebrow, title);
+
+            if (law.subtitle) {
+                section.appendChild(subtitle);
+            }
+
+            return section;
+        }
+
+        function createReferencesPanel(law) {
+            const section = document.createElement("section");
+            section.className = "references";
+
+            const details = document.createElement("details");
+            details.className = "references__details";
+            details.open = false;
+
+            const summary = document.createElement("summary");
+            summary.className = "references__summary";
+            summary.textContent = law.referencesTitle || "ΠΑΡΑΠΟΜΠΕΣ";
+
+            const body = document.createElement("div");
+            body.className = "references__body";
+
+            const list = document.createElement("ol");
+            list.className = "references__list";
+
+            const references = [...law.references].sort((left, right) => (left.index ?? 0) - (right.index ?? 0));
+
+            for (const reference of references) {
+                const item = document.createElement("li");
+                item.className = "references__item";
+
+                if (reference.url) {
+                    const link = document.createElement("a");
+                    link.href = reference.url;
+                    link.target = "_blank";
+                    link.rel = "noopener noreferrer";
+                    link.textContent = reference.text || "";
+                    item.appendChild(link);
+                }
+                else {
+                    item.textContent = reference.text || "";
+                }
+
+                list.appendChild(item);
+            }
+
+            body.appendChild(list);
+            details.append(summary, body);
+            section.appendChild(details);
+
+            return section;
+        }
+
+        function renderTables(container, tables) {
+            for (const table of tables) {
+                if (!table || !Array.isArray(table.rows) || table.rows.length === 0) {
+                    continue;
+                }
+
+                const wrap = document.createElement("div");
+                wrap.className = "article__table-wrap";
+
+                const tableElement = document.createElement("table");
+                tableElement.className = "article__table";
+
+                const useHeader = table.rows.length > 1 && table.rows[0].every(cell => String(cell ?? "").trim() !== "");
+
+                if (useHeader) {
+                    const thead = document.createElement("thead");
+                    const headerRow = document.createElement("tr");
+
+                    for (const cell of table.rows[0]) {
+                        const th = document.createElement("th");
+                        th.textContent = cell ?? "";
+                        headerRow.appendChild(th);
+                    }
+
+                    thead.appendChild(headerRow);
+                    tableElement.appendChild(thead);
+                }
+
+                const tbody = document.createElement("tbody");
+                const startIndex = useHeader ? 1 : 0;
+
+                for (let rowIndex = startIndex; rowIndex < table.rows.length; rowIndex++) {
+                    const row = document.createElement("tr");
+
+                    for (const cell of table.rows[rowIndex]) {
+                        const td = document.createElement("td");
+                        td.textContent = cell ?? "";
+                        row.appendChild(td);
+                    }
+
+                    tbody.appendChild(row);
+                }
+
+                tableElement.appendChild(tbody);
+                wrap.appendChild(tableElement);
+                container.appendChild(wrap);
+            }
+        }
+
+        function renderFootnotes(articleElement, article) {
+            const footnotes = Array.isArray(article.footnotes) ? article.footnotes : [];
+            const footnoteMap = new Map();
+
+            if (footnotes.length === 0) {
+                return footnoteMap;
+            }
+
+            const section = document.createElement("section");
+            section.className = "footnotes";
+
+            const title = document.createElement("h3");
+            title.className = "footnotes__title";
+            title.textContent = "Υποσημειώσεις";
+
+            const list = document.createElement("ol");
+            list.className = "footnotes__list";
+
+            for (let index = 0; index < footnotes.length; index++) {
+                const footnoteHtml = footnotes[index];
+                const footnoteNumber = extractFootnoteNumber(footnoteHtml) ?? String(index + 1);
+
+                const item = document.createElement("li");
+                item.className = "footnote-item";
+                item.dataset.footnote = footnoteNumber;
+                item.id = `footnote-${article.id}-${footnoteNumber}`;
+
+                const content = document.createElement("span");
+                content.innerHTML = footnoteHtml;
+
+                const backlink = document.createElement("a");
+                backlink.href = "#";
+                backlink.className = "footnote-backlink is-hidden";
+                backlink.textContent = "↩";
+                backlink.setAttribute("aria-label", `Back to reference ${footnoteNumber}`);
+
+                item.append(content, backlink);
+                list.appendChild(item);
+                footnoteMap.set(footnoteNumber, item);
+            }
+
+            section.append(title, list);
+            articleElement.appendChild(section);
+
+            return footnoteMap;
+        }
+
+        function wireFootnoteReferences(container, articleId, footnoteMap) {
+            const references = container.querySelectorAll(".footnote-ref[data-footnote]");
+            const firstReferenceMap = new Map();
+            const counters = new Map();
+
+            for (const reference of references) {
+                const footnoteNumber = reference.dataset.footnote?.trim();
+
+                if (!footnoteNumber || !footnoteMap.has(footnoteNumber)) {
+                    continue;
+                }
+
+                const nextCounter = (counters.get(footnoteNumber) ?? 0) + 1;
+                counters.set(footnoteNumber, nextCounter);
+
+                const referenceId = `ref-${articleId}-${footnoteNumber}-${nextCounter}`;
+                reference.id = referenceId;
+                reference.setAttribute("role", "link");
+                reference.setAttribute("tabindex", "0");
+                reference.setAttribute("aria-label", `Footnote ${footnoteNumber}`);
+
+                if (!firstReferenceMap.has(footnoteNumber)) {
+                    firstReferenceMap.set(footnoteNumber, referenceId);
+                }
+
+                reference.addEventListener("click", () => {
+                    goToFootnote(footnoteMap.get(footnoteNumber), reference);
+                });
+
+                reference.addEventListener("keydown", event => {
+                    if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault();
+                        goToFootnote(footnoteMap.get(footnoteNumber), reference);
+                    }
+                });
+            }
+
+            return firstReferenceMap;
+        }
+
+        function wireFootnoteBackLinks(footnoteMap, firstReferenceMap) {
+            for (const [footnoteNumber, footnoteElement] of footnoteMap.entries()) {
+                const backlink = footnoteElement.querySelector(".footnote-backlink");
+                const referenceId = firstReferenceMap.get(footnoteNumber);
+
+                if (!backlink || !referenceId) {
+                    continue;
+                }
+
+                backlink.classList.remove("is-hidden");
+
+                backlink.addEventListener("click", event => {
+                    event.preventDefault();
+
+                    const reference = document.getElementById(referenceId);
+
+                    if (!reference) {
+                        return;
+                    }
+
+                    scrollToElement(reference);
+                    flash(reference);
+                    flash(footnoteElement);
+                });
+            }
+        }
+
+        function goToFootnote(footnoteElement, referenceElement) {
+            if (!footnoteElement) {
+                return;
+            }
+
+            scrollToElement(footnoteElement);
+            flash(footnoteElement);
+            flash(referenceElement);
+        }
+
+        function scrollToElement(element) {
+            element.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+        }
+
+        function flash(element) {
+            element.classList.add("is-highlighted");
+
+            window.setTimeout(() => {
+                element.classList.remove("is-highlighted");
+            }, 1400);
+        }
+
+        function extractFootnoteNumber(footnoteHtml) {
+            const match = footnoteHtml.match(/<sup[^>]*>(\d+)<\/sup>/i);
+            return match ? match[1] : null;
+        }
+
+        function getRequestedState() {
+            const hash = window.location.hash.replace(/^#/, "");
+            const params = new URLSearchParams(hash);
+
+            return {
+                lawId: params.get("law")?.trim() ?? "",
+                articleId: params.get("article")?.trim() ?? ""
+            };
+        }
+
+        function updateLocationHash() {
+            const params = new URLSearchParams();
+
+            if (activeLawId) {
+                params.set("law", activeLawId);
+            }
+
+            if (activeArticleId) {
+                params.set("article", activeArticleId);
+            }
+
+            history.replaceState(null, "", `#${params.toString()}`);
+        }
+
+        function onHashChange() {
+            const requestedState = getRequestedState();
+
+            if (!requestedState.lawId) {
+                return;
+            }
+
+            if (requestedState.lawId !== activeLawId) {
+                selectLaw(requestedState.lawId, requestedState.articleId, false);
+                return;
+            }
+
+            if (requestedState.articleId && requestedState.articleId !== activeArticleId) {
+                selectArticle(requestedState.articleId, false);
+            }
+        }
+
+        function getActiveLaw() {
+            return laws.find(item => item.id === activeLawId) ?? null;
+        }
+
+        function setStatus(message, isError = false) {
+            const status = document.getElementById("status");
+            status.textContent = message;
+            status.classList.toggle("is-error", isError);
+            status.classList.toggle("is-hidden", !message);
+        }
+    </script>

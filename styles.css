@@ -1,0 +1,525 @@
+:root {
+    --blue-main: #1a73e8;
+    --bg-light: #f8f9fa;
+    --text-dark: #3c4043;
+    --border-color: #dadce0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+}
+
+/* Top Blue Bar */
+.top-bar {
+    background-color: var(--blue-main);
+    height: 40px;
+    width: 100%;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 20px auto;
+    gap: 20px;
+    padding: 0 15px;
+}
+
+/* Sidebar Style */
+.sidebar {
+    flex: 1 1 250px;
+}
+
+.menu-section {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.menu-title {
+    padding: 15px;
+    font-weight: bold;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.menu-item {
+    padding: 12px 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-size: 0.9em;
+}
+
+.menu-item:hover {
+    background-color: #f1f3f4;
+}
+
+/* Main Content Style */
+.main-content {
+    flex: 3 1 600px;
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.breadcrumb {
+    font-size: 0.85em;
+    color: var(--blue-main);
+    margin-bottom: 20px;
+}
+
+.breadcrumb span { 
+    color: #70757a; 
+}
+
+.header-section {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/* Grid for Badges/Buttons */
+.badges-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.badge-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.85em;
+    color: var(--blue-main);
+    cursor: pointer;
+}
+
+/* Highlighted Banner */
+.blue-banner {
+    background-color: var(--blue-main);
+    color: white;
+    padding: 12px;
+    text-align: center;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.info-text {
+    font-size: 0.9em;
+    color: #5f6368;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+/* Table Style */
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 0.9em;
+}
+
+th, td {
+    border: 1px solid var(--border-color);
+    padding: 12px;
+    text-align: center;
+}
+
+th {
+    background-color: #f8f9fa;
+}
+
+.category-col { 
+    text-align: left; 
+    background: #f8f9fa; 
+}
+
+.highlight-blue { 
+    color: var(--blue-main); 
+    font-weight: bold; 
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container { 
+        flex-direction: column; 
+    }
+    .sidebar { 
+        order: 2; 
+    }
+    .main-content { 
+        order: 1; 
+    }
+	.nav-btn {
+        flex: 1 1 100%;
+        max-width: none;
+        min-height: 52px;
+    }
+}
+
+/* === Δυναμικά Επιδόματα ===  
+.allowance-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 18px;
+    background: white;
+    border: 1px solid #dadce0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.95em;
+}
+
+.nav-btn:hover {
+    background: #f8f9fa;
+    border-color: var(--blue-main);
+}
+
+.nav-btn.active {
+    background: var(--blue-main);
+    color: white;
+    border-color: var(--blue-main);
+}
+*/
+.category-cell {
+    text-align: left;
+    background: #f8f9fa;
+    font-weight: 500;
+}
+
+.blue-val {
+    color: var(--blue-main);
+    font-weight: bold;
+}
+
+/* Βελτίωση πίνακα */
+table th {
+    background-color: #f1f3f4;
+    font-weight: 600;
+}
+
+/* ==================== ΒΕΛΤΙΩΜΕΝΑ ΚΟΥΜΠΙΑ ΕΠΙΔΟΜΑΤΩΝ ==================== */
+.allowance-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 20px 0 25px 0;
+}
+
+.nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.02em;
+    font-weight: 500;
+    color: #3c4043;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    min-height: 54px;			/* ← Μειωμένο ύψος */
+	flex: 1 1 280px;            /* Καλύτερη κατανομή χώρου */
+    max-width: 340px;
+}
+
+.nav-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    border-color: #1a73e8;
+}
+
+.nav-btn.active {
+    background: linear-gradient(135deg, #1a73e8, #4285f4);
+    color: white;
+    border-color: #1a73e8;
+    box-shadow: 0 4px 12px rgba(26, 115, 232, 0.35);
+}
+
+.nav-btn i {
+    font-size: 1.45em;
+    transition: transform 0.3s ease;
+	width: 32px;
+}
+
+.nav-btn.active i {
+    color: white;
+}
+.nav-btn span {
+    line-height: 1.3;
+}
+
+
+/* Ειδικά χρώματα για κάθε επίδομα (προαιρετικά) */
+.nav-btn[data-type="family"] i { color: #ff8a80; }
+.nav-btn[data-type="hazardous"] i { color: #26a69a; }
+.nav-btn[data-type="remote"] i { color: #4db6ac; }
+.nav-btn[data-type="position"] i { color: #3f51b5; }
+.nav-btn[data-type="responsibility"] i { color: #1a73e8; }
+
+/*   Changed   ==================== RESPONSIVE NAV BUTTONS ==================== */
+.allowance-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+    margin: 25px 0 30px 0;
+    width: 100%;
+}
+
+.nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1em;
+    font-weight: 500;
+    color: #3c4043;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+    min-height: 58px;
+}
+
+.nav-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    border-color: #1a73e8;
+}
+
+.nav-btn.active {
+    background: linear-gradient(135deg, #1a73e8, #4285f4);
+    color: white;
+    border-color: #1a73e8;
+    box-shadow: 0 6px 16px rgba(26, 115, 232, 0.3);
+}
+
+.nav-btn i {
+    font-size: 1.55em;
+    flex-shrink: 0;
+    width: 36px;
+}
+
+/* ==================== ΓΕΝΙΚΟ RESPONSIVE ==================== */
+@media (max-width: 992px) {
+    .container {
+        padding: 0 12px;
+        gap: 15px;
+    }
+    
+    .sidebar {
+        flex: 1 1 220px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        order: 2;
+        width: 100%;
+    }
+    
+    .main-content {
+        order: 1;
+        width: 100%;
+    }
+    
+    .nav-btn {
+        min-height: 54px;
+        padding: 12px 14px;
+        font-size: 0.97em;
+    }
+    
+    .allowance-nav {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-btn {
+        min-height: 52px;
+        padding: 11px 12px;
+        gap: 10px;
+    }
+    
+    .allowance-nav {
+        grid-template-columns: 1fr;
+    }
+    
+    table {
+        font-size: 0.85em;
+    }
+    
+    th, td {
+        padding: 10px 6px;
+    }
+}
+
+.main-content {
+    flex: 3 1 600px;
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    min-height: calc(100vh - 120px);
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        padding: 18px;
+    }
+}
+
+/* ====================== COMPACT STICKY FOOTER ====================== */
+.footer {
+    background-color: #1a73e8;
+    color: white;
+    padding: 12px 0;
+    width: 100%;
+    position: sticky;           /* Sticky Footer */
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.footer-text {
+    margin: 0;
+    font-size: 0.95em;
+    opacity: 0.95;
+}
+
+.footer-social {
+    display: flex;
+    gap: 18px;
+}
+
+.footer-social a {
+    color: white;
+    font-size: 1.4em;
+    transition: all 0.3s ease;
+}
+
+.footer-social a:hover {
+    color: #fbbc04;
+    transform: translateY(-3px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .footer-content {
+        justify-content: center;
+        text-align: center;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .footer {
+        padding: 10px 0;
+        position: relative;     /* Στα πολύ μικρά κινητά καλύτερα relative */
+    }
+}
+.special-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9em;
+}
+
+.special-table th {
+    background: #1a73e8;
+    color: white;
+    padding: 10px 8px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.special-table .section-header {
+    background: #e8f0fe;
+    font-weight: bold;
+    text-align: left;
+    padding: 12px 10px;
+    font-size: 1.05em;
+    color: #1a73e8;
+}
+
+.special-table .category-cell {
+    text-align: left;
+    padding: 10px;
+    background: #f8f9fa;
+    font-weight: 500;
+}
+
+.special-table .amount-cell {
+    text-align: right;
+    padding: 10px;
+    font-weight: 500;
+}
+.tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px 0 25px 0;
+}
+
+.tab-btn {
+    padding: 12px 22px;
+    background: #f1f3f4;
+    border: 1px solid #dadce0;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s;
+    white-space: nowrap;
+}
+
+.tab-btn.active {
+    background: #1a73e8;
+    color: white;
+    border-color: #1a73e8;
+}
