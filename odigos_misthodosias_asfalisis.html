@@ -1,0 +1,3183 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Οδηγός Μισθοδοσίας &amp; Ασφάλισης Δημοσίου Τομέα</title>
+<style>
+:root{
+  --ink:#122032;
+  --ink-soft:#2c3e52;
+  --paper:#f3f1ec;
+  --paper-raised:#fdfcfa;
+  --line:#dcd7cb;
+  --line-soft:#e8e4da;
+  --gold:#a9762f;
+  --gold-soft:#c9954f;
+  --teal:#2f5d5a;
+  --teal-soft:#e7efee;
+  --gold-tint:#f6ecdb;
+  --danger:#8a3324;
+  --shadow: 0 1px 2px rgba(18,32,50,.06), 0 8px 24px -12px rgba(18,32,50,.18);
+  --radius: 10px;
+  --serif: Georgia, 'Times New Roman', 'Noto Serif', serif;
+  --sans: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ===== Header ===== */
+.site-header{
+  background:linear-gradient(180deg,var(--ink) 0%, #17293d 100%);
+  color:#f2ede1;
+  padding:12px 20px 0px;
+  position:relative;
+  border-bottom:3px solid var(--gold);
+}
+/* Εξαφανίζουμε τη σφραγίδα (Seal) και τα μετα-δεδομένα δεξιά, */
+/* αφού οι πληροφορίες υπάρχουν ήδη στο dashboard σας */
+.site-seal, 
+.site-meta {
+  display: none !important; 
+}
+
+.site-header::after{
+  content:"";
+  position:absolute;
+  left:0; right:0; bottom:-3px;
+  height:3px;
+  background:repeating-linear-gradient(90deg,var(--gold) 0 10px, transparent 10px 14px);
+  opacity:.55;
+}
+.site-header-inner{
+  max-width:1180px;
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+  flex-wrap:wrap;
+}
+.site-brand{display:flex; align-items:center; gap:16px;}
+.site-seal{
+  width:46px; height:46px;
+  border-radius:50%;
+  border:2px solid var(--gold-soft);
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--serif);
+  font-weight:700;
+  font-size:15px;
+  color:var(--gold-soft);
+  flex-shrink:0;
+}
+.site-titles h1{
+  margin:0;
+  font-family:var(--serif);
+  font-weight:700;
+  font-size: 20px ;
+  letter-spacing:.2px;
+}
+.site-titles p{
+  margin:2px 0 0;
+  font-size:12px;
+  color:#c8cedb;
+  font-weight:400;
+}
+.site-meta{
+  display:flex; gap:22px; font-size:12.5px; color:#aeb7c9;
+}
+.site-meta strong{color:#f2ede1; font-size:17px; display:block; font-family:var(--serif);}
+.site-meta span{display:block; margin-top:2px;}
+
+/* ===== TOC panel ===== */
+.toc-wrap{
+  max-width:1180px;
+  margin:22px auto 0;
+  padding:0 24px;
+}
+.toc-panel{
+  background:var(--paper-raised);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.toc-bar{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:14px 20px;
+  cursor:pointer;
+  user-select:none;
+  background:var(--paper-raised);
+  border-bottom:1px solid transparent;
+}
+.toc-bar[aria-expanded="true"]{border-bottom-color:var(--line-soft);}
+.toc-bar-title{
+  display:flex; align-items:center; gap:10px;
+  font-family:var(--serif);
+  font-weight:700;
+  font-size:16px;
+  color:var(--ink);
+}
+.toc-bar-title .chev{
+  display:inline-flex;
+  transition:transform .2s ease;
+  color:var(--gold);
+  font-size:13px;
+}
+.toc-bar[aria-expanded="false"] .chev{transform:rotate(-90deg);}
+.toc-count{
+  font-family:var(--sans);
+  font-weight:600;
+  font-size:11.5px;
+  color:var(--teal);
+  background:var(--teal-soft);
+  padding:2px 9px;
+  border-radius:999px;
+}
+.toc-bar-right{margin-left:auto; display:flex; align-items:center; gap:10px;}
+.toc-hint{font-size:12px; color:#8a8f9a;}
+
+.toc-search-wrap{
+  padding:0 20px;
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .22s ease;
+}
+.toc-panel.expanded .toc-search-wrap{max-height:60px; padding:12px 20px 0;}
+.toc-search{
+  width:100%;
+  padding:9px 12px 9px 34px;
+  border:1px solid var(--line);
+  border-radius:7px;
+  font-size:13.5px;
+  font-family:var(--sans);
+  background:var(--paper) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" stroke="%238a8f9a" stroke-width="2"><circle cx="6" cy="6" r="5"/><line x1="10" y1="10" x2="13" y2="13"/></svg>') no-repeat 11px center;
+  color:var(--ink);
+}
+.toc-search:focus{outline:2px solid var(--gold-soft); outline-offset:1px;}
+
+.toc-body{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .28s ease;
+}
+.toc-panel.expanded .toc-body{max-height:900px; overflow-y:auto;}
+.toc-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:0;
+  padding:14px 20px 18px;
+}
+.toc-group{padding:0 14px 6px 0;}
+.toc-group + .toc-group{border-left:1px solid var(--line-soft); padding-left:18px;}
+.toc-group-label{
+  display:flex; align-items:center; gap:8px;
+  font-size:11.5px;
+  font-weight:700;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--teal);
+  margin:10px 0 8px;
+}
+.toc-cat-icon{
+  width:20px; height:20px;
+  border-radius:5px;
+  background:var(--teal-soft);
+  display:inline-flex; align-items:center; justify-content:center;
+  font-size:11px;
+  color:var(--teal);
+}
+.toc-list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:5px;}
+.toc-item{
+  width:100%;
+  text-align:left;
+  background:transparent;
+  border:1px solid transparent;
+  border-radius:7px;
+  padding:8px 10px;
+  cursor:pointer;
+  font-family:var(--sans);
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  transition:background .12s ease, border-color .12s ease;
+}
+.toc-item:hover{background:var(--gold-tint); border-color:var(--line-soft);}
+.toc-item.active{background:var(--ink); border-color:var(--ink);}
+.toc-item.active .toc-item-title{color:#f6ecdb;}
+.toc-item.active .toc-item-sub{color:#b9c2d1;}
+.toc-item-title{font-size:13.5px; font-weight:600; color:var(--ink); line-height:1.35;}
+.toc-item-sub{font-size:11.5px; color:#767c88; line-height:1.3;}
+.toc-item.hidden-by-search{display:none;}
+
+/* collapsed state: slim bar only */
+.toc-panel:not(.expanded) .toc-body{max-height:0;}
+
+/* ===== Main content ===== */
+.main-wrap{
+  max-width:1180px;
+  margin:0 auto;
+  padding:24px 24px 80px;
+}
+
+.intro-panel{
+  background:var(--paper-raised);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:44px 40px;
+  text-align:center;
+  margin-top:8px;
+}
+.intro-panel .intro-mark{
+  font-family:var(--serif);
+  font-size:34px;
+  color:var(--gold);
+  margin-bottom:6px;
+}
+.intro-panel h2{
+  font-family:var(--serif);
+  font-size:23px;
+  margin:0 0 10px;
+  color:var(--ink);
+}
+.intro-panel p{
+  max-width:520px;
+  margin:0 auto 4px;
+  color:var(--ink-soft);
+  font-size:14.5px;
+}
+.intro-stats{
+  display:flex; justify-content:center; gap:36px;
+  margin-top:26px; padding-top:22px; border-top:1px solid var(--line-soft);
+}
+.intro-stats div{text-align:center;}
+.intro-stats strong{display:block; font-family:var(--serif); font-size:22px; color:var(--teal);}
+.intro-stats span{font-size:11.5px; color:#8a8f9a; text-transform:uppercase; letter-spacing:.05em;}
+
+/* Document sections */
+.doc-section{
+  background:var(--paper-raised);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:36px 44px 44px;
+  margin-top:8px;
+  animation:fadein .25s ease;
+}
+@keyframes fadein{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;}}
+
+.doc-head{border-bottom:2px solid var(--line-soft); padding-bottom:18px; margin-bottom:20px;}
+.doc-eyebrow{
+  display:block;
+  font-size:11.5px;
+  font-weight:700;
+  letter-spacing:.07em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:8px;
+}
+.doc-title{
+  font-family:var(--serif);
+  font-size:clamp(22px,3vw,30px);
+  margin:0;
+  color:var(--ink);
+  line-height:1.3;
+}
+.doc-subtitle{
+  margin:8px 0 0;
+  color:var(--ink-soft);
+  font-size:14.5px;
+  font-style:italic;
+}
+
+.mini-nav{
+  display:flex; flex-wrap:wrap; gap:6px 8px;
+  align-items:center;
+  background:var(--teal-soft);
+  border:1px solid #d6e3e1;
+  border-radius:8px;
+  padding:10px 14px;
+  margin-bottom:26px;
+  font-size:12.5px;
+}
+.mini-nav-label{font-weight:700; color:var(--teal); margin-right:4px;}
+.mini-nav a{
+  color:var(--teal);
+  text-decoration:none;
+  background:#fff;
+  border:1px solid #cfe1de;
+  padding:3px 9px;
+  border-radius:999px;
+  white-space:nowrap;
+}
+.mini-nav a:hover{background:var(--teal); color:#fff; border-color:var(--teal);}
+
+/* ===== doc-body typography (converted docx content) ===== */
+.doc-body h2{
+  font-family:var(--serif);
+  font-size:19.5px;
+  color:var(--ink);
+  margin:34px 0 12px;
+  padding-bottom:8px;
+  border-bottom:1px solid var(--line-soft);
+  scroll-margin-top:20px;
+}
+.doc-body h2:first-child{margin-top:0;}
+.doc-body h3{
+  font-family:var(--serif);
+  font-size:16px;
+  color:var(--teal);
+  margin:22px 0 10px;
+  scroll-margin-top:20px;
+}
+.doc-body h4{
+  font-size:14px; color:var(--ink-soft); margin:16px 0 8px; font-weight:700;
+}
+.doc-body p{margin:0 0 13px; font-size:14.8px; color:#243447;}
+.doc-body strong{color:var(--ink); font-weight:700;}
+.doc-body em{color:var(--ink-soft);}
+.doc-body ul, .doc-body ol{margin:0 0 15px; padding-left:22px; font-size:14.8px; color:#243447;}
+.doc-body li{margin-bottom:6px;}
+.doc-body li > p{margin-bottom:4px;}
+.doc-body a{color:var(--teal); text-decoration-color:#a9c6c2;}
+.doc-body a:hover{text-decoration-color:var(--teal);}
+
+.doc-body blockquote{
+  margin:0 0 16px;
+  padding:12px 18px;
+  background:var(--gold-tint);
+  border-left:3px solid var(--gold);
+  border-radius:0 7px 7px 0;
+  font-size:14px;
+  color:#5a4326;
+}
+.doc-body blockquote p{margin:0; color:inherit;}
+
+/* tables */
+.doc-body table{
+  width:100%;
+  border-collapse:collapse;
+  margin:8px 0 22px;
+  font-size:13.8px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  overflow:hidden;
+}
+.doc-body th, .doc-body td{
+  border:1px solid var(--line-soft);
+  padding:9px 13px;
+  text-align:left;
+  vertical-align:top;
+}
+.doc-body thead th, .doc-body tr:first-child th{
+  background:var(--ink);
+  color:#f3ede0;
+  font-weight:600;
+  font-family:var(--sans);
+  border-color:var(--ink);
+}
+.doc-body tbody tr:nth-child(even){background:#f8f6f1;}
+.doc-body tbody tr:hover{background:var(--gold-tint);}
+.doc-body td p, .doc-body th p{margin:0 0 6px;}
+.doc-body td p:last-child, .doc-body th p:last-child{margin-bottom:0;}
+
+/* single-column "callout" tables used as tip boxes in the source docs */
+.doc-body table:has(col[style*="100%"]){
+  border:none;
+}
+.doc-body table:has(col[style*="100%"]) td{
+  background:var(--teal-soft);
+  border:1px solid #d6e3e1;
+  border-radius:8px;
+  padding:14px 18px;
+}
+.doc-body table:has(col[style*="100%"]) td p{margin:0 0 5px; color:#1f3a37;}
+.doc-body table:has(col[style*="100%"]) td p:last-child{margin-bottom:0;}
+.doc-body table:has(col[style*="100%"]) strong:first-child{color:var(--teal);}
+
+.doc-body hr{border:none; border-top:1px solid var(--line-soft); margin:26px 0;}
+
+.doc-pager{
+  display:flex; justify-content:space-between; gap:14px;
+  margin-top:36px; padding-top:22px; border-top:1px solid var(--line-soft);
+}
+.pager-btn{
+  display:flex; align-items:center; gap:10px;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:10px 16px;
+  cursor:pointer;
+  font-family:var(--sans);
+  color:var(--ink);
+  max-width:46%;
+}
+.pager-btn:hover{border-color:var(--gold-soft); background:var(--gold-tint);}
+.pager-next{margin-left:auto; text-align:right;}
+.pager-arrow{color:var(--gold); font-size:16px; flex-shrink:0;}
+.pager-label{display:block; font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; color:#8a8f9a;}
+.pager-title{display:block; font-size:13px; font-weight:600; line-height:1.3;}
+
+/* back to top */
+.back-to-top{
+  position:fixed; right:26px; bottom:26px;
+  width:44px; height:44px;
+  border-radius:50%;
+  background:var(--ink);
+  color:#f3ede0;
+  border:none;
+  cursor:pointer;
+  font-size:16px;
+  box-shadow:var(--shadow);
+  display:none;
+  align-items:center; justify-content:center;
+  z-index:50;
+}
+.back-to-top.show{display:flex;}
+.back-to-top:hover{background:var(--gold);}
+
+.site-footer{
+  text-align:center;
+  padding:26px 20px 40px;
+  font-size:12px;
+  color:#9199a6;
+}
+
+@media (max-width: 880px){
+  .toc-grid{grid-template-columns:1fr;}
+  .toc-group + .toc-group{border-left:none; border-top:1px solid var(--line-soft); padding-left:0; padding-top:10px;}
+  .doc-section{padding:26px 20px 32px;}
+  .site-meta{display:none;}
+  .doc-pager{flex-direction:column;}
+  .pager-btn{max-width:100%;}
+}
+
+@media print{
+  .site-header, .toc-wrap, .back-to-top, .doc-pager, .mini-nav{display:none !important;}
+  .doc-section{display:block !important; box-shadow:none; border:none; padding:0; hidden:false;}
+  body{background:#fff;}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <div class="site-brand">
+      <div class="site-seal">ΔΤ</div>
+      <div class="site-titles">
+        <h1>Οδηγός Μισθοδοσίας &amp; Ασφάλισης Δημοσίου Τομέα</h1>
+        <p>Συγκεντρωτικό αρχείο αναφοράς — συντάξεις, μισθοδοσία, ΑΠΔ &amp; ταξινομήσεις προϋπολογισμού</p>
+      </div>
+    </div>
+    <div class="site-meta">
+      <div><strong id="statDocs">9</strong><span>Έγγραφα</span></div>
+      <div><strong id="statCats">3</strong><span>Κατηγορίες</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="toc-wrap">
+  <div class="toc-panel expanded" id="tocPanel">
+    <div class="toc-bar" id="tocBar" role="button" tabindex="0" aria-expanded="true" aria-controls="tocBody">
+      <span class="toc-bar-title"><span class="chev">▾</span> Πίνακας Περιεχομένων</span>
+      <span class="toc-count" id="tocCount">9 έγγραφα</span>
+      <span class="toc-bar-right"><span class="toc-hint">κλικ για σύμπτυξη / ανάπτυξη</span></span>
+    </div>
+    <div class="toc-search-wrap">
+      <input type="text" class="toc-search" id="tocSearch" placeholder="Αναζήτηση εγγράφου…" aria-label="Αναζήτηση στον πίνακα περιεχομένων">
+    </div>
+    <div class="toc-body" id="tocBody" role="tree">
+      <div class="toc-grid" id="tocGrid">
+        
+    <div class="toc-group">
+      <div class="toc-group-label"><span class="toc-cat-icon" aria-hidden="true">⛨</span>Συντάξεις, Εφάπαξ &amp; Ασφάλιση</div>
+      <ul class="toc-list" role="group">
+        <li>
+          <button class="toc-item" data-target="doc-1785434186680" role="treeitem" aria-selected="false">
+            <span class="toc-item-title">Υπολογισμός Κύριας Σύνταξης</span>
+            <span class="toc-item-sub">Οδηγός για υπαλλήλους ΙΔΑΧ Δημοσίου, Μόνιμους υπαλλήλους Δημοσίου και ασφαλισμένους στο πρώην ΤΣΜΕΔΕ</span>
+          </button>
+        </li>
+        <li>
+          <button class="toc-item" data-target="doc-1785434186650" role="treeitem" aria-selected="false">
+            <span class="toc-item-title">Επικουρική Σύνταξη — Θεμελίωση &amp; Υπολογισμός</span>
+            <span class="toc-item-sub">Για υπαλλήλους ΙΔΑΧ Δημοσίου, Μόνιμους υπαλλήλους, προσωπικό ΝΠΔΔ και ασφαλισμένους στο πρώην ΤΣΜΕΔΕ</span>
+          </button>
+        </li>
+        <li>
+          <button class="toc-item" data-target="doc-1785434186657" role="treeitem" aria-selected="false">
+            <span class="toc-item-title">Εφάπαξ Βοήθημα — Θεμελίωση &amp; Υπολογισμός</span>
+            <span class="toc-item-sub">Για υπαλλήλους ΙΔΑΧ Δημοσίου, Μόνιμους υπαλλήλους, προσωπικό ΝΠΔΔ και ασφαλισμένους στο πρώην ΤΣΜΕΔΕ</span>
+          </button>
+        </li>
+        <li>
+          <button class="toc-item" data-target="doc-1785434186672" role="treeitem" aria-selected="false">
+            <span class="toc-item-title">ΤΕΚΑ — Ταμείο Επικουρικής Κεφαλαιοποιητικής Ασφάλισης</span>
+            <span class="toc-item-sub">Το νέο μοντέλο επικουρικής ασφάλισης — ενημερωτικό σημείωμα</span>
+          </button>
+        </li>
+        <li>
+          <button class="toc-item" data-target="doc-1785434186684" role="treeitem" aria-selected="false">
+            <span class="toc-item-title">ΑΠΔ Δημοσίου, ΤΕΚΑ, ΕΔΟΕΑΠ, Μαθητεία &amp; Ωφελούμενοι</span>
+            
+          </button>
+        </li></ul>
+    </div>
+
+    <div class="toc-group">
+      <div class="toc-group-label"><span class="toc-cat-icon" aria-hidden="true">⏲</span>Μισθοδοσία &amp; Αμοιβές</div>
+      <ul class="toc-list" role="group">
+        <li>
+          <button class="toc-item" data-target="doc-1785434186668" role="treeitem" aria-selected="false">
+            <span class="toc-item-title">Άρθρο 20, Ν.4354/2015 — Υπερωρίες, Νυχτερινά, Εξαιρέσιμα</span>
+            <span class="toc-item-sub">Αναλυτική εκπαιδευτική αναφορά — περίοδος 2024 / 2025 / 2026</span>
+          </button>
+        </li>
+        <li>
+          <button class="toc-item" data-target="doc-1785434186676" role="treeitem" aria-selected="false">
+            <span class="toc-item-title">Μισθοδοσία Δημάρχων, Αιρετών &amp; Αρχιερέων</span>
+            <span class="toc-item-sub">Η εξέλιξη από το 2020 έως σήμερα — οδηγός για αρχάριους</span>
+          </button>
+        </li></ul>
+    </div>
+
+    <div class="toc-group">
+      <div class="toc-group-label"><span class="toc-cat-icon" aria-hidden="true">⎘</span>Προϋπολογισμός &amp; Ταξινομήσεις</div>
+      <ul class="toc-list" role="group">
+        <li>
+          <button class="toc-item" data-target="doc-1785434186661" role="treeitem" aria-selected="false">
+            <span class="toc-item-title">Διοικητική Ταξινόμηση Δημοσίου Τομέα</span>
+            
+          </button>
+        </li>
+        <li>
+          <button class="toc-item" data-target="doc-1785434186664" role="treeitem" aria-selected="false">
+            <span class="toc-item-title">Οικονομική Ταξινόμηση Δημοσίου Τομέα</span>
+            
+          </button>
+        </li></ul>
+    </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<main class="main-wrap" id="mainWrap">
+  <div class="intro-panel" id="introPanel">
+    <div class="intro-mark">§</div>
+    <h2>Καλώς ήρθατε</h2>
+    <p>Επιλέξτε ένα έγγραφο από τον πίνακα περιεχομένων παραπάνω για να εμφανιστεί εδώ. Χρησιμοποιήστε την αναζήτηση ή τις κατηγορίες για γρήγορη πλοήγηση.</p>
+    <div class="intro-stats">
+      <div><strong>9</strong><span>Έγγραφα</span></div>
+      <div><strong>3</strong><span>Θεματικές Ενότητες</span></div>
+      <div><strong>2026</strong><span>Ενημέρωση</span></div>
+    </div>
+  </div>
+
+  
+<section class="doc-section" id="doc-1785434186680" data-title="Υπολογισμός Κύριας Σύνταξης" data-subtitle="Οδηγός για υπαλλήλους ΙΔΑΧ Δημοσίου, Μόνιμους υπαλλήλους Δημοσίου και ασφαλισμένους στο πρώην ΤΣΜΕΔΕ" data-category="Συντάξεις, Εφάπαξ &amp; Ασφάλιση" hidden>
+  <div class="doc-head">
+    <span class="doc-eyebrow">Συντάξεις, Εφάπαξ &amp; Ασφάλιση · Έγγραφο 1 από 9</span>
+    <h1 class="doc-title">Υπολογισμός Κύριας Σύνταξης</h1>
+    <p class="doc-subtitle">Οδηγός για υπαλλήλους ΙΔΑΧ Δημοσίου, Μόνιμους υπαλλήλους Δημοσίου και ασφαλισμένους στο πρώην ΤΣΜΕΔΕ</p>
+  </div>
+  <nav class="mini-nav" aria-label="Ενότητες εγγράφου"><span class="mini-nav-label">Σε αυτή τη σελίδα</span><a href="#1-η-βασική-ιδέα-δύο-συστατικά-φτιάχνουν-την-κύρια-σύνταξη" data-doc-anchor>1. Η βασική ιδέα: δύο «συστατικά» φτιάχνουν την κύρια σύνταξη</a><a href="#2-το-πρώτο-συστατικό-η-εθνική-σύνταξη" data-doc-anchor>2. Το πρώτο συστατικό: η Εθνική Σύνταξη</a><a href="#3-το-δεύτερο-συστατικό-η-ανταποδοτική-σύνταξη" data-doc-anchor>3. Το δεύτερο συστατικό: η Ανταποδοτική Σύνταξη</a><a href="#4-ειδικά-για-τους-μόνιμους-υπαλλήλους-δημοσίου" data-doc-anchor>4. Ειδικά για τους Μόνιμους υπαλλήλους Δημοσίου</a><a href="#5-ειδικά-για-τους-υπαλλήλους-ιδαχ" data-doc-anchor>5. Ειδικά για τους υπαλλήλους ΙΔΑΧ</a><a href="#6-ειδικά-για-τους-ασφαλισμένους-του-πρώην-τσμεδε" data-doc-anchor>6. Ειδικά για τους ασφαλισμένους του πρώην ΤΣΜΕΔΕ</a><a href="#7-συνοπτικός-συγκριτικός-πίνακας" data-doc-anchor>7. Συνοπτικός συγκριτικός πίνακας</a><a href="#8-πώς-μπορεί-κανείς-να-δει-μια-εκτίμηση-της-δικής-του-σύνταξ" data-doc-anchor>8. Πώς μπορεί κανείς να δει μια εκτίμηση της δικής του σύνταξης</a><a href="#9-συμπέρασμα" data-doc-anchor>9. Συμπέρασμα</a><a href="#ενδεικτικές-πηγές" data-doc-anchor>Ενδεικτικές πηγές</a></nav>
+  <div class="doc-body">
+    
+
+<p>Η παρούσα αναφορά εξηγεί, με απλή γλώσσα, πώς υπολογίζεται το μηνιαίο ποσό της κύριας σύνταξης γήρατος, δηλαδή της βασικής σύνταξης που καταβάλλει ο e-ΕΦΚΑ. Καλύπτει τρεις κατηγορίες: τους Μόνιμους υπαλλήλους Δημοσίου, τους υπαλλήλους Ιδιωτικού Δικαίου Αορίστου Χρόνου (ΙΔΑΧ) και τους ασφαλισμένους του πρώην Ταμείου Μηχανικών (ΤΣΜΕΔΕ). Δεν εξετάζονται εδώ η επικουρική σύνταξη ή το εφάπαξ, που υπολογίζονται με διαφορετικούς κανόνες.</p>
+<blockquote>
+<p><em>Σημείωση: Το κείμενο έχει ενημερωτικό-εκπαιδευτικό χαρακτήρα και βασίζεται στο γενικό πλαίσιο του ν. 4387/2016 (όπως τροποποιήθηκε, μεταξύ άλλων, με τον ν. 4670/2020) και σε στοιχεία που ισχύουν το 2026. Τα ποσά (π.χ. εθνική σύνταξη) αναπροσαρμόζονται κάθε χρόνο. Για τον ακριβή υπολογισμό μιας συγκεκριμένης σύνταξης απαιτείται εξατομικευμένος υπολογισμός από τον e-ΕΦΚΑ, καθώς παίζουν ρόλο πολλές προσωπικές παράμετροι.</em></p>
+</blockquote>
+<h2 id="1-η-βασική-ιδέα-δύο-συστατικά-φτιάχνουν-την-κύρια-σύνταξη"><strong>1. Η βασική ιδέα: δύο «συστατικά» φτιάχνουν την κύρια σύνταξη</strong></h2>
+<p>Από το 2016 και μετά (ν. 4387/2016, γνωστός και ως «νόμος Κατρούγκαλου»), η κύρια σύνταξη γήρατος στην Ελλάδα δεν είναι ένα ενιαίο ποσό, αλλά το άθροισμα δύο ξεχωριστών «κομματιών»:</p>
+<p><strong>Κύρια Σύνταξη = Εθνική Σύνταξη + Ανταποδοτική Σύνταξη</strong></p>
+<p><strong>Η Εθνική Σύνταξη</strong> είναι ένα σταθερό, βασικό ποσό που χρηματοδοτείται απευθείας από τον κρατικό προϋπολογισμό (όχι από εισφορές) και εξαρτάται κυρίως από τα χρόνια διαμονής στην Ελλάδα. Είναι ίδια για όλες τις κατηγορίες ασφαλισμένων -Μόνιμους, ΙΔΑΧ, πρώην ΤΣΜΕΔΕ- εφόσον πληρούνται οι ίδιες προϋποθέσεις.</p>
+<p><strong>Η Ανταποδοτική Σύνταξη</strong> είναι το κομμάτι που «ανταποδίδει» τις εισφορές που κατέβαλε ο ασφαλισμένος όλη του τη ζωή: όσο περισσότερα χρόνια εργασίας και όσο υψηλότερος ο μισθός, τόσο μεγαλύτερη είναι.</p>
+<p>Τα δύο αυτά κομμάτια υπολογίζονται με εντελώς διαφορετικό τρόπο, όπως αναλύεται στις επόμενες ενότητες.</p>
+<h2 id="2-το-πρώτο-συστατικό-η-εθνική-σύνταξη"><strong>2. Το πρώτο συστατικό: η Εθνική Σύνταξη</strong></h2>
+<p>Η εθνική σύνταξη λειτουργεί σαν ένα «κατώφλι ασφάλειας»: όσο χαμηλός κι αν είναι ο μισθός κάποιου στη ζωή του, θα λάβει τουλάχιστον αυτό το βασικό ποσό, εφόσον πληροί τις προϋποθέσεις.</p>
+<p><strong>Το πλήρες ποσό</strong></p>
+<p>Από 1/1/2026, το πλήρες ποσό της εθνικής σύνταξης ανέρχεται σε 446,87 ευρώ τον μήνα (αυξημένο κατά 2,4% σε σχέση με το 2025). Το ποσό αυτό αναπροσαρμόζεται κάθε χρόνο.</p>
+<p><strong>Πότε μειώνεται</strong></p>
+<ul>
+<li><p>Λόγω λιγότερων ετών διαμονής στην Ελλάδα: για πλήρες ποσό απαιτούνται 40 έτη νόμιμης διαμονής· για κάθε έτος που λείπει, το ποσό μειώνεται κατά 1/40.</p></li>
+<li><p>Λόγω λιγότερων ετών ασφάλισης: αν κάποιος έχει από 15 έως 19 έτη ασφάλισης (και όχι τα βασικά 20), η εθνική μειώνεται κατά 2% για κάθε έτος που λείπει από τα 20.</p></li>
+<li><p>Λόγω πρόωρης (μειωμένης) συνταξιοδότησης: αν κάποιος βγει στη σύνταξη με μικρότερη ηλικία από το πλήρες όριο (π.χ. στα 62 αντί για 67), η εθνική μειώνεται κατά 6% για κάθε έτος που λείπει, με ανώτατο όριο μείωσης 30%.</p></li>
+</ul>
+<blockquote>
+<p><em>Σημαντικό: οι μειώσεις λόγω πρόωρης συνταξιοδότησης επηρεάζουν μόνο την εθνική σύνταξη. Η ανταποδοτική σύνταξη (ενότητα 3) υπολογίζεται κανονικά, χωρίς αυτή την ποινή, με βάση τα πραγματικά έτη και τις αποδοχές.</em></p>
+</blockquote>
+<p>Η εθνική σύνταξη υπολογίζεται με τον ίδιο ακριβώς τρόπο για Μόνιμους υπαλλήλους Δημοσίου, υπαλλήλους ΙΔΑΧ και ασφαλισμένους πρώην ΤΣΜΕΔΕ -δεν υπάρχει καμία διαφοροποίηση ανάμεσα στις κατηγορίες σε αυτό το κομμάτι.</p>
+<h2 id="3-το-δεύτερο-συστατικό-η-ανταποδοτική-σύνταξη"><strong>3. Το δεύτερο συστατικό: η Ανταποδοτική Σύνταξη</strong></h2>
+<p>Αυτό είναι το πιο σύνθετο κομμάτι, γιατί εξατομικεύεται πλήρως ανάλογα με τον μισθό και τα χρόνια εργασίας του καθενός. Ο γενικός τύπος είναι:</p>
+<p><strong>Ανταποδοτική Σύνταξη = Συντάξιμες Αποδοχές × Συνολικό Ποσοστό Αναπλήρωσης</strong></p>
+<p><strong>Τι είναι οι «συντάξιμες αποδοχές»</strong></p>
+<p>Είναι, απλά, ο μέσος μηνιαίος μεικτός μισθός του ασφαλισμένου σε όλη του (ή σχεδόν όλη του) την επαγγελματική ζωή, όπως αυτός αναπροσαρμόζεται με βάση τον πληθωρισμό ή, από το 2026 και μετά, με βάση έναν «δείκτη μισθών». Ως αφετηρία λαμβάνεται συνήθως το έτος 2002, δηλαδή υπολογίζεται ο μέσος όρος των μηνιαίων αποδοχών από το 2002 μέχρι την ημέρα συνταξιοδότησης. Όσο υψηλότερος είναι αυτός ο μέσος μισθός, τόσο μεγαλύτερη είναι η ανταποδοτική σύνταξη.</p>
+<p><strong>Τι είναι το «ποσοστό αναπλήρωσης»</strong></p>
+<p>Είναι ένα ποσοστό που αντιστοιχεί σε κάθε έτος ασφάλισης και προβλέπεται σε ειδικό πίνακα του νόμου (ν. 4387/2016, όπως αναθεωρήθηκε με τον ν. 4670/2020). Το ποσοστό αυτό δεν είναι σταθερό: αυξάνεται προοδευτικά όσο περισσότερα είναι τα έτη ασφάλισης, ενώ οι μεγαλύτερες αυξήσεις δίνονται σε ασφαλισμένους με πολλά έτη εργασίας (π.χ. πάνω από 30 έτη), ώστε να ανταμείβεται η μακρόχρονη εργασία. Το άθροισμα των ποσοστών όλων των ετών (το «συνολικό ποσοστό αναπλήρωσης») είναι αυτό που πολλαπλασιάζεται με τις συντάξιμες αποδοχές.</p>
+<blockquote>
+<p>Ενδεικτικά: ένας ασφαλισμένος με περίπου 37-38 έτη ασφάλισης έχει σήμερα συνολικό ποσοστό αναπλήρωσης της τάξης του 42%-43%, ενώ όσοι φτάνουν τα 40 πλήρη έτη έχουν ποσοστό γύρω στο 50%. Τα ακριβή ποσοστά ανά έτος καθορίζονται από τον επίσημο πίνακα του νόμου και μπορούν να αλλάξουν με νεότερη νομοθεσία -το παράδειγμα δίνεται μόνο για να γίνει κατανοητή η λογική της προοδευτικής αύξησης.</p>
+</blockquote>
+<p><strong>Ανώτατο όριο</strong></p>
+<p>Το συνολικό ακαθάριστο ποσό της κύριας σύνταξης (εθνική + ανταποδοτική) δεν μπορεί να ξεπερνά ένα ανώτατο όριο, το οποίο ισούται με το δωδεκαπλάσιο της πλήρους εθνικής σύνταξης. Για το 2026, το όριο αυτό διαμορφώνεται στα 5.362,44 ευρώ μεικτά τον μήνα.</p>
+<h2 id="4-ειδικά-για-τους-μόνιμους-υπαλλήλους-δημοσίου"><strong>4. Ειδικά για τους Μόνιμους υπαλλήλους Δημοσίου</strong></h2>
+<p>Οι μόνιμοι υπάλληλοι-λειτουργοί του Δημοσίου (και οι στρατιωτικοί) ακολουθούν τον ίδιο γενικό τύπο (εθνική + ανταποδοτική), αλλά ο νόμος προβλέπει ειδικό τρόπο υπολογισμού των συντάξιμων αποδοχών τους:</p>
+<ul>
+<li><p>Κανονικά, λαμβάνεται ο μέσος όρος των μηνιαίων μεικτών αποδοχών από το 2002 μέχρι τη συνταξιοδότηση.</p></li>
+<li><p>Αν όμως ο υπάλληλος δεν έχει τουλάχιστον 5 έτη ασφάλισης μετά το 2002 (π.χ. γιατί συνταξιοδοτείται νωρίς μετά την πρόσληψή του), τότε ο υπολογισμός «κοιτάζει» και σε χρόνο πριν το 2002, ώστε να συμπληρωθούν συνολικά 5 έτη.</p></li>
+<li><p>Ειδικές κατηγορίες (π.χ. όσοι είχαν ήδη συμπληρώσει 35 έτη υπηρεσίας υπό παλαιότερο καθεστώς) μπορεί να έχουν ξεχωριστό τρόπο υπολογισμού των συντάξιμων αποδοχών τους, με βάση τον μέσο όρο όλης της ασφαλιστικής τους ζωής.</p></li>
+</ul>
+<p>Στην πράξη, αυτό σημαίνει ότι για τους μόνιμους υπαλλήλους μετράει κυρίως ο μισθός των τελευταίων ετών εργασίας (μετά το 2002), κάτι που έχει σημασία για όσους είχαν χαμηλότερες αποδοχές παλαιότερα και υψηλότερες αργότερα.</p>
+<blockquote>
+<p>Παράδειγμα κατανόησης (ενδεικτικό, με στρογγυλοποιημένα ποσά): υπάλληλος με 38 έτη υπηρεσίας και μέσο συντάξιμο μισθό περίπου 1.700-1.750 ευρώ μπορεί σήμερα να προσδοκά ανταποδοτική σύνταξη της τάξης του 1.100-1.250 ευρώ και εθνική σύνταξη 446,87 ευρώ (αν πληρούνται οι προϋποθέσεις πλήρους εθνικής), δηλαδή συνολική κύρια σύνταξη περίπου 1.550-1.700 ευρώ μεικτά. Οι αριθμοί είναι ενδεικτικοί και το ακριβές ποσό υπολογίζεται εξατομικευμένα.</p>
+</blockquote>
+<h2 id="5-ειδικά-για-τους-υπαλλήλους-ιδαχ"><strong>5. Ειδικά για τους υπαλλήλους ΙΔΑΧ</strong></h2>
+<p>Οι υπάλληλοι ΙΔΑΧ, παρότι εργάζονται στο Δημόσιο, ασφαλίζονται στο κοινό καθεστώς μισθωτών (πρώην ΙΚΑ-ΕΤΑΜ). Γι' αυτό, ο υπολογισμός της ανταποδοτικής τους σύνταξης ακολουθεί τον γενικό τύπο των μισθωτών, χωρίς τις ειδικές διατάξεις που ισχύουν αποκλειστικά για υπαλλήλους-λειτουργούς και στρατιωτικούς του Δημοσίου (ενότητα 4).</p>
+<ul>
+<li><p>Συντάξιμες αποδοχές: μέσος όρος μηνιαίων μεικτών αποδοχών, με αναπροσαρμογή στο χρόνο (από το 2002 και μετά, ή για ολόκληρο τον ασφαλιστικό βίο για όσους ασφαλίστηκαν πρώτη φορά μετά την 1/1/2002).</p></li>
+<li><p>Ποσοστό αναπλήρωσης: ο ίδιος πίνακας που εφαρμόζεται σε κάθε μισθωτό εργαζόμενο, δημόσιου ή ιδιωτικού τομέα.</p></li>
+</ul>
+<p>Πρακτικά, η μέθοδος υπολογισμού είναι πιο «απλή» και ενιαία σε σχέση με τους μόνιμους υπαλλήλους, καθώς δεν υπάρχουν οι ειδικές μεταβατικές ρυθμίσεις του π.δ. 169/2007 που αφορούν αποκλειστικά το ειδικό καθεστώς Δημοσίου.</p>
+<h2 id="6-ειδικά-για-τους-ασφαλισμένους-του-πρώην-τσμεδε"><strong>6. Ειδικά για τους ασφαλισμένους του πρώην ΤΣΜΕΔΕ</strong></h2>
+<p>Οι μηχανικοί, αρχιτέκτονες και συναφείς ειδικότητες που ήταν ασφαλισμένοι στο πρώην ΤΣΜΕΔΕ (σήμερα κλάδος του e-ΕΦΚΑ μέσω του πρώην ΕΤΑΑ) λαμβάνουν, όπως όλοι, εθνική + ανταποδοτική σύνταξη με τον γενικό τρόπο υπολογισμού. Ωστόσο, υπάρχει ένα επιπλέον, τρίτο στοιχείο που αφορά αποκλειστικά αυτούς:</p>
+<p><strong>Σύνταξη ΤΣΜΕΔΕ = Εθνική + Ανταποδοτική + Ειδική Προσαύξηση ΤΣΜΕΔΕ</strong></p>
+<p><strong>Τι είναι η Ειδική Προσαύξηση ΤΣΜΕΔΕ</strong></p>
+<p>Ιστορικά, οι μηχανικοί του πρώην ΤΣΜΕΔΕ κατέβαλλαν, πέρα από τις κανονικές εισφορές, και μία επιπλέον εισφορά (αρχικά μέσω του «Ειδικού Λογαριασμού», που από το 2006 μετονομάστηκε σε «Ειδική Προσαύξηση»). Η επιπλέον αυτή εισφορά «αγοράζει» ένα πρόσθετο κομμάτι σύνταξης, το οποίο υπολογίζεται περίπου ως εξής:</p>
+<p><strong>Ειδική Προσαύξηση = Έτη με επιπλέον εισφορά × Επιπλέον μηνιαία εισφορά × 0,075%</strong></p>
+<p>Δικαίωμα στην Ειδική Προσαύξηση έχουν όσοι έχουν καταβάλει τη σχετική επιπλέον εισφορά για τουλάχιστον 10 έτη. Το ακριβές ποσό εξαρτάται από το ύψος της ασφαλιστικής κατηγορίας (κλάσης) στην οποία ήταν ενταγμένος ο μηχανικός κάθε χρόνο, γι' αυτό και διαφέρει σημαντικά από μηχανικό σε μηχανικό, ακόμη και με τα ίδια έτη ασφάλισης.</p>
+<blockquote>
+<p><em>Το καθεστώς υπολογισμού των συντάξιμων αποδοχών για τους μηχανικούς είναι ιδιαίτερα σύνθετο, καθώς έχει αλλάξει αρκετές φορές: μέχρι το 2016 βασιζόταν σε τεκμαρτούς μισθούς ανά ασφαλιστική κλάση, από το 2017 σε πραγματικά εισοδήματα, και από το 2020 σε νέες ασφαλιστικές κατηγορίες. Για τον λόγο αυτό συνιστάται σχεδόν πάντα εξατομικευμένος υπολογισμός.</em></p>
+<p>Παράδειγμα κατανόησης (ενδεικτικό): μηχανικός με 40 έτη ασφάλισης μπορεί να λάβει βασική (εθνική + ανταποδοτική) σύνταξη περίπου στα ίδια επίπεδα με άλλους μισθωτούς αντίστοιχου μισθού, προσαυξημένη κατά ένα επιπλέον ποσό λόγω Ειδικής Προσαύξησης, το οποίο μπορεί να κυμαίνεται από μερικές δεκάδες έως λίγες εκατοντάδες ευρώ τον μήνα, ανάλογα με τα έτη και το ύψος της επιπλέον εισφοράς που κατέβαλε.</p>
+</blockquote>
+<h2 id="7-συνοπτικός-συγκριτικός-πίνακας"><strong>7. Συνοπτικός συγκριτικός πίνακας</strong></h2>
+<table>
+<colgroup>
+<col style="width: 26%"/>
+<col style="width: 24%"/>
+<col style="width: 24%"/>
+<col style="width: 24%"/>
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Κατηγορία</strong></th>
+<th><strong>Εθνική σύνταξη</strong></th>
+<th><strong>Ανταποδοτική σύνταξη</strong></th>
+<th><strong>Ιδιαίτερο στοιχείο</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Μόνιμοι υπάλληλοι Δημοσίου</strong></td>
+<td>Ίδιοι πανελλαδικοί κανόνες (ν. 4387/2016)</td>
+<td>Συντάξιμες αποδοχές (μισθός) × ποσοστό αναπλήρωσης, με ειδικό τρόπο υπολογισμού αποδοχών για υπαλλήλους-λειτουργούς Δημοσίου</td>
+<td>Οι συντάξιμες αποδοχές υπολογίζονται με βάση τον μέσο όρο αποδοχών από το 2002, με ειδική μεταχείριση αν δεν υπάρχει αρκετός χρόνος μετά το 2002</td>
+</tr>
+<tr class="even">
+<td><strong>Υπάλληλοι ΙΔΑΧ</strong></td>
+<td>Ίδιοι πανελλαδικοί κανόνες (ν. 4387/2016)</td>
+<td>Ίδιος γενικός τύπος με τους μισθωτούς του ιδιωτικού τομέα</td>
+<td>Ακολουθούν πλήρως το κοινό καθεστώς μισθωτών, χωρίς ειδικές διατάξεις Δημοσίου</td>
+</tr>
+<tr class="odd">
+<td><strong>Ασφαλισμένοι πρώην ΤΣΜΕΔΕ</strong></td>
+<td>Ίδιοι πανελλαδικοί κανόνες (ν. 4387/2016)</td>
+<td>Ίδιος γενικός τύπος, με βάση τις ασφαλιστικές κατηγορίες/εισφορές του πρώην ΤΣΜΕΔΕ</td>
+<td>Προστίθεται επιπλέον Ειδική Προσαύξηση ΤΣΜΕΔΕ, λόγω πρόσθετων εισφορών του κλάδου μηχανικών</td>
+</tr>
+</tbody>
+</table>
+<h2 id="8-πώς-μπορεί-κανείς-να-δει-μια-εκτίμηση-της-δικής-του-σύνταξ"><strong>8. Πώς μπορεί κανείς να δει μια εκτίμηση της δικής του σύνταξης</strong></h2>
+<ul>
+<li><p>Έλεγχος του Ατομικού Λογαριασμού Ασφάλισης στον e-ΕΦΚΑ, για επιβεβαίωση των ετών ασφάλισης και των καταγεγραμμένων αποδοχών.</p></li>
+<li><p>Αίτημα προσυνταξιοδοτικού ελέγχου (εκτίμηση σύνταξης) στον e-ΕΦΚΑ πριν την οριστική αίτηση συνταξιοδότησης.</p></li>
+<li><p>Για μόνιμους υπαλλήλους: έλεγχος αν υπάρχουν λιγότερα από 5 έτη ασφάλισης μετά το 2002, κάτι που επηρεάζει τον τρόπο υπολογισμού των συντάξιμων αποδοχών.</p></li>
+<li><p>Για ασφαλισμένους πρώην ΤΣΜΕΔΕ: επιβεβαίωση των ετών κατά τα οποία καταβλήθηκε η επιπλέον εισφορά (Ειδικός Λογαριασμός/Ειδική Προσαύξηση), καθώς αυτά προσαυξάνουν το τελικό ποσό.</p></li>
+<li><p>Χρήση επίσημων ή αξιόπιστων υπολογιστών σύνταξης, πάντα με επιφύλαξη ότι πρόκειται για εκτιμήσεις και όχι για τελικό, δεσμευτικό ποσό.</p></li>
+</ul>
+<blockquote>
+<p><em>Η <strong>Προσυνταξιοδοτική Βεβαίωση</strong> είναι η διαδικασία κατά την οποία ο e-ΕΦΚΑ πιστοποιεί τον συνολικό χρόνο ασφάλισής σας. Συστήνεται να υποβάλλεται περίπου δύο χρόνια πριν από την προβλεπόμενη ημερομηνία συνταξιοδότησής σας, προκειμένου να επιταχυνθεί η διαδικασία απονομής της κύριας σύνταξής σας. [<a href="https://www.gov.gr/ipiresies/ergasia-kai-asphalise/suntaxiodotese/prosuntaxiodotike-bebaiose">1</a>, <a href="https://www.e-efka.gov.gr/el/sychnes-eroteseis/asphalisi-eisphores/asphalismenoi/prosyntaxiodotike-bebaiose">2</a>, <a href="https://www.capital.gr/oikonomia/3985607/prosuntaxiodotiki-bebaiosi-i-lusi-gia-taxuteri-suntaxiodotisi-poioi-pote-kai-pos-tin-ekdidoun/">3</a>]</em></p>
+<p><em>Τρόπος Υποβολής Αιτήματος</em></p>
+<p><em>Ηλεκτρονικά: Μπορείτε να συνδεθείτε στην επίσημη υπηρεσία <a href="https://www.gov.gr/ipiresies/ergasia-kai-asphalise/suntaxiodotese/prosuntaxiodotike-bebaiose">Προσυνταξιοδοτική βεβαίωση - Gov.gr</a> χρησιμοποιώντας τους προσωπικούς σας κωδικούς Taxisnet και τον ΑΜΚΑ σας. [<a href="https://www.gov.gr/ipiresies/ergasia-kai-asphalise/suntaxiodotese/prosuntaxiodotike-bebaiose">1</a>]</em></p>
+<p><em>Δια ζώσης ή μέσω πιστοποιημένου επαγγελματία: Η αίτηση μπορεί εναλλακτικά να κατατεθεί στις κατά τόπους αρμόδιες υπηρεσίες του e-ΕΦΚΑ ή μέσω πιστοποιημένων δικηγόρων/λογιστών, ώστε να εντοπιστούν τυχόν ελλείψεις στον ατομικό σας λογαριασμό. [<a href="https://www.eea.gr/arthra-eea/prosyntaxiodotiki-vevaiosi-ti-einai-kai-poioi-prepei-na-ypovalloyn-aitisi-2/">1</a>]</em></p>
+<p><em>Στάδια Ελέγχου</em></p>
+<p><em>Ασφαλιστικός Βίος: Το σύστημα αντλεί και ελέγχει όλα τα δηλωμένα ένσημα/χρόνια ασφάλισής σας (π.χ. από το πληροφοριακό σύστημα "ΑΤΛΑΣ"). [<a href="https://www.e-efka.gov.gr/el/sychnes-eroteseis/asphalisi-eisphores/asphalismenoi/prosyntaxiodotike-bebaiose">1</a>]</em></p>
+<p><em>Έκδοση: Μετά τον έλεγχο εκδίδεται η βεβαίωση, η οποία είναι πολύτιμη για να γνωρίζετε ακριβώς τον χρόνο που έχετε θεμελιώσει. [<a href="https://www.e-efka.gov.gr/el/sychnes-eroteseis/asphalisi-eisphores/asphalismenoi/prosyntaxiodotike-bebaiose">1</a>]</em></p>
+<p><em>Έλεγχος Ορθότητας: Όταν εκδοθεί η βεβαίωση, πρέπει να ελέγξετε προσεκτικά τα στοιχεία. Αν διαφωνείτε με τις μέρες ασφάλισης, έχετε το δικαίωμα να υποβάλλετε ένσταση. [<a href="https://syllogos-socratis.gr/?p=14910">1</a>]</em></p>
+</blockquote>
+<h2 id="9-συμπέρασμα"><strong>9. Συμπέρασμα</strong></h2>
+<p>Η κύρια σύνταξη γήρατος είναι πάντα το άθροισμα ενός σταθερού, κρατικού μέρους (εθνική σύνταξη) και ενός εξατομικευμένου μέρους που αντανακλά τα χρόνια εργασίας και τον μισθό (ανταποδοτική σύνταξη). Ο τρόπος υπολογισμού αυτών των δύο κομματιών είναι, σε γενικές γραμμές, κοινός για Μόνιμους υπαλλήλους Δημοσίου, υπαλλήλους ΙΔΑΧ και ασφαλισμένους του πρώην ΤΣΜΕΔΕ. Οι πραγματικές διαφορές αφορούν κυρίως τον τρόπο υπολογισμού των συντάξιμων αποδοχών (ειδικές διατάξεις για το Δημόσιο) και την ύπαρξη ενός επιπλέον, τρίτου στοιχείου -της Ειδικής Προσαύξησης- αποκλειστικά για τους μηχανικούς του πρώην ΤΣΜΕΔΕ. Για τον ακριβή προσδιορισμό του δικού του ποσού, κάθε ασφαλισμένος πρέπει να απευθύνεται στον e-ΕΦΚΑ ή σε εξειδικευμένο σύμβουλο, καθώς η νομοθεσία μεταβάλλεται συχνά και οι εξατομικευμένες παράμετροι είναι πολλές.</p>
+<h2 id="ενδεικτικές-πηγές"><strong>Ενδεικτικές πηγές</strong></h2>
+<ul>
+<li><p>e-ΕΦΚΑ – Σύνταξη λόγω γήρατος / Ποσό (e-efka.gov.gr)</p></li>
+<li><p>ν. 4387/2016, άρθρα 7-8 – Εθνική και Ανταποδοτική Σύνταξη</p></li>
+<li><p>ν. 4670/2020, άρθρο 24 – Αναθεώρηση ποσοστών αναπλήρωσης</p></li>
+<li><p>π.δ. 169/2007 – Κώδικας Πολιτικών και Στρατιωτικών Συντάξεων</p></li>
+<li><p>ν. 3518/2006 – Ειδική Προσαύξηση πρώην ΤΣΜΕΔΕ</p></li>
+<li><p>Δημοσιεύματα οικονομικού Τύπου 2026 σχετικά με τον υπολογισμό συντάξεων και τον δείκτη μισθών</p></li>
+</ul>
+
+  </div>
+  <div class="doc-pager"><span></span><button class="pager-btn pager-next" data-goto="doc-1785434186650"><span><span class="pager-label">Επόμενο</span><span class="pager-title">Επικουρική Σύνταξη — Θεμελίωση &amp; Υπολογισμός</span></span><span class="pager-arrow">→</span></button></div>
+</section>
+
+<section class="doc-section" id="doc-1785434186650" data-title="Επικουρική Σύνταξη — Θεμελίωση &amp; Υπολογισμός" data-subtitle="Για υπαλλήλους ΙΔΑΧ Δημοσίου, Μόνιμους υπαλλήλους, προσωπικό ΝΠΔΔ και ασφαλισμένους στο πρώην ΤΣΜΕΔΕ" data-category="Συντάξεις, Εφάπαξ &amp; Ασφάλιση" hidden>
+  <div class="doc-head">
+    <span class="doc-eyebrow">Συντάξεις, Εφάπαξ &amp; Ασφάλιση · Έγγραφο 2 από 9</span>
+    <h1 class="doc-title">Επικουρική Σύνταξη — Θεμελίωση &amp; Υπολογισμός</h1>
+    <p class="doc-subtitle">Για υπαλλήλους ΙΔΑΧ Δημοσίου, Μόνιμους υπαλλήλους, προσωπικό ΝΠΔΔ και ασφαλισμένους στο πρώην ΤΣΜΕΔΕ</p>
+  </div>
+  <nav class="mini-nav" aria-label="Ενότητες εγγράφου"><span class="mini-nav-label">Σε αυτή τη σελίδα</span><a href="#1-τι-είναι-η-επικουρική-σύνταξη" data-doc-anchor>1. Τι είναι η επικουρική σύνταξη</a><a href="#μερος-α-η-θεμελιωση-της-επικουρικης-συνταξης" data-doc-anchor>ΜΕΡΟΣ Α΄ — Η ΘΕΜΕΛΙΩΣΗ ΤΗΣ ΕΠΙΚΟΥΡΙΚΗΣ ΣΥΝΤΑΞΗΣ</a><a href="#2-ποιος-υπάγεται-σε-ποιο-σύστημα" data-doc-anchor>2. Ποιος υπάγεται σε ποιο σύστημα</a><a href="#3-θεμελίωση-δικαιώματος-στον-κλάδο-επικουρικής-ασφάλισης-e-ε" data-doc-anchor>3. Θεμελίωση δικαιώματος στον Κλάδο Επικουρικής Ασφάλισης e-ΕΦΚΑ</a><a href="#4-θεμελίωση-δικαιώματος-στο-τεκα" data-doc-anchor>4. Θεμελίωση δικαιώματος στο ΤΕΚΑ</a><a href="#μερος-β-ο-υπολογισμος-της-επικουρικης-συνταξης" data-doc-anchor>ΜΕΡΟΣ Β΄ — Ο ΥΠΟΛΟΓΙΣΜΟΣ ΤΗΣ ΕΠΙΚΟΥΡΙΚΗΣ ΣΥΝΤΑΞΗΣ</a><a href="#5-υπολογισμός-στον-κλάδο-επικουρικής-ασφάλισης-e-εφκα" data-doc-anchor>5. Υπολογισμός στον Κλάδο Επικουρικής Ασφάλισης e-ΕΦΚΑ</a><a href="#6-υπολογισμός-στο-τεκα" data-doc-anchor>6. Υπολογισμός στο ΤΕΚΑ</a><a href="#7-συνοπτικός-πίνακας-ανά-κατηγορία-εργαζομένων" data-doc-anchor>7. Συνοπτικός πίνακας ανά κατηγορία εργαζομένων</a><a href="#8-πρακτικά-βήματα" data-doc-anchor>8. Πρακτικά βήματα</a><a href="#9-συμπέρασμα" data-doc-anchor>9. Συμπέρασμα</a><a href="#ενδεικτικές-πηγές" data-doc-anchor>Ενδεικτικές πηγές</a></nav>
+  <div class="doc-body">
+    
+
+<p>Η παρούσα αναφορά εξηγεί, με απλή γλώσσα και χωρίς να προϋποθέτει καμία προηγούμενη γνώση, τι είναι η επικουρική σύνταξη, πότε θεμελιώνεται το δικαίωμα λήψης της και πώς υπολογίζεται το ποσό της, για τέσσερις κατηγορίες: Μόνιμους υπαλλήλους Δημοσίου, υπαλλήλους ΙΔΑΧ, προσωπικό ΝΠΔΔ και ασφαλισμένους του πρώην Ταμείου Μηχανικών (ΤΣΜΕΔΕ).</p>
+<blockquote>
+<p><em>Σημείωση: Το κείμενο έχει ενημερωτικό-εκπαιδευτικό χαρακτήρα και βασίζεται στο γενικό πλαίσιο που ισχύει το 2026 (ν. 4052/2012, ν. 4387/2016, ν. 4670/2020, ν. 4826/2021 για το ΤΕΚΑ, ν. 5078/2023 κ.ά.). Η νομοθεσία για την επικουρική ασφάλιση αλλάζει συχνά· για τον ακριβή προσδιορισμό μιας συγκεκριμένης περίπτωσης απαιτείται έλεγχος στον e-ΕΦΚΑ, στο ΤΕΚΑ ή σε εξειδικευμένο σύμβουλο.</em></p>
+</blockquote>
+<h2 id="1-τι-είναι-η-επικουρική-σύνταξη">1. Τι είναι η επικουρική σύνταξη</h2>
+<p>Η επικουρική σύνταξη είναι ένα δεύτερο, συμπληρωματικό ποσό σύνταξης που καταβάλλεται πάνω από την κύρια σύνταξη (αυτή που αναλύθηκε σε προηγούμενη αναφορά). Ονομάζεται «επικουρική» επειδή έρχεται να ενισχύσει, να «βοηθήσει» το εισόδημα του συνταξιούχου, χωρίς όμως να αντικαθιστά την κύρια σύνταξη.</p>
+<p>Η μεγάλη διαφορά σε σχέση με την κύρια σύνταξη είναι ότι, τα τελευταία χρόνια, δημιουργήθηκαν στην Ελλάδα δύο εντελώς διαφορετικά συστήματα επικουρικής ασφάλισης, τα οποία λειτουργούν παράλληλα:</p>
+<ul>
+<li><p>Ο Κλάδος Επικουρικής Ασφάλισης του e-ΕΦΚΑ (πρώην ΕΤΕΑΕΠ) — το «παλιό» σύστημα.</p></li>
+<li><p>Το Ταμείο Επικουρικής Κεφαλαιοποιητικής Ασφάλισης (ΤΕΚΑ) — το «νέο» σύστημα, σε λειτουργία από 1/1/2022.</p></li>
+</ul>
+<p>Ποιο από τα δύο συστήματα αφορά κάποιον δεν εξαρτάται από το αν είναι Μόνιμος, ΙΔΑΧ ή ασφαλισμένος πρώην ΤΣΜΕΔΕ, αλλά κυρίως από το πότε άρχισε να εργάζεται. Αυτό είναι το πιο σημαντικό σημείο που πρέπει να κατανοήσει κανείς πριν προχωρήσει.</p>
+<table>
+<colgroup>
+<col style="width: 22%"/>
+<col style="width: 38%"/>
+<col style="width: 38%"/>
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Κλάδος Επικουρικής Ασφάλισης e-ΕΦΚΑ ("παλιό" σύστημα)</strong></th>
+<th><strong>ΤΕΚΑ ("νέο", κεφαλαιοποιητικό σύστημα)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Ποιοι υπάγονται</strong></td>
+<td>Όσοι ασφαλίστηκαν για πρώτη φορά πριν την 1/1/2022 (με εξαιρέσεις/δυνατότητα επιλογής, βλ. ενότητα 2)</td>
+<td>Όσοι εργάζονται για πρώτη φορά από 1/1/2022 και μετά, και όσοι γεννήθηκαν από 1/1/2004 και μετά</td>
+</tr>
+<tr class="even">
+<td><strong>Τρόπος λειτουργίας</strong></td>
+<td>Διανεμητικό σύστημα: οι εισφορές των σημερινών εργαζομένων χρηματοδοτούν εν μέρει τις σημερινές συντάξεις, με «ράντα» επί ατομικής μερίδας για τον χρόνο μετά το 2015</td>
+<td>Κεφαλαιοποιητικό σύστημα: κάθε ασφαλισμένος έχει προσωπικό λογαριασμό ("ατομικός κουμπαράς") όπου συσσωρεύονται οι δικές του εισφορές και οι αποδόσεις τους</td>
+</tr>
+<tr class="odd">
+<td><strong>Ύψος εισφοράς</strong></td>
+<td>6% επί μεικτών αποδοχών (3% εργοδότης + 3% εργαζόμενος), από 1/6/2022</td>
+<td>Ίδιο ποσοστό, 6% επί μεικτών αποδοχών (3%+3%)</td>
+</tr>
+<tr class="even">
+<td><strong>Ελάχιστος χρόνος για σύνταξη</strong></td>
+<td>15 έτη (4.500 ημέρες) επικουρικής ασφάλισης</td>
+<td>Δεν υπάρχει ελάχιστο όριο ετών· η σύνταξη προκύπτει από το συσσωρευμένο κεφάλαιο, όποιο κι αν είναι αυτό</td>
+</tr>
+</tbody>
+</table>
+<h2 id="μερος-α-η-θεμελιωση-της-επικουρικης-συνταξης">ΜΕΡΟΣ Α΄ — Η ΘΕΜΕΛΙΩΣΗ ΤΗΣ ΕΠΙΚΟΥΡΙΚΗΣ ΣΥΝΤΑΞΗΣ</h2>
+<h2 id="2-ποιος-υπάγεται-σε-ποιο-σύστημα">2. Ποιος υπάγεται σε ποιο σύστημα</h2>
+<h3 id="21-κλάδος-επικουρικής-ασφάλισης-e-εφκα">2.1 Κλάδος Επικουρικής Ασφάλισης e-ΕΦΚΑ</h3>
+<p>Υπάγονται όσοι είχαν ασφαλιστεί για πρώτη φορά, σε οποιονδήποτε φορέα κύριας ή επικουρικής ασφάλισης, πριν την 1/1/2022. Αυτό καλύπτει τη μεγάλη πλειονότητα των σημερινών εν ενεργεία Μόνιμων υπαλλήλων, υπαλλήλων ΙΔΑΧ και ασφαλισμένων πρώην ΤΣΜΕΔΕ, εφόσον εργάζονται από πριν το 2022.</p>
+<h3 id="22-τεκα">2.2 ΤΕΚΑ</h3>
+<p>Υπάγονται υποχρεωτικά:</p>
+<ul>
+<li><p>Όσοι εργάζονται για πρώτη φορά στην Ελλάδα από 1/1/2022 και μετά (δημόσιο και ιδιωτικό τομέα), εφόσον η εργασία τους συνεπάγεται υποχρέωση επικουρικής ασφάλισης.</p></li>
+<li><p>Όσοι έχουν γεννηθεί από την 1/1/2004 και μετά, ανεξάρτητα πότε ξεκίνησαν να εργάζονται.</p></li>
+<li><p>Ειδικά για το Δημόσιο: τακτικοί και μετακλητοί υπάλληλοι, λειτουργοί του Δημοσίου, καθώς και στελέχη Ενόπλων Δυνάμεων και Σωμάτων Ασφαλείας, που διορίζονται από 1/1/2022 και μετά χωρίς προηγούμενη ασφαλιστέα απασχόληση.</p></li>
+</ul>
+<blockquote>
+<p>Νέα δυνατότητα επιλογής (2026): όσοι έχουν γεννηθεί από την 1/1/1987 και μετά και είχαν αρχίσει να εργάζονται πριν το 2022 (άρα υπάγονταν κανονικά στο e-ΕΦΚΑ) αποκτούν, με προθεσμία έως 31/12/2026, δικαίωμα να επιλέξουν μετάβαση στο ΤΕΚΑ, χωρίς πλέον τον παλαιότερο ηλικιακό περιορισμό (35 ετών) — ακόμη κι αν κάνουν την αίτηση μετά τα 47 τους. Η επιλογή αυτή είναι σημαντική και αξίζει διερεύνησης κατά περίπτωση.</p>
+</blockquote>
+<p>Όσοι είχαν αρχίσει να εργάζονται πριν το 2022 και δεν εμπίπτουν στην παραπάνω δυνατότητα επιλογής παραμένουν κανονικά στον Κλάδο Επικουρικής Ασφάλισης του e-ΕΦΚΑ.</p>
+<h2 id="3-θεμελίωση-δικαιώματος-στον-κλάδο-επικουρικής-ασφάλισης-e-ε">3. Θεμελίωση δικαιώματος στον Κλάδο Επικουρικής Ασφάλισης e-ΕΦΚΑ</h2>
+<p>Μέχρι το 2023 υπήρχαν διαφορετικές προϋποθέσεις ανάλογα με τον παλιό ασφαλιστικό φορέα του καθενός. Με τον ν. 5078/2023 οι προϋποθέσεις ενοποιήθηκαν και έγιναν κοινές για δημόσιο και ιδιωτικό τομέα. Σήμερα, για να θεμελιώσει κάποιος δικαίωμα επικουρικής σύνταξης λόγω γήρατος χρειάζονται δύο πράγματα ταυτόχρονα:</p>
+<ul>
+<li><p>Να έχει θεμελιώσει το αντίστοιχο δικαίωμα συνταξιοδότησης λόγω γήρατος στον φορέα κύριας ασφάλισής του (δηλαδή να πληροί τις προϋποθέσεις ηλικίας/χρόνου που είδαμε στην προηγούμενη αναφορά για την κύρια σύνταξη).</p></li>
+<li><p>Να έχει συμπληρώσει τουλάχιστον 15 έτη (4.500 ημέρες) επικουρικής ασφάλισης, είτε σε έναν φορέα είτε αθροιστικά σε περισσότερους (διαδοχική ασφάλιση).</p></li>
+</ul>
+<blockquote>
+<p><em>Αν κάποιος έχει λιγότερα από 15 έτη επικουρικής ασφάλισης, δεν δικαιούται μηνιαία επικουρική σύνταξη· ο χρόνος και οι εισφορές του δεν χάνονται, αλλά δεν οδηγούν σε μηνιαία παροχή (στο παλιό σύστημα δεν προβλέπεται επιστροφή εισφορών σε αυτή την περίπτωση).</em></p>
+</blockquote>
+<p>Αυτές οι προϋποθέσεις ισχύουν με τον ίδιο ακριβώς τρόπο για Μόνιμους υπαλλήλους Δημοσίου, υπαλλήλους ΙΔΑΧ, προσωπικό ΝΠΔΔ και ασφαλισμένους πρώην ΤΣΜΕΔΕ, εφόσον υπάγονται στον Κλάδο Επικουρικής Ασφάλισης του e-ΕΦΚΑ. Δεν υπάρχει, δηλαδή, καμία ειδική -δυσμενέστερη ή ευνοϊκότερη- μεταχείριση ανάλογα με την εργασιακή σχέση.</p>
+<h2 id="4-θεμελίωση-δικαιώματος-στο-τεκα">4. Θεμελίωση δικαιώματος στο ΤΕΚΑ</h2>
+<p>Στο ΤΕΚΑ η λογική είναι διαφορετική, επειδή πρόκειται για κεφαλαιοποιητικό σύστημα: το δικαίωμα λήψης επικουρικής σύνταξης δεν εξαρτάται από ελάχιστο αριθμό ετών ασφάλισης, αλλά από τη συμπλήρωση των προϋποθέσεων συνταξιοδότησης λόγω γήρατος στον φορέα κύριας ασφάλισης.</p>
+<ul>
+<li><p>Δεν υπάρχει ελάχιστο όριο ετών επικουρικής ασφάλισης· ακόμη κι αν κάποιος έχει ασφαλιστεί στο ΤΕΚΑ για λίγα μόνο χρόνια, δικαιούται τη μηνιαία σύνταξη που αναλογεί στο κεφάλαιο που έχει συγκεντρωθεί στον ατομικό του λογαριασμό.</p></li>
+<li><p>Το ατομικό κεφάλαιο ανήκει στον ασφαλισμένο· δεν χάνεται ποτέ, αντίθετα με τη λογική του «ελάχιστου ορίου» που ισχύει στο e-ΕΦΚΑ.</p></li>
+</ul>
+<p>Και εδώ, οι κανόνες θεμελίωσης είναι κοινοί για όλες τις κατηγορίες εργαζομένων (Μόνιμους, ΙΔΑΧ, ΝΠΔΔ, μηχανικούς) που υπάγονται στο ΤΕΚΑ, χωρίς καμία διαφοροποίηση ανάμεσά τους.</p>
+<h2 id="μερος-β-ο-υπολογισμος-της-επικουρικης-συνταξης">ΜΕΡΟΣ Β΄ — Ο ΥΠΟΛΟΓΙΣΜΟΣ ΤΗΣ ΕΠΙΚΟΥΡΙΚΗΣ ΣΥΝΤΑΞΗΣ</h2>
+<h2 id="5-υπολογισμός-στον-κλάδο-επικουρικής-ασφάλισης-e-εφκα">5. Υπολογισμός στον Κλάδο Επικουρικής Ασφάλισης e-ΕΦΚΑ</h2>
+<p>Από 1/1/2015 εφαρμόζεται ένας «μικτός» τρόπος υπολογισμού, ο οποίος χωρίζει τον χρόνο ασφάλισης σε δύο περιόδους και υπολογίζει ξεχωριστά το ποσό που αναλογεί στην καθεμία. Το τελικό ποσό της επικουρικής σύνταξης είναι το άθροισμα των δύο:</p>
+<p><strong>Επικουρική Σύνταξη = Ποσό για τον χρόνο έως 31/12/2014 + Ποσό για τον χρόνο από 1/1/2015 και μετά</strong></p>
+<h3 id="α-το-τμήμα-για-τον-χρόνο-ασφάλισης-έως-31122014">Α. Το τμήμα για τον χρόνο ασφάλισης έως 31/12/2014</h3>
+<p>Υπολογίζεται με έναν πιο «παραδοσιακό» τρόπο: για κάθε έτος ασφάλισης μέχρι το 2014 εφαρμόζεται συντελεστής 0,45%, ο οποίος πολλαπλασιάζεται επί τις συντάξιμες αποδοχές της περιόδου (μέσος όρος μηνιαίων αποδοχών από το 2002 έως το 2014).</p>
+<p><strong>Τμήμα έως 2014 = 0,45% × Έτη ασφάλισης έως 2014 × Μέσες μηνιαίες αποδοχές 2002-2014</strong></p>
+<h3 id="β-το-τμήμα-για-τον-χρόνο-ασφάλισης-από-112015-και-μετά">Β. Το τμήμα για τον χρόνο ασφάλισης από 1/1/2015 και μετά</h3>
+<p>Εδώ εφαρμόζεται ένα διαφορετικό, πιο σύγχρονο σύστημα, γνωστό ως «νοητή κεφαλαιοποίηση» (στα αγγλικά NDC). Η λογική του είναι η εξής: όλες οι εισφορές που καταβλήθηκαν για επικουρική ασφάλιση από το 2015 και μετά καταγράφονται σε μια ατομική «εικονική» μερίδα (δεν πρόκειται για πραγματικό επενδυτικό λογαριασμό, όπως στο ΤΕΚΑ, αλλά για λογιστική καταγραφή). Όταν κάποιος συνταξιοδοτείται, το συνολικό ποσό αυτής της μερίδας πολλαπλασιάζεται με έναν συντελεστή που λέγεται «ράντα» και εξαρτάται από την ηλικία συνταξιοδότησης και το είδος της σύνταξης (γήρατος, αναπηρίας, θανάτου).</p>
+<p><strong>Τμήμα από 2015 = Συσσωρευμένες εισφορές ατομικής μερίδας (2015 και μετά) × Συντελεστής «ράντα»</strong></p>
+<blockquote>
+<p><em>Όσο μεγαλύτερη είναι η ηλικία συνταξιοδότησης, τόσο πιο ευνοϊκός τείνει να είναι ο συντελεστής ράντα, καθώς το κεφάλαιο «μοιράζεται» σε λιγότερα αναμενόμενα έτη καταβολής σύνταξης. Οι ακριβείς συντελεστές ράντα καθορίζονται με υπουργική απόφαση και αναθεωρούνται περιοδικά.</em></p>
+</blockquote>
+<p>Για όσους ασφαλίστηκαν για πρώτη φορά μετά την 1/1/2014, δεν υπάρχει καθόλου το «παλιό» τμήμα (Α)· ολόκληρη η επικουρική τους σύνταξη υπολογίζεται με το σύστημα νοητής κεφαλαιοποίησης (τμήμα Β).</p>
+<blockquote>
+<p>Παράδειγμα κατανόησης (ενδεικτικό, στρογγυλοποιημένο): υπάλληλος με 20 έτη ασφάλισης έως το 2014 και μέσες αποδοχές περίπου 1.500 ευρώ θα έχει τμήμα Α περίπου 0,45% × 20 × 1.500 = 135 ευρώ. Το τμήμα Β προστίθεται ξεχωριστά, ανάλογα με το πόσο συγκεντρώθηκε στην ατομική μερίδα του από το 2015 και μετά και με τον συντελεστή ράντα που θα του αναλογεί κατά τη συνταξιοδότησή του.</p>
+</blockquote>
+<p>Αυτός ο τρόπος υπολογισμού ισχύει με τον ίδιο τρόπο για Μόνιμους υπαλλήλους Δημοσίου, υπαλλήλους ΙΔΑΧ και ασφαλισμένους πρώην ΤΣΜΕΔΕ που υπάγονται στο e-ΕΦΚΑ. Η μόνη πρακτική διαφοροποίηση για τους μηχανικούς αφορά τον τρόπο με τον οποίο υπολογίστηκαν οι συντάξιμες αποδοχές τους στο παρελθόν (βλ. σημείωση παρακάτω).</p>
+<blockquote>
+<p><em>Ειδικά για τους μηχανικούς πρώην ΤΣΜΕΔΕ: μέχρι το 2016 οι συντάξιμες αποδοχές για την επικουρική τους ασφάλιση υπολογίζονταν με βάση τεκμαρτούς μισθούς ανά ασφαλιστική κλάση (και όχι το πραγματικό εισόδημα), κάτι που μπορεί να επηρεάζει το τμήμα Α του υπολογισμού για όσους είχαν μεγάλο μέρος της σταδιοδρομίας τους πριν το 2016.</em></p>
+</blockquote>
+<h2 id="6-υπολογισμός-στο-τεκα">6. Υπολογισμός στο ΤΕΚΑ</h2>
+<p>Στο ΤΕΚΑ ο υπολογισμός είναι εννοιολογικά πιο απλός, γιατί δεν υπάρχουν «ποσοστά αναπλήρωσης» ή πίνακες όπως στην κύρια ή στην παλιά επικουρική σύνταξη. Η λογική είναι αυτή ενός προσωπικού αποταμιευτικού λογαριασμού:</p>
+<ul>
+<li><p>Κάθε μήνα, ο εργοδότης αποδίδει στο ΤΕΚΑ εισφορές ύψους 6% επί των μεικτών αποδοχών του εργαζομένου (3% από τον εργοδότη, 3% από τον εργαζόμενο, από 1/6/2022).</p></li>
+<li><p>Οι εισφορές αυτές πιστώνονται απευθείας στον προσωπικό λογαριασμό («ατομικό κουμπαρά») του κάθε ασφαλισμένου, τον οποίο μπορεί να παρακολουθεί ηλεκτρονικά μέσω της υπηρεσίας myTEKA.</p></li>
+<li><p>Το κεφάλαιο αυτό επενδύεται (κατά τη μεταβατική περίοδο, σε καταθέσεις μέσω της Τράπεζας της Ελλάδος) και αποδίδει τόκο/απόδοση με την πάροδο του χρόνου.</p></li>
+<li><p>Όταν ο ασφαλισμένος συνταξιοδοτηθεί, το συνολικό συσσωρευμένο κεφάλαιο (εισφορές + αποδόσεις) μετατρέπεται σε μηνιαία σύνταξη, με τη χρήση αντίστοιχου συντελεστή «ράντα» ανάλογα με την ηλικία συνταξιοδότησης.</p></li>
+</ul>
+<p><strong>Μηνιαία Επικουρική Σύνταξη ΤΕΚΑ = Συνολικό Κεφάλαιο Ατομικού Λογαριασμού × Συντελεστής «ράντα»</strong></p>
+<p>Το ύψος της σύνταξης εξαρτάται αποκλειστικά από το πόσο κατέβαλε ο ασφαλισμένος (δηλαδή από τον μισθό του) και για πόσα χρόνια, καθώς και από τις αποδόσεις των επενδύσεων στο διάστημα αυτό. Δεν υπάρχει καμία διαφοροποίηση στον τρόπο υπολογισμού ανάμεσα σε Μόνιμους υπαλλήλους, ΙΔΑΧ, προσωπικό ΝΠΔΔ ή μηχανικούς πρώην ΤΣΜΕΔΕ που υπάγονται στο ΤΕΚΑ -όλοι ακολουθούν ακριβώς την ίδια λογική «ατομικού λογαριασμού».</p>
+<blockquote>
+<p>Σημαντική διαφορά φιλοσοφίας: στο e-ΕΦΚΑ, αν κάποιος δεν συμπληρώσει 15 έτη, δεν παίρνει καθόλου μηνιαία επικουρική σύνταξη. Στο ΤΕΚΑ, το κεφάλαιο είναι πάντα «δικό» του και μετατρέπεται σε σύνταξη όποιο κι αν είναι το ύψος του -απλώς, όσο λιγότερα τα χρόνια συμμετοχής, τόσο μικρότερο θα είναι και το τελικό ποσό.</p>
+</blockquote>
+<h2 id="7-συνοπτικός-πίνακας-ανά-κατηγορία-εργαζομένων">7. Συνοπτικός πίνακας ανά κατηγορία εργαζομένων</h2>
+<table>
+<colgroup>
+<col style="width: 26%"/>
+<col style="width: 36%"/>
+<col style="width: 36%"/>
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Κατηγορία</strong></th>
+<th><strong>Θεμελίωση επικουρικής σύνταξης</strong></th>
+<th><strong>Ιδιαιτερότητα στον υπολογισμό</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Μόνιμοι υπάλληλοι Δημοσίου / ΝΠΔΔ</strong></td>
+<td>15 έτη επικουρικής ασφάλισης (e-ΕΦΚΑ) ή ένταξη στο ΤΕΚΑ, ανάλογα με το πότε προσλήφθηκαν</td>
+<td>Καμία ειδική διάταξη πέραν της γενικής· ακολουθούν το σύστημα (e-ΕΦΚΑ ή ΤΕΚΑ) στο οποίο υπάγονται</td>
+</tr>
+<tr class="even">
+<td><strong>Υπάλληλοι ΙΔΑΧ / ΝΠΔΔ</strong></td>
+<td>Ίδιες προϋποθέσεις με τους μόνιμους, ίδια λογική ένταξης σε e-ΕΦΚΑ ή ΤΕΚΑ</td>
+<td>Πλήρως όμοιοι κανόνες με τους μισθωτούς του ιδιωτικού τομέα</td>
+</tr>
+<tr class="odd">
+<td><strong>Ασφαλισμένοι πρώην ΤΣΜΕΔΕ (μηχανικοί)</strong></td>
+<td>Ίδιες γενικές προϋποθέσεις 15 ετών ή ΤΕΚΑ, ανάλογα με ημερομηνία πρώτης ασφάλισης· μηχανικοί είναι υποχρεωτικά υπαγόμενοι στην επικουρική ασφάλιση</td>
+<td>Ο υπολογισμός του «παλιού» τμήματος (έως 2014) βασίζεται στις συντάξιμες αποδοχές/ασφαλιστικές κλάσεις του πρώην ΤΣΜΕΔΕ</td>
+</tr>
+</tbody>
+</table>
+<h2 id="8-πρακτικά-βήματα">8. Πρακτικά βήματα</h2>
+<ul>
+<li><p>Έλεγχος στον e-ΕΦΚΑ (Ατομικός Λογαριασμός Ασφάλισης) για επιβεβαίωση του συνολικού χρόνου επικουρικής ασφάλισης και του φορέα υπαγωγής (e-ΕΦΚΑ ή ΤΕΚΑ).</p></li>
+<li><p>Για όσους υπάγονται στο ΤΕΚΑ: τακτική παρακολούθηση του ατομικού λογαριασμού μέσω της ηλεκτρονικής υπηρεσίας myTEKA.</p></li>
+<li><p>Για όσους γεννήθηκαν από το 1987 και μετά και ενδιαφέρονται για μετάβαση στο ΤΕΚΑ: διερεύνηση της δυνατότητας επιλογής έως 31/12/2026, σταθμίζοντας τα υπέρ και τα κατά κάθε συστήματος στη δική τους περίπτωση.</p></li>
+<li><p>Για ασφαλισμένους πρώην ΤΣΜΕΔΕ: επιβεβαίωση του τρόπου με τον οποίο υπολογίστηκαν οι συντάξιμες αποδοχές τους στο παρελθόν (τεκμαρτός μισθός ανά κλάση ή πραγματικό εισόδημα), καθώς επηρεάζει το τμήμα της σύνταξης έως το 2014-2016.</p></li>
+<li><p>Αίτημα προσυνταξιοδοτικού ελέγχου, όπου είναι διαθέσιμος, για εκτίμηση του αναμενόμενου ποσού επικουρικής σύνταξης πριν την οριστική αίτηση συνταξιοδότησης.</p></li>
+</ul>
+<h2 id="9-συμπέρασμα">9. Συμπέρασμα</h2>
+<p>Η επικουρική σύνταξη λειτουργεί σήμερα μέσα από δύο παράλληλα συστήματα -το «παλιό» διανεμητικό σύστημα του e-ΕΦΚΑ και το «νέο» κεφαλαιοποιητικό σύστημα του ΤΕΚΑ- και η ένταξη σε καθένα από αυτά καθορίζεται κυρίως από την ημερομηνία πρώτης ασφάλισης και το έτος γέννησης, όχι από το αν κάποιος είναι Μόνιμος υπάλληλος, ΙΔΑΧ, προσωπικό ΝΠΔΔ ή ασφαλισμένος πρώην ΤΣΜΕΔΕ. Στο e-ΕΦΚΑ, η θεμελίωση απαιτεί τουλάχιστον 15 έτη επικουρικής ασφάλισης και ο υπολογισμός γίνεται σε δύο τμήματα (έως και μετά το 2014)· στο ΤΕΚΑ, δεν υπάρχει ελάχιστο όριο ετών και η σύνταξη προκύπτει απευθείας από το συσσωρευμένο ατομικό κεφάλαιο. Λόγω της πολυπλοκότητας και των συχνών αλλαγών στο πλαίσιο αυτό, συνιστάται πάντα εξατομικευμένος έλεγχος στον e-ΕΦΚΑ ή στο ΤΕΚΑ.</p>
+<h2 id="ενδεικτικές-πηγές">Ενδεικτικές πηγές</h2>
+<ul>
+<li><p>e-ΕΦΚΑ – Απονομή Επικουρικής Σύνταξης (e-efka.gov.gr)</p></li>
+<li><p>ν. 4052/2012, άρθρο 42 – Σύστημα νοητής κεφαλαιοποίησης (NDC)</p></li>
+<li><p>ν. 4387/2016, άρθρο 96 και ν. 4670/2020, άρθρο 44 – Υπολογισμός επικουρικής σύνταξης</p></li>
+<li><p>ν. 5078/2023 – Ενιαίες προϋποθέσεις θεμελίωσης επικουρικής σύνταξης</p></li>
+<li><p>ν. 4826/2021 – Ίδρυση και λειτουργία ΤΕΚΑ</p></li>
+<li><p>ΤΕΚΑ – Επίσημος ιστότοπος (teka.gov.gr) και ηλεκτρονική υπηρεσία myTEKA</p></li>
+<li><p>Δημοσιεύματα οικονομικού Τύπου 2026 σχετικά με τη δυνατότητα επιλογής ΤΕΚΑ για γεννηθέντες από το 1987</p></li>
+</ul>
+
+  </div>
+  <div class="doc-pager"><button class="pager-btn pager-prev" data-goto="doc-1785434186680"><span class="pager-arrow">←</span><span><span class="pager-label">Προηγούμενο</span><span class="pager-title">Υπολογισμός Κύριας Σύνταξης</span></span></button><button class="pager-btn pager-next" data-goto="doc-1785434186657"><span><span class="pager-label">Επόμενο</span><span class="pager-title">Εφάπαξ Βοήθημα — Θεμελίωση &amp; Υπολογισμός</span></span><span class="pager-arrow">→</span></button></div>
+</section>
+
+<section class="doc-section" id="doc-1785434186657" data-title="Εφάπαξ Βοήθημα — Θεμελίωση &amp; Υπολογισμός" data-subtitle="Για υπαλλήλους ΙΔΑΧ Δημοσίου, Μόνιμους υπαλλήλους, προσωπικό ΝΠΔΔ και ασφαλισμένους στο πρώην ΤΣΜΕΔΕ" data-category="Συντάξεις, Εφάπαξ &amp; Ασφάλιση" hidden>
+  <div class="doc-head">
+    <span class="doc-eyebrow">Συντάξεις, Εφάπαξ &amp; Ασφάλιση · Έγγραφο 3 από 9</span>
+    <h1 class="doc-title">Εφάπαξ Βοήθημα — Θεμελίωση &amp; Υπολογισμός</h1>
+    <p class="doc-subtitle">Για υπαλλήλους ΙΔΑΧ Δημοσίου, Μόνιμους υπαλλήλους, προσωπικό ΝΠΔΔ και ασφαλισμένους στο πρώην ΤΣΜΕΔΕ</p>
+  </div>
+  <nav class="mini-nav" aria-label="Ενότητες εγγράφου"><span class="mini-nav-label">Σε αυτή τη σελίδα</span><a href="#1-τι-είναι-το-εφάπαξ-βοήθημα" data-doc-anchor>1. Τι είναι το εφάπαξ βοήθημα</a><a href="#μερος-α-η-θεμελιωση-του-εφαπαξ" data-doc-anchor>ΜΕΡΟΣ Α΄ — Η ΘΕΜΕΛΙΩΣΗ ΤΟΥ ΕΦΑΠΑΞ</a><a href="#2-βασική-προϋπόθεση-ελάχιστος-χρόνος-ασφάλισης" data-doc-anchor>2. Βασική προϋπόθεση: ελάχιστος χρόνος ασφάλισης</a><a href="#3-θεμελίωση-για-μόνιμους-υπαλλήλους-δημοσίου-και-νπδδ" data-doc-anchor>3. Θεμελίωση για Μόνιμους υπαλλήλους Δημοσίου και ΝΠΔΔ</a><a href="#4-θεμελίωση-για-υπαλλήλους-ιδαχ-και-νπδδ" data-doc-anchor>4. Θεμελίωση για υπαλλήλους ΙΔΑΧ και ΝΠΔΔ</a><a href="#5-θεμελίωση-για-ασφαλισμένους-στο-πρώην-τσμεδε" data-doc-anchor>5. Θεμελίωση για ασφαλισμένους στο πρώην ΤΣΜΕΔΕ</a><a href="#μερος-β-ο-υπολογισμος-του-εφαπαξ" data-doc-anchor>ΜΕΡΟΣ Β΄ — Ο ΥΠΟΛΟΓΙΣΜΟΣ ΤΟΥ ΕΦΑΠΑΞ</a><a href="#6-το-διπλό-μοντέλο-υπολογισμού" data-doc-anchor>6. Το «διπλό μοντέλο» υπολογισμού</a>
+   
+  <a href="#8-πρακτικά-βήματα" data-doc-anchor>8. Πρακτικά βήματα</a><a href="#9-συμπέρασμα" data-doc-anchor>9. Συμπέρασμα</a><a href="#ενδεικτικές-πηγές" data-doc-anchor>Ενδεικτικές πηγές</a></nav>
+  <div class="doc-body">
+    
+
+<p>Η παρούσα αναφορά εξηγεί, με απλή γλώσσα και χωρίς να προϋποθέτει καμία προηγούμενη γνώση, τι είναι το εφάπαξ βοήθημα, πότε θεμελιώνεται το δικαίωμα είσπραξής του και πώς υπολογίζεται το ποσό του, για Μόνιμους υπαλλήλους Δημοσίου, υπαλλήλους ΙΔΑΧ, προσωπικό ΝΠΔΔ και ασφαλισμένους του πρώην Ταμείου Μηχανικών (ΤΣΜΕΔΕ).</p>
+<blockquote>
+<p><em>Σημείωση: Το κείμενο έχει ενημερωτικό-εκπαιδευτικό χαρακτήρα και βασίζεται στο γενικό πλαίσιο που ισχύει το 2026 (ν. 3865/2010, ν. 4387/2016, ν. 4670/2020 κ.ά.), όπως εφαρμόζεται από τον e-ΕΦΚΑ . Το πλαίσιο υπολογισμού του εφάπαξ αλλάζει συχνά και βρίσκεται υπό συνεχή αναθεώρηση· για τον ακριβή προσδιορισμό μιας συγκεκριμένης περίπτωσης απαιτείται έλεγχος στον e-ΕΦΚΑ	 ή σε εξειδικευμένο σύμβουλο.</em></p>
+</blockquote>
+<h2 id="1-τι-είναι-το-εφάπαξ-βοήθημα">1. Τι είναι το εφάπαξ βοήθημα</h2>
+<p>Το εφάπαξ βοήθημα (ή «εφάπαξ παροχή») είναι ένα εντελώς διαφορετικό είδος παροχής από την κύρια και την επικουρική σύνταξη: δεν καταβάλλεται κάθε μήνα, αλλά μία και μόνη φορά, ως ένα συνολικό χρηματικό ποσό, τη στιγμή που κάποιος αποχωρεί οριστικά από την εργασία του λόγω συνταξιοδότησης. Σκοπός του είναι να «απορροφήσει» οικονομικά την απότομη μετάβαση από την ενεργό εργασία στη συνταξιοδότηση.</p>
+<p>Ανάλογα με την κατηγορία στην οποία ανήκει κάποιος, το εφάπαξ μπορεί να προέρχεται από έναν ή και από δύο διαφορετικούς φορείς:</p>
+<table>
+<colgroup>
+<col style="width: 26%"/>
+<col style="width: 36%"/>
+<col style="width: 36%"/>
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Κατηγορία</strong></th>
+<th><strong>Κύριος φορέας εφάπαξ</strong></th>
+<th><strong>Πρόσθετος φορέας (όπου υπάρχει)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Μόνιμοι υπάλληλοι Δημοσίου / ΝΠΔΔ</strong></td>
+<td>Τομέας Εφάπαξ Παροχής Δημοσίου Τομέα (πρώην ΤΠΔΥ), εντός e-ΕΦΚΑ</td>
+<!-- <td>ΜΤΠΥ, μόνο για όσους είναι «μέτοχοι» του Ταμείου (κυρίως πολιτικοί υπάλληλοι Υπουργείων)</td> -->
+</tr>
+<tr class="even">
+<td><strong>Υπάλληλοι ΙΔΑΧ / ΝΠΔΔ</strong></td>
+<td>Τομέας Εφάπαξ Παροχής Δημοσίου Τομέα (πρώην ΤΠΔΥ), εντός e-ΕΦΚΑ, από 1/1/2011 και μετά</td>
+<!-- <td>Κατά κανόνα δεν συμμετέχουν στο ΜΤΠΥ</td> -->
+</tr>
+<tr class="odd">
+<td><strong>Ασφαλισμένοι πρώην ΤΣΜΕΔΕ (μηχανικοί)</strong></td>
+<td>Τομέας Πρόνοιας Μηχανικών &amp; Εργοληπτών Δημοσίων Έργων (πρώην ΤΣΜΕΔΕ - Πρόνοια), εντός e-ΕΦΚΑ</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<!--
+<blockquote>
+<p><em>Το ΜΤΠΥ (Μετοχικό Ταμείο Πολιτικών Υπαλλήλων) είναι ένας παλιός, ιδιόμορφος αμοιβαίος («μετοχικός») οργανισμός, ξεχωριστός από τον e-ΕΦΚΑ, στον οποίο συμμετέχουν ως «μέτοχοι» -όχι όλοι- οι μόνιμοι πολιτικοί υπάλληλοι, κυρίως Υπουργείων. Λειτουργεί με διαφορετική λογική («μερίδα») από τον Τομέα Εφάπαξ Παροχής, όπως εξηγείται στην ενότητα 6.</em></p>
+</blockquote>
+-->
+<h2 id="μερος-α-η-θεμελιωση-του-εφαπαξ">ΜΕΡΟΣ Α΄ — Η ΘΕΜΕΛΙΩΣΗ ΤΟΥ ΕΦΑΠΑΞ</h2>
+<h2 id="2-βασική-προϋπόθεση-ελάχιστος-χρόνος-ασφάλισης">2. Βασική προϋπόθεση: ελάχιστος χρόνος ασφάλισης</h2>
+<p>Για να δικαιούται κάποιος εφάπαξ βοήθημα από τον Τομέα Εφάπαξ Παροχής Δημοσίου Τομέα (ή τον αντίστοιχο Τομέα Πρόνοιας Μηχανικών για τους ασφαλισμένους πρώην ΤΣΜΕΔΕ), πρέπει να έχει συμπληρώσει έναν ελάχιστο χρόνο ασφάλισης στον κλάδο πρόνοιας.</p>
+<ul>
+<li><p>Το γενικό όριο που εφαρμόζεται σήμερα είναι, κατά κανόνα, γύρω στα 15 έτη ασφάλισης.</p></li>
+<li><p>Ιστορικά, στο παλαιό Ταμείο Πρόνοιας Δημοσίων Υπαλλήλων (ΤΠΔΥ) το ελάχιστο όριο ήταν 12,5 έτη — ένα όριο που μπορεί ακόμη να έχει σημασία για υπαλλήλους με μεγάλο μέρος της σταδιοδρομίας τους πριν τις μεταρρυθμίσεις της τελευταίας δεκαετίας.</p></li>
+</ul>
+<blockquote>
+<p><em>Επειδή το ακριβές ελάχιστο όριο ετών έχει μεταβληθεί αρκετές φορές τα τελευταία χρόνια και μπορεί να διαφέρει ανά Τομέα, ο κάθε ενδιαφερόμενος θα πρέπει να επιβεβαιώνει το ισχύον όριο στην περίπτωσή του απευθείας από τον e-ΕΦΚΑ.</em></p>
+</blockquote>
+<p>Πέρα από τον ελάχιστο χρόνο ασφάλισης, βασική προϋπόθεση είναι φυσικά και η οριστική αποχώρηση από την υπηρεσία λόγω συνταξιοδότησης (το εφάπαξ δεν καταβάλλεται σε εν ενεργεία εργαζόμενο).</p>
+<h2 id="3-θεμελίωση-για-μόνιμους-υπαλλήλους-δημοσίου-και-νπδδ">3. Θεμελίωση για Μόνιμους υπαλλήλους Δημοσίου και ΝΠΔΔ</h2>
+<p>Οι μόνιμοι υπάλληλοι Δημοσίου και ΝΠΔΔ θεμελιώνουν δικαίωμα εφάπαξ από τον Τομέα Εφάπαξ Παροχής Δημοσίου Τομέα εφόσον συμπληρώνουν τον απαιτούμενο ελάχιστο χρόνο ασφάλισης (ενότητα 2) και αποχωρούν οριστικά από την υπηρεσία λόγω συνταξιοδότησης.</p>
+<!--
+<p>Όσοι από αυτούς είναι επιπλέον «μέτοχοι» του ΜΤΠΥ (κυρίως πολιτικοί υπάλληλοι Υπουργείων και ορισμένων άλλων φορέων) δικαιούνται, 
+παράλληλα, και ξεχωριστή εφάπαξ οικονομική ενίσχυση από το ΜΤΠΥ, με δικές του προϋποθέσεις χρόνου συμμετοχής -βλ. ενότητα 6.</p>
+-->
+<h2 id="4-θεμελίωση-για-υπαλλήλους-ιδαχ-και-νπδδ">4. Θεμελίωση για υπαλλήλους ΙΔΑΧ και ΝΠΔΔ</h2>
+<p>Οι υπάλληλοι ΙΔΑΧ εντάχθηκαν στην ασφάλιση του (τότε) Ταμείου Πρόνοιας Δημοσίων Υπαλλήλων από την 1/1/2011 και μετά, ανεξαρτήτως του πότε προσλήφθηκαν αρχικά. Από τη στιγμή αυτή και μετά, ακολουθούν ακριβώς τις ίδιες προϋποθέσεις θεμελίωσης με τους μόνιμους υπαλλήλους (ελάχιστος χρόνος ασφάλισης και οριστική αποχώρηση λόγω συνταξιοδότησης), μέσω του σημερινού Τομέα Εφάπαξ Παροχής Δημοσίου Τομέα του e-ΕΦΚΑ.</p>
+<!--
+<p>Οι υπάλληλοι ΙΔΑΧ, σε αντίθεση με τους μόνιμους, δεν συμμετέχουν κατά κανόνα στο ΜΤΠΥ, καθώς η ιδιότητα του «μετόχου» αφορά ιστορικά τους πολιτικούς (μόνιμους) υπαλλήλους.</p>
+-->
+<p>Το προσωπικό ΝΠΔΔ (είτε μόνιμο είτε ΙΔΑΧ) ακολουθεί, όπως και στις προηγούμενες αναφορές, τους κανόνες που αντιστοιχούν στη σχέση εργασίας του, δηλαδή αυτούς της ενότητας 3 ή της ενότητας 4.</p>
+<h2 id="5-θεμελίωση-για-ασφαλισμένους-στο-πρώην-τσμεδε">5. Θεμελίωση για ασφαλισμένους στο πρώην ΤΣΜΕΔΕ</h2>
+<p>Οι μηχανικοί και συναφείς ειδικότητες που ήταν ασφαλισμένοι στο πρώην ΤΣΜΕΔΕ θεμελιώνουν δικαίωμα εφάπαξ μέσω του Τομέα Πρόνοιας Μηχανικών &amp; Εργοληπτών Δημοσίων Έργων, με την ίδια γενική λογική: ελάχιστος χρόνος ασφάλισης στον κλάδο πρόνοιας και οριστική αποχώρηση από την ενεργό επαγγελματική δραστηριότητα λόγω συνταξιοδότησης.</p>
+<p>Ειδικά για τους μισθωτούς μηχανικούς που εργάζονται στο Δημόσιο, η θεμελίωση ακολουθεί τους δικούς της κανόνες (Τομέα Πρόνοιας Μηχανικών), ξεχωριστούς από τον Τομέα Εφάπαξ Παροχής Δημοσίου Τομέα που αφορά τους λοιπούς δημοσίους υπαλλήλους.</p>
+<h2 id="μερος-β-ο-υπολογισμος-του-εφαπαξ">ΜΕΡΟΣ Β΄ — Ο ΥΠΟΛΟΓΙΣΜΟΣ ΤΟΥ ΕΦΑΠΑΞ</h2>
+<h2 id="6-το-διπλό-μοντέλο-υπολογισμού">6. Το «διπλό μοντέλο» υπολογισμού</h2>
+<p>Όπως και στην επικουρική σύνταξη, ο υπολογισμός του εφάπαξ έχει μετατραπεί σε ένα «διπλό μοντέλο»: ο συνολικός χρόνος ασφάλισης χωρίζεται σε δύο περιόδους, οι οποίες υπολογίζονται με εντελώς διαφορετική λογική η καθεμία, και το τελικό ποσό είναι το άθροισμά τους.</p>
+<p><strong>Εφάπαξ = Ποσό για τον χρόνο έως 31/12/2013 + Ποσό για τον χρόνο από 1/1/2014 και μετά</strong></p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 24%"/>
+<col style="width: 37%"/>
+<col style="width: 37%"/>
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>Τμήμα έως 31/12/2013</strong></th>
+<th><strong>Τμήμα από 1/1/2014 και μετά</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Λογική υπολογισμού</strong></td>
+<td>«Παραδοσιακή»: βασίζεται σε μέσο όρο αποδοχών τελευταίας πενταετίας πριν την αποχώρηση και σε συντελεστή ανά έτος υπηρεσίας</td>
+<td>«Ατομικός λογαριασμός»: οι εισφορές καταγράφονται σε ατομική μερίδα με νοητή κεφαλαιοποίηση</td>
+</tr>
+<tr class="even">
+<td><strong>Τι μετράει</strong></td>
+<td>Τα χρόνια υπηρεσίας και το ύψος του μισθού στο τέλος της σταδιοδρομίας</td>
+<td>Το ακριβές ύψος των εισφορών που καταβλήθηκαν κάθε μήνα από το 2014 και μετά</td>
+</tr>
+<tr class="odd">
+<td><strong>Ποιον ευνοεί</strong></td>
+<td>Όσους έχουν πολλά έτη υπηρεσίας πριν το 2014</td>
+<td>Κανέναν ιδιαίτερα· είναι καθαρά ανταποδοτικό, χωρίς αναδιανομή</td>
+</tr>
+</tbody>
+</table>
+<h3 id="α-το-τμήμα-έως-31122013">Α. Το τμήμα έως 31/12/2013</h3>
+<p>Υπολογίζεται με βάση τον μέσο όρο των μηνιαίων αποδοχών που είχε ο ασφαλισμένος κατά τα πέντε τελευταία έτη πριν την αποχώρησή του (χωρίς τα δώρα εορτών και αδείας), ο οποίος στη συνέχεια αναπροσαρμόζεται κάθε χρόνο με βάση τον πληθωρισμό, μέχρι το έτος της συνταξιοδότησης. Στο ποσό αυτό εφαρμόζεται συντελεστής που εξαρτάται από τα έτη υπηρεσίας.</p>
+<blockquote>
+<p>Ιστορικά, το ύψος του εφάπαξ για το τμήμα αυτό διέφερε επίσης ανάλογα με την εκπαιδευτική κατηγορία του υπαλλήλου (ΠΕ, ΤΕ, ΔΕ, ΥΕ) -δηλαδή Πανεπιστημιακής, Τεχνολογικής, Δευτεροβάθμιας ή Υποχρεωτικής Εκπαίδευσης- με τους υπαλλήλους ανώτερης εκπαιδευτικής κατηγορίας να λαμβάνουν, κατά κανόνα, υψηλότερο ποσό για τα ίδια έτη υπηρεσίας. Η λογική αυτή εξακολουθεί σε μεγάλο βαθμό να επηρεάζει τον υπολογισμό του τμήματος έως το 2013.</p>
+</blockquote>
+<h3 id="β-το-τμήμα-από-112014-και-μετά">Β. Το τμήμα από 1/1/2014 και μετά</h3>
+<p>Εδώ εφαρμόζεται πλέον ένα σύστημα «ατομικών μερίδων»: όλες οι εισφορές που καταβλήθηκαν υπέρ πρόνοιας από το 2014 και μετά καταγράφονται σε μια ατομική μερίδα για κάθε ασφαλισμένο, η οποία «μεγαλώνει» κάθε χρόνο με ένα πλασματικό ποσοστό επιστροφής (βασισμένο στη μεταβολή των συντάξιμων αποδοχών των ασφαλισμένων σε επίπεδο συστήματος, όχι σε πραγματική επένδυση σε αγορές). Όταν κάποιος συνταξιοδοτείται, το εφάπαξ αυτού του τμήματος ισούται ακριβώς με το ποσό που έχει συσσωρευτεί στην ατομική του μερίδα.</p>
+<p><strong>Τμήμα από 2014 = Συσσωρευμένες εισφορές ατομικής μερίδας × Πλασματικό ποσοστό επιστροφής (ετησίως)</strong></p>
+<blockquote>
+<p><em>Σημαντική συνέπεια: όσο μεγαλύτερο είναι το ποσοστό της σταδιοδρομίας κάποιου μετά το 2014, τόσο πιο «στενά» συνδέεται το εφάπαξ του με τις πραγματικές εισφορές που κατέβαλε, χωρίς τα ευνοϊκότερα χαρακτηριστικά του παλιού συστήματος. Αντίθετα, όσοι έχουν το μεγαλύτερο μέρος της σταδιοδρομίας τους πριν το 2014, τείνουν να έχουν συγκριτικά υψηλότερο εφάπαξ για τα ίδια συνολικά έτη υπηρεσίας.</em></p>
+<p>Παράδειγμα κατανόησης (ενδεικτικό): υπάλληλος με 36 συνολικά έτη ασφάλισης, εκ των οποίων τα 28 έως το 2013 και τα 8 από το 2014 και μετά, θα λάβει το τμήμα Α υπολογισμένο με τον παλιό τρόπο για τα 28 έτη, και το τμήμα Β ως άθροισμα των εισφορών του (με τις ετήσιες αναπροσαρμογές) για τα υπόλοιπα 8 έτη -χωρίς κανέναν επιπλέον συντελεστή αναπλήρωσης πέρα από τις ίδιες τις εισφορές.</p>
+</blockquote>
+<p>Αυτός ο τρόπος υπολογισμού («διπλό μοντέλο») ισχύει με τον ίδιο τρόπο για Μόνιμους υπαλλήλους Δημοσίου, υπαλλήλους ΙΔΑΧ, προσωπικό ΝΠΔΔ και ασφαλισμένους πρώην ΤΣΜΕΔΕ που λαμβάνουν εφάπαξ από τον e-ΕΦΚΑ.</p>
+<blockquote>
+<p><em>Ειδικά για τους μηχανικούς πρώην ΤΣΜΕΔΕ: όπως και στην επικουρική σύνταξη, το τμήμα του εφάπαξ που αφορά περιόδους πριν το 2016-2017 μπορεί να έχει υπολογιστεί με βάση τεκμαρτούς μισθούς ανά ασφαλιστική κλάση, αντί για το πραγματικό εισόδημα, κάτι που πρέπει να λαμβάνεται υπόψη στην εκτίμηση του τελικού ποσού.</em></p>
+</blockquote>
+<!--
+<h2 id="7-ο-ξεχωριστός-υπολογισμός-του-μτπυ">7. Ο ξεχωριστός υπολογισμός του ΜΤΠΥ</h2>
+<p>Το ΜΤΠΥ λειτουργεί με εντελώς διαφορετική λογική από τον Τομέα Εφάπαξ Παροχής, καθώς πρόκειται 
+ουσιαστικά για έναν παλιό αμοιβαίο (μετοχικό) οργανισμό:</p>
+<ul>
+<li><p>Κάθε μέτοχος του ΜΤΠΥ έχει μια προσωπική «μερίδα», η αξία της οποίας διαμορφώνεται από τις εισφορές που έχει 
+καταβάλει ο ίδιος στο Ταμείο κατά τη διάρκεια της υπηρεσίας του.
+</p>
+</li>
+</ul>
+ -->
+<h2 id="8-πρακτικά-βήματα">8. Πρακτικά βήματα</h2>
+<ul>
+<li><p>Έλεγχος στον e-ΕΦΚΑ (Ατομικός Λογαριασμός Ασφάλισης) για επιβεβαίωση του συνολικού χρόνου ασφάλισης στον αντίστοιχο Τομέα Πρόνοιας/Εφάπαξ.</p></li>
+ 
+<li><p>Προσδιορισμός του πόσα από τα συνολικά έτη ασφάλισης έχουν διανυθεί πριν και πόσα μετά την 1/1/2014, καθώς αυτό επηρεάζει σημαντικά το τελικό ποσό.</p></li>
+<li><p>Για ασφαλισμένους πρώην ΤΣΜΕΔΕ: επιβεβαίωση του τρόπου υπολογισμού των παλαιότερων αποδοχών τους (τεκμαρτός μισθός ανά κλάση ή πραγματικό εισόδημα).</p></li>
+<li><p>Αίτημα ενημέρωσης/εκτίμησης από τις αρμόδιες υπηρεσίες του e-ΕΦΚΑ πριν την οριστική αίτηση συνταξιοδότησης, ώστε να υπάρχει εικόνα του αναμενόμενου ποσού.</p></li>
+</ul>
+<h2 id="9-συμπέρασμα">9. Συμπέρασμα</h2>
+<p>Το εφάπαξ βοήθημα είναι μια εφάπαξ, όχι μηνιαία, παροχή που καταβάλλεται κατά την οριστική συνταξιοδότηση, 
+εφόσον έχει συμπληρωθεί ένας ελάχιστος χρόνος ασφάλισης στον αντίστοιχο κλάδο πρόνοιας. 
+Μόνιμοι υπάλληλοι Δημοσίου, υπάλληλοι ΙΔΑΧ, προσωπικό ΝΠΔΔ και ασφαλισμένοι πρώην ΤΣΜΕΔΕ 
+ακολουθούν κατ' αρχήν τους ίδιους γενικούς κανόνες θεμελίωσης και το ίδιο «διπλό μοντέλο» υπολογισμού (παλιό σύστημα έως το 2013, 
+ατομική μερίδα από το 2014 και μετά). 
+Η   βασική ιδιαιτερότητα αφορά τους μηχανικούς πρώην ΤΣΜΕΔΕ, για τους οποίους μέρος του παλαιότερου χρόνου μπορεί να έχει υπολογιστεί βάσει τεκμαρτών αποδοχών. 
+Λόγω της πολυπλοκότητας και των συχνών αναθεωρήσεων του πλαισίου, συνιστάται πάντα εξατομικευμένος έλεγχος στον e-ΕΦΚΑ.</p>
+<h2 id="ενδεικτικές-πηγές">Ενδεικτικές πηγές</h2>
+<ul>
+<li><p>e-ΕΦΚΑ – Απονομή Εφάπαξ Παροχής (Πρόνοια) Δημοσίου Τομέα (e-efka.gov.gr)</p></li>
+<li><p>ν. 3865/2010 – Μεταρρύθμιση συνταξιοδοτικού συστήματος Δημοσίου</p></li>
+<li><p>ν. 4387/2016 και ν. 4670/2020 – Σύστημα ατομικών μερίδων και νοητής κεφαλαιοποίησης εφάπαξ</p></li>
+<!--
+<li><p>ΜΤΠΥ – Επίσημος ιστότοπος (mtpy.gr)</p></li>
+-->
+<li><p>Δημοσιεύματα οικονομικού Τύπου 2025-2026 σχετικά με το «διπλό μοντέλο» υπολογισμού εφάπαξ</p></li>
+</ul>
+
+  </div>
+  <div class="doc-pager"><button class="pager-btn pager-prev" data-goto="doc-1785434186650"><span class="pager-arrow">←</span><span><span class="pager-label">Προηγούμενο</span><span class="pager-title">Επικουρική Σύνταξη — Θεμελίωση &amp; Υπολογισμός</span></span></button><button class="pager-btn pager-next" data-goto="doc-1785434186672"><span><span class="pager-label">Επόμενο</span><span class="pager-title">ΤΕΚΑ — Ταμείο Επικουρικής Κεφαλαιοποιητικής Ασφάλισης</span></span><span class="pager-arrow">→</span></button></div>
+</section>
+
+<section class="doc-section" id="doc-1785434186672" data-title="ΤΕΚΑ — Ταμείο Επικουρικής Κεφαλαιοποιητικής Ασφάλισης" data-subtitle="Το νέο μοντέλο επικουρικής ασφάλισης — ενημερωτικό σημείωμα" data-category="Συντάξεις, Εφάπαξ &amp; Ασφάλιση" hidden>
+  <div class="doc-head">
+    <span class="doc-eyebrow">Συντάξεις, Εφάπαξ &amp; Ασφάλιση · Έγγραφο 4 από 9</span>
+    <h1 class="doc-title">ΤΕΚΑ — Ταμείο Επικουρικής Κεφαλαιοποιητικής Ασφάλισης</h1>
+    <p class="doc-subtitle">Το νέο μοντέλο επικουρικής ασφάλισης — ενημερωτικό σημείωμα</p>
+  </div>
+  <nav class="mini-nav" aria-label="Ενότητες εγγράφου"><span class="mini-nav-label">Σε αυτή τη σελίδα</span><a href="#1-τι-είναι-το-τεκα" data-doc-anchor>1. Τι είναι το ΤΕΚΑ</a><a href="#2-ποιοι-ασφαλισμένοι-εντάσσονται-στο-τεκα" data-doc-anchor>2. Ποιοι ασφαλισμένοι εντάσσονται στο ΤΕΚΑ</a><a href="#3-εισφορές-στο-τεκα" data-doc-anchor>3. Εισφορές στο ΤΕΚΑ</a><a href="#4-παροχές" data-doc-anchor>4. Παροχές</a><a href="#5-ατομικοί-λογαριασμοί-κουμπαράδες" data-doc-anchor>5. Ατομικοί Λογαριασμοί («κουμπαράδες»)</a><a href="#6-χαρακτηριστικά-επενδύσεων" data-doc-anchor>6. Χαρακτηριστικά επενδύσεων</a><a href="#7-εγγυήσεις" data-doc-anchor>7. Εγγυήσεις</a></nav>
+  <div class="doc-body">
+    <p>Από το Γραφείο Τύπου του Υπουργείου Εργασίας και Κοινωνικών Υποθέσεων εκδόθηκε η ακόλουθη ανακοίνωση:</p>
+<p>Ενεργοποιήθηκε το νέο μοντέλο για την επικουρική ασφάλιση των νέων, καθώς από <strong>1<sup>η</sup> Ιανουαρίου 2022 ξεκίνησε να λειτουργεί το νέο Ταμείο Επικουρικής Κεφαλαιοποιητικής Ασφάλισης (ΤΕΚΑ)</strong> και υποδέχεται τους νέους που μπαίνουν στην αγορά εργασίας για πρώτη φορά από 1.1.2022 ως εργαζόμενοι με υποχρέωση υπαγωγής στην επικουρική ασφάλιση. Από 1.1.2023, όλοι οι υπόλοιποι ασφαλισμένοι κάτω των 35 ετών θα μπορούν προαιρετικά να ενταχθούν στο ΤΕΚΑ.</p>
+<p>Το ΤΕΚΑ είναι το Ταμείο που θα διαχειρίζεται τους προσωπικούς ατομικούς λογαριασμούς των νέων ασφαλισμένων («ατομικοί κουμπαράδες») και είναι ο φορέας υλοποίησης των προβλέψεων του νόμου «Ασφαλιστική Μεταρρύθμιση για τη Νέα Γενιά» (Ν. 4826/2021) που ψηφίστηκε τον περασμένο Σεπτέμβριο. Κεντρικός πυλώνας του νέου μοντέλου είναι η εισαγωγή των <strong>«ατομικών κουμπαράδων» για τις επικουρικές συντάξεις των νεοεισερχόμενων στην αγορά εργασίας</strong>, καθώς και όσων νέων μέχρι 35 ετών το επιλέξουν. Με αυτή την αλλαγή οι νέοι αποκτούν μεγαλύτερο έλεγχο πάνω στην επικουρική τους σύνταξη. Αντί οι νέοι άνθρωποι να δίνουν τα χρήματά τους σε ένα γενικό «κορβανά», θα τα επενδύουν σε προσωπική βάση, επιλέγοντας οι ίδιοι μεταξύ τριών επενδυτικών προφίλ.</p>
+<p>Με τη μεταρρύθμιση αυτή, η Ελλάδα υιοθετεί το μοντέλο που εφαρμόζεται εδώ και πολλά χρόνια σε προηγμένες ευρωπαϊκές χώρες, το οποίο -μεταξύ άλλων- περιορίζει τους κινδύνους που προκαλεί στο σύστημα κοινωνικής ασφάλισης το δημογραφικό πρόβλημα. Η εμπειρία των χωρών αυτών (Δανία, Σουηδία, Ολλανδία, κλπ.) δείχνει ότι οι νέοι μπορούν να λάβουν επικουρική σύνταξη μεγαλύτερη σε σχέση με αυτή που λαμβάνουν σήμερα, μέσω της επαγγελματικής διαχείρισης των κεφαλαίων που θα επενδυθούν. Παράλληλα, το νέο σύστημα δημιουργεί κουλτούρα αποταμίευσης και έχει ξεκάθαρο αναπτυξιακό πρόσημο, αφού μέσω της συσσώρευσης των κεφαλαίων που θα διοχετευθούν στην ελληνική οικονομία θα ενισχυθεί η ανάπτυξη και η απασχόληση.</p>
+<p>Ο <strong>υπουργός Εργασίας και Κοινωνικών Υποθέσεων Κωστής Χατζηδάκης </strong>δήλωσε: «<em>Η έναρξη της λειτουργίας του νέου Ταμείου ΤΕΚΑ σηματοδοτεί την απαρχή της εφαρμογής μιας εκ των βασικών προεκλογικών μας δεσμεύσεων. Βάζουμε σε ευρωπαϊκή τροχιά την επικουρική ασφάλιση<strong>, </strong>εισάγοντας το κεφαλαιοποιητικό σύστημα ή σε απλά ελληνικά τον <strong>«ατομικό κουμπαρά»</strong> για αυτούς που μπαίνουν στην αγορά εργασίας για πρώτη φορά από 1<sup>η</sup> Ιανουαρίου 2022- και για όσους είναι μέχρι 35 ετών και αποφασίσουν να ενταχθούν στο νέο σύστημα από 1<sup>η</sup> Ιανουαρίου 2023. Η παρέμβαση αυτή αποκαθιστά την <strong>εμπιστοσύνη</strong> των νέων προς το ασφαλιστικό σύστημα, καθώς ο νέος ασφαλισμένος <strong>θα αποκτήσει σημαντικό έλεγχο πάνω στη σύνταξή του</strong> και στο τελικό της ύψος. Δεν θα αποφασίζουν άλλοι γι’ αυτόν, χωρίς αυτόν. Η ευρωπαϊκή εμπειρία την οποία ακολουθούμε δείχνει ότι το νέο μοντέλο θα οδηγήσει σε υψηλότερες επικουρικές συντάξεις από 43% έως 68% για τους νέους ασφαλισμένους».</em></p>
+<p>Ο <strong>υφυπουργός Εργασίας και Κοινωνικών Υποθέσεων Πάνος Τσακλόγλου</strong> δήλωσε:<em> «Με τη νέα χρονιά, τίθεται σε εφαρμογή η νέα επικουρική ασφάλιση κεφαλαιοποιητικού χαρακτήρα. Η σταδιακή μετατροπή της επικουρικής ασφάλισης από διανεμητική σε κεφαλαιοποιητική έρχεται να καλύψει τις ανάγκες της νέας γενιάς, που θα βγει στη σύνταξη μετά από μερικές δεκαετίες. Με την εισαγωγή της κεφαλαιοποιητικής επικουρικής ασφάλισης μειώνεται η έκθεση της κοινωνικής ασφάλισης στο δημογραφικό κίνδυνο, δημιουργούνται αποταμιεύσεις σημαντικό τμήμα των οποίων θα διατεθεί για χρηματοδότηση επενδύσεων στη χώρα μας δίνοντας ώθηση στην αναπτυξιακή δυναμική της ελληνικής οικονομίας, δημιουργούνται ισχυρά αντικίνητρα για ανασφάλιστη εργασία και τίθενται οι βάσεις για την παροχή σημαντικά υψηλότερων συντάξεων στη νέα γενιά, χωρίς να τίθενται σε κίνδυνο οι συντάξεις του υφιστάμενου συστήματος».</em></p>
+<p> </p>
+<p><strong>ΕΝΗΜΕΡΩΤΙΚΟ ΣΗΜΕΙΩΜΑ</strong></p>
+<h2 id="1-τι-είναι-το-τεκα">1. Τι είναι το ΤΕΚΑ</h2>
+<p>Το ΤΕΚΑ (Ταμείο Επικουρικής Κεφαλαιοποιητικής Ασφάλισης) είναι Νομικό Πρόσωπο Δημοσίου Δικαίου, εποπτευόμενο από το Υπουργείο Εργασίας και Κοινωνικών Υποθέσεων και διοικείται από επταμελή Προσωρινή Διοικούσα Επιτροπή μέχρι την ανάδειξη του πρώτου Δ.Σ. εντός του 2022. Οργανώνεται πάνω σε αρχές σύγχρονης διακυβέρνησης και διοίκησης, διαφάνεια, λογοδοσία, αξιοκρατική επιλογή της διοίκησης και των στελεχών του.</p>
+<h2 id="2-ποιοι-ασφαλισμένοι-εντάσσονται-στο-τεκα">2. Ποιοι ασφαλισμένοι εντάσσονται στο ΤΕΚΑ</h2>
+<p>Από <strong>1/1/2022</strong> όλοι όσοι μπαίνουν στην αγορά εργασίας για πρώτη φορά (ανεξαρτήτως ηλικίας), θα υπάγονται στο ΤΕΚΑ για την επικουρική ασφάλισή τους, εφόσον απασχολούνται σε κλάδο για τον οποίο υπάρχει υποχρεωτικότητα επικουρικής ασφάλισης. Αφορά, δηλαδή, <strong>μισθωτούς δημόσιου και ιδιωτικού τομέα, και αυτοαπασχολούμενους μηχανικούς και δικηγόρους</strong>.</p>
+<p>Από <strong>1/1/2023</strong> θα υπάρχει δυνατότητα να υπαχθούν προαιρετικά στην ασφάλιση του ΤΕΚΑ:</p>
+<ul>
+<li><p>Ασφαλισμένοι στον Κλάδο Επικουρικής Ασφάλισης του e-ΕΦΚΑ (πρώην ΕΤΕΑΕΠ) που έχουν γεννηθεί από 1/1/1987 και μετά και οι οποίοι επιθυμούν να μεταβούν από τον προαναφερόμενο Κλάδο στο ΤΕΚΑ. Η συγκεκριμένη κατηγορία ασφαλισμένων μπορεί να ασκήσει το δικαίωμά της για υπαγωγή στην ασφάλιση του ΤΕΚΑ μέχρι τις <strong>31.12.2023.</strong></p></li>
+<li><p>Εργαζόμενοι που απασχολούνται σε κλάδους για τους οποίους δεν υπάρχει υποχρέωση υπαγωγής στην επικουρική ασφάλιση (π.χ. ελεύθεροι επαγγελματίες, αγρότες, αυτοαπασχολούμενοι υγειονομικοί) και οι οποίοι διατηρούν το δικαίωμα ένταξης στο ΤΕΚΑ μέχρι να συμπληρώσουν το 35ο έτος της ηλικίας τους.</p></li>
+</ul>
+<h2 id="3-εισφορές-στο-τεκα">3. Εισφορές στο ΤΕΚΑ</h2>
+<p>Το ύψος των εισφορών δεν διαφοροποιείται από εκείνο του ισχύοντος συστήματος, διαμορφώνεται δηλαδή σε ποσοστό 3,25% για τον εργοδότη και 3,25% για τον εργαζόμενο μέχρι και τον Μάιο του 2022, και σε 3% για τον καθένα εφεξής.</p>
+<h2 id="4-παροχές">4. Παροχές</h2>
+<p>Προϋπόθεση θεμελίωσης δικαιώματος μηνιαίας επικουρικής σύνταξης είναι η έκδοση κύριας σύνταξης και η συμπλήρωση δεκαπέντε (15) ετών επικουρικής ασφάλισης<strong>. </strong>Σημαντική καινοτομία του νόμου 4826/2021 αποτελεί το γεγονός ότι,<strong> στις περιπτώσεις που δεν θεμελιώνεται δικαίωμα μηνιαίας επικουρικής σύνταξης οι καταβληθείσες εισφορές επιστρέφονται σε πραγματική αξία στον ασφαλισμένο κατά τη συμπλήρωση του γενικού ορίου ηλικίας συνταξιοδότησης,</strong> κάτι που δεν ισχύει σήμερα.</p>
+<p>Περαιτέρω, στο ΤΕΚΑ προβλέπεται <strong>κατώτατη επικουρική σύνταξη σε περίπτωση αναπηρίας ή θανάτου ενεργού ασφαλισμένου</strong>, κάτι που δεν ισχύει στο υφιστάμενο σύστημα επικουρικής ασφάλισης νοητής κεφαλαιοποίησης. Ειδικότερα, εάν το υπόλοιπο του ατομικού λογαριασμού του ασφαλισμένου υπολείπεται του ποσού των εισφορών ασφαλισμένου με δεκαπέντε (15) έτη ασφάλισης και αποδοχές ίσες με τον νομοθετημένο κατώτατο μισθό υπαλλήλου για πλήρη απασχόληση, ο Κρατικός Προϋπολογισμός καλύπτει τη διαφορά και στη συνέχεια υπολογίζεται το ποσό της σύνταξης του ασφαλισμένου ή των λοιπών δικαιοδόχων προσώπων.</p>
+<h2 id="5-ατομικοί-λογαριασμοί-κουμπαράδες">5. Ατομικοί Λογαριασμοί («κουμπαράδες»)</h2>
+<p>Κάθε ασφαλισμένος έχει τον δικό του ατομικό λογαριασμό, όπου σωρεύονται οι εισφορές επικουρικής ασφάλισης που καταβάλλει και στη συνέχεια επενδύονται σε συγκεκριμένα επενδυτικά χαρτοφυλάκια. Όταν φτάσει η ώρα της συνταξιοδότησης, η επικουρική σύνταξη του ασφαλισμένου υπολογίζεται στη βάση του σωρευμένου ποσού των εισφορών και των αποδόσεων στον ατομικό λογαριασμό του. Η διαχείριση των αποταμιεύσεων γίνεται από το ΤΕΚΑ με σύνεση, υπευθυνότητα, διαφάνεια και επαγγελματική επάρκεια.</p>
+<p>Ο ασφαλισμένος θα μπορεί να έχει πρόσβαση στον ατομικό λογαριασμό του μέσω site και εφαρμογής για κινητά τηλέφωνα καθώς και μέσω άλλων φορητών ηλεκτρονικών συσκευών εντός του 2022. Κατά το πρώτο εξάμηνο του 2022, θα καθοριστεί λεπτομερώς το περιεχόμενο, η διάρκεια και η διαδικασία τήρησης των ατομικών λογαριασμών. <strong>Η ιστοσελίδα του νέου Ταμείου – με όλες τις απαραίτητες πληροφορίες για τη λειτουργία του – θα λειτουργήσει στη διαδικτυακή διεύθυνση <a href="http://teka.gov.gr/">teka.gov.gr</a>. Επίσης, θα λειτουργήσει και η εφαρμογή <a href="http://myteka.gov.gr/">myteka.gov.gr</a></strong>, μέσω της οποίας θα γίνεται πρόσβαση των ασφαλισμένων στους ατομικούς τους λογαριασμούς.</p>
+<h2 id="6-χαρακτηριστικά-επενδύσεων">6. Χαρακτηριστικά επενδύσεων</h2>
+<p>Στους ασφαλισμένους του ΤΕΚΑ θα προσφέρεται ένα βασικό συνταξιοδοτικό-επενδυτικό προϊόν (default) με δομή κύκλου ζωής που θα συνδυάζει το κατάλληλο μείγμα κινδύνου, απόδοσης και ασφάλειας για όλη τη διάρκεια του εργασιακού βίου ενός τυπικού ασφαλισμένου χωρίς ο ίδιος να χρειάζεται να ασχοληθεί περισσότερο με τη διαχείριση των εισφορών του. Στους ασφαλισμένους θα προσφέρονται και άλλα συνταξιοδοτικό-επενδυτικά προϊόντα, επίσης με δομή κύκλου ζωής αλλά με διαφορετικό προφίλ ρίσκου, για αυτούς που θέλουν μόνοι τους να επιλέξουν τη διαβάθμιση του ρίσκου που επιθυμούν να αναλάβουν. Ο ασφαλισμένος θα κατατάσσεται αυτομάτως στο default χαρτοφυλάκιο και θα μπορεί μέσω ηλεκτρονικής πλατφόρμας να επιλέξει διαφορετικό χαρτοφυλάκιο ή συνδυασμό χαρτοφυλακίων. Εάν το επιθυμεί, ο ασφαλισμένος θα έχει τη δυνατότητα να μεταβάλει το χαρτοφυλάκιό του κάθε τρία χρόνια. Σε κάθε περίπτωση, η σύσταση του ΤΕΚΑ προς τους ασφαλισμένους θα είναι να εμπιστευτούν τους επαγγελματίες διαχειριστές του Ταμείου και να παραμείνουν στο default χαρτοφυλάκιο, καθ’ όλη τη διάρκεια του εργασιακού τους βίου.</p>
+<h2 id="7-εγγυήσεις">7. Εγγυήσεις</h2>
+<p>Στο ΤΕΚΑ ενισχύεται η προστατευτική λειτουργία του συστήματος έναντι των ασφαλισμένων. Πέραν της επιστροφής των εισφορών σε πραγματικές τιμές σε περίπτωση μη συμπλήρωσης δεκαπενταετούς ασφάλισης και της παροχής κατώτατης σύνταξης σε περίπτωση αναπηρίας ή θανάτου που αναφέρθηκαν προηγουμένως, <strong>το Κράτος εγγυάται μη αρνητικές αποδόσεις στους συνταξιούχους του νέου συστήματος</strong>. Αυτό επιτυγχάνεται χάρη στη ρητή πρόβλεψη ότι <strong>το Κράτος εγγυάται την καταβολή ελάχιστης ανταποδοτικής μηνιαίας επικουρικής σύνταξης, η οποία υπολογίζεται στη βάση του ύψους της πραγματικής αξίας των εισφορών που κατέβαλαν οι ασφαλισμένοι.</strong> Κατά συνέπεια, απονέμεται στους ασφαλισμένους επικουρική σύνταξη τουλάχιστον ίση με αυτή που αντιστοιχεί στις εισφορές τις οποίες κατέβαλαν, λαμβανομένου υπόψη και του πληθωρισμού. Ταυτόχρονα, <strong>το Κράτος εγγυάται ότι οι επικουρικές συντάξεις του «παλαιού» συστήματος θα εξακολουθήσουν να υπολογίζονται με βάση τους υφιστάμενους κανόνες χωρίς να υπάρξει καμία απολύτως περικοπή.</strong></p>
+
+  </div>
+  <div class="doc-pager"><button class="pager-btn pager-prev" data-goto="doc-1785434186657"><span class="pager-arrow">←</span><span><span class="pager-label">Προηγούμενο</span><span class="pager-title">Εφάπαξ Βοήθημα — Θεμελίωση &amp; Υπολογισμός</span></span></button><button class="pager-btn pager-next" data-goto="doc-1785434186684"><span><span class="pager-label">Επόμενο</span><span class="pager-title">ΑΠΔ Δημοσίου, ΤΕΚΑ, ΕΔΟΕΑΠ, Μαθητεία &amp; Ωφελούμενοι</span></span><span class="pager-arrow">→</span></button></div>
+</section>
+
+<section class="doc-section" id="doc-1785434186684" data-title="ΑΠΔ Δημοσίου, ΤΕΚΑ, ΕΔΟΕΑΠ, Μαθητεία &amp; Ωφελούμενοι" data-subtitle="" data-category="Συντάξεις, Εφάπαξ &amp; Ασφάλιση" hidden>
+  <div class="doc-head">
+    <span class="doc-eyebrow">Συντάξεις, Εφάπαξ &amp; Ασφάλιση · Έγγραφο 5 από 9</span>
+    <h1 class="doc-title">ΑΠΔ Δημοσίου, ΤΕΚΑ, ΕΔΟΕΑΠ, Μαθητεία &amp; Ωφελούμενοι</h1>
+    
+  </div>
+  <nav class="mini-nav" aria-label="Ενότητες εγγράφου"><span class="mini-nav-label">Σε αυτή τη σελίδα</span><a href="#1-τα-βασικά-τι-είναι-η-απδ-και-ποιους-αφορά" data-doc-anchor>1. Τα βασικά: τι είναι η ΑΠΔ και ποιους αφορά</a><a href="#2-πλήρης-κατάλογος-εγκυκλίων-e-εφκα-τεκα-απδ-δημοσίου-ιδαχιδ" data-doc-anchor>2. Πλήρης κατάλογος εγκυκλίων e-ΕΦΚΑ / ΤΕΚΑ (ΑΠΔ Δημοσίου, ΙΔΑΧ/ΙΔΟΧ, ΤΕΚΑ)</a><a href="#3-πλήρης-κατάλογος-εγκυκλίων-εδοεαπ" data-doc-anchor>3. Πλήρης κατάλογος εγκυκλίων ΕΔΟΕΑΠ</a><a href="#4-τι-είναι-η-ακα-και-η-ακε" data-doc-anchor>4. Τι είναι η ΑΚΑ και η ΑΚΕ</a><a href="#5-πίνακας-καδ-κωδικός-ειδικότητας-κπκ-ποσοστά-για-απδ-δημοσί" data-doc-anchor>5. Πίνακας: ΚΑΔ – Κωδικός Ειδικότητας – ΚΠΚ – Ποσοστά για ΑΠΔ Δημοσίου ΙΔΑΧ (κύρια ασφάλιση, e-ΕΦΚΑ)</a><a href="#6-μαθητεία-τι-ισχύει-στην-πράξη" data-doc-anchor>6. Μαθητεία — τι ισχύει στην πράξη</a><a href="#7-ωφελούμενοι-προγραμμάτων-οαεδδυπα-πχ-κοινωφελής-εργασία-σε" data-doc-anchor>7. Ωφελούμενοι Προγραμμάτων ΟΑΕΔ/ΔΥΠΑ (π.χ. Κοινωφελής Εργασία σε Δήμους) — τι ισχύει</a><a href="#8-η-στρατηγική-σε-βήματα" data-doc-anchor>8. Η «στρατηγική» σε βήματα</a><a href="#9-πηγές" data-doc-anchor>9. Πηγές</a></nav>
+  <div class="doc-body">
+    
+<p><em>Οδηγός για αρχάριους — σαν να εξηγεί ένας έμπειρος οικονομικός σύμβουλος τη «στρατηγική» σε κάποιον που ξεκινάει από το μηδέν.</em></p>
+<h2 id="1-τα-βασικά-τι-είναι-η-απδ-και-ποιους-αφορά">1. Τα βασικά: τι είναι η ΑΠΔ και ποιους αφορά</h2>
+<p>Η <strong>Αναλυτική Περιοδική Δήλωση (ΑΠΔ)</strong> είναι το μηνιαίο «δελτίο αναφοράς» που κάθε εργοδότης (άρα και το Δημόσιο, οι Δήμοι, τα ΝΠΔΔ) στέλνει στον <strong>e-ΕΦΚΑ</strong>, καταγράφοντας ποιος εργάστηκε, πόσο αμείφθηκε και σε ποιους ασφαλιστικούς κλάδους έγιναν κρατήσεις.</p>
+<ul>
+<li><strong>ΙΔΑΧ</strong> = Ιδιωτικού Δικαίου <strong>Αορίστου</strong> Χρόνου</li>
+<li><strong>ΙΔΟΧ</strong> = Ιδιωτικού Δικαίου <strong>Ορισμένου</strong> Χρόνου</li>
+</ul>
+<p><strong>Ειδική περίπτωση — ΙΔΑΧ + ΕΔΟΕΑΠ:</strong> Ορισμένοι ΙΔΑΧ Δημοσίου (π.χ. προσωπικό Τύπου σε ΕΡΤ, ΑΠΕ-ΜΠΕ) υπάγονται για επικουρική/πρόνοια στον <strong>ΕΔΟΕΑΠ</strong> αντί για το ΤΕΚΑ.</p>
+<h2 id="2-πλήρης-κατάλογος-εγκυκλίων-e-εφκα-τεκα-απδ-δημοσίου-ιδαχιδ">2. Πλήρης κατάλογος εγκυκλίων e-ΕΦΚΑ / ΤΕΚΑ (ΑΠΔ Δημοσίου, ΙΔΑΧ/ΙΔΟΧ, ΤΕΚΑ)</h2>
+<p>🔗 <strong>Επίσημοι κατάλογοι:</strong> - e-ΕΦΚΑ — Εγκύκλιοι και Γενικά Έγγραφα: https://www.e-efka.gov.gr/el/egkyklioi-kai-genika-eggrapha - ΤΕΚΑ — Εγκύκλιοι και Γενικά Έγγραφα: https://teka.gov.gr/egkyklioi-kai-genika-eggrafa-0 - ΤΕΚΑ — Ενημέρωση/Ανακοινώσεις: https://teka.gov.gr/enimerosi - Διαύγεια (αναζήτηση πλήρους κειμένου ανά ΑΔΑ): https://diavgeia.gov.gr</p>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+</colgroup>
+<thead>
+<tr class="header">
+<th>Εγκύκλιος</th>
+<th>Θέμα</th>
+<th>Πηγή/Link</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>10/2020</strong></td>
+<td>Υπαγωγή υπαλλήλων και λειτουργών του Δημοσίου στον e-ΕΦΚΑ και απεικόνιση της ασφάλισής τους στην ΑΠΔ</td>
+<td>e-efka.gov.gr/el/egkyklioi-kai-genika-eggrapha</td>
+</tr>
+<tr class="even">
+<td><strong>5/2022</strong></td>
+<td>Υποβολή ΑΠΔ και απεικόνιση της υποχρεωτικής ασφάλισης επικουρικού κλάδου των νεοεισερχόμενων από 01/01/2022 που υπάγονται στο ΤΕΚΑ</td>
+<td>https://teka.gov.gr/enimerosi/egkyklios-52022-ypoboli-apd-kai-apeikonisi-tis-ypohreotikis-asfalisis-epikoyrikoy-kladoy</td>
+</tr>
+<tr class="odd">
+<td><strong>7/2022</strong></td>
+<td>Οδηγίες απεικόνισης επικουρικής ασφάλισης τακτικών/μετακλητών υπαλλήλων Δημοσίου, ΝΠΔΔ, ΟΤΑ στη διακριτή ΑΠΔ ΤΕΚΑ· ανάλυση συνδυασμών ΚΑΔ-Κωδικών Ειδικότητας-ΚΠΚ και ποσοστά ασφαλίστρων ανά κατηγορία</td>
+<td>https://teka.gov.gr/sites/default/files/inline-files/egk.7_2022.pdf</td>
+</tr>
+<tr class="even">
+<td><strong>20/2022</strong></td>
+<td>Οδηγίες για την απεικόνιση κύριας και επικουρικής ασφάλισης συμμετεχόντων σε προγράμματα μαθητείας (ΕΣΚ, ΕΠΑΣ ΔΥΠΑ, ΙΕΚ, Μεταλυκειακό Έτος)</td>
+<td>https://teka.gov.gr/enimerosi/egkyklios-202022-apeikonisi-asfalisis-symmetehonton-se-programmata-mathiteias</td>
+</tr>
+<tr class="odd">
+<td><strong>34/2022</strong></td>
+<td>Συμπληρωματικές οδηγίες εφαρμογής ΤΕΚΑ, ειδικές περιπτώσεις ασφάλισης Δημοσίου</td>
+<td>teka.gov.gr/egkyklioi-kai-genika-eggrafa-0</td>
+</tr>
+<tr class="even">
+<td><strong>40/2022</strong></td>
+<td>Απεικόνιση αμοιβών Μελών Διοικητικού Συμβουλίου Α.Ε./Αγροτικών Συνεταιρισμών, με νέο κωδικό ειδικότητας 001071 (και αντίστοιχο για ΤΕΚΑ)</td>
+<td>e-efka.gov.gr</td>
+</tr>
+<tr class="odd">
+<td><strong>10/2023, 17/2023</strong></td>
+<td>Αναπροσαρμογή ποσών ασφαλιστικών κατηγοριών επικουρικής/εφάπαξ, πλαφόν</td>
+<td>e-efka.gov.gr</td>
+</tr>
+<tr class="even">
+<td><strong>11/2024</strong></td>
+<td>Ενημέρωση/διορθώσεις κωδικοποίησης ΤΕΚΑ και εφάπαξ Δημοσίου</td>
+<td>e-efka.gov.gr</td>
+</tr>
+<tr class="odd">
+<td><strong>38/2024</strong></td>
+<td>Μείωση ασφαλιστικών εισφορών κλάδου υγειονομικής περίθαλψης, πίνακες ΚΠΚ από 01.01.2025</td>
+<td>e-efka.gov.gr</td>
+</tr>
+<tr class="even">
+<td><strong>4/2025</strong></td>
+<td>Αναπροσαρμογή από 01.01.2025 πλαφόν, ποσών ασφαλιστικών κατηγοριών επικουρικής e-ΕΦΚΑ/ΤΕΚΑ εμμίσθων δικηγόρων/μηχανικών, ποσών εφάπαξ παροχών</td>
+<td>https://teka.gov.gr/en/circulars-and-general-directives</td>
+</tr>
+<tr class="odd">
+<td><strong>5/2025, 6/2025</strong></td>
+<td>Αναπροσαρμογή πλαφόν/ποσών ειδικών κατηγοριών Δημοσίου, Ειδική Παροχή Προστασίας Μητρότητας</td>
+<td>e-efka.gov.gr</td>
+</tr>
+<tr class="even">
+<td><strong>Εγκύκλιος Εφάπαξ/Πρόνοιας 2026</strong></td>
+<td>Απεικόνιση, από 01/01/2017, στην ΑΠΔ e-ΕΦΚΑ της ασφάλισης στον Κλάδο Εφάπαξ Παροχών (Πρόνοιας) του τ. Ταμείου Πρόνοιας Δημοσίων Υπαλλήλων για ΙΔΑΧ Δημοσίου/ΝΠΔΔ</td>
+<td>https://www.e-efka.gov.gr/el/egkyklioi-kai-genika-eggrapha</td>
+</tr>
+<tr class="odd">
+<td><strong>4/2026</strong></td>
+<td>Αναπροσαρμογή από 01.01.2026 πλαφόν, ποσών επικουρικής e-ΕΦΚΑ/ΤΕΚΑ, εφάπαξ, Πόρου υπέρ e-ΕΦΚΑ</td>
+<td>e-efka.gov.gr</td>
+</tr>
+<tr class="even">
+<td><strong>5/2026</strong></td>
+<td>Αναπροσαρμογή πλαφόν/ποσών εφάπαξ-επικουρικής εμμίσθων δικηγόρων, μηχανικών, υγειονομικών Δημοσίου</td>
+<td>e-efka.gov.gr</td>
+</tr>
+<tr class="odd">
+<td><strong>11/2026</strong></td>
+<td>Ασφάλιση στον e-ΕΦΚΑ προσώπων που παρέχουν κοινωφελή εργασία, για τον κίνδυνο ατυχήματος (άρθρο 31 Ν.4596/2019 — ποινική κοινωφελής εργασία, διαφορετική από ΚΟΧ ΟΑΕΔ)</td>
+<td>https://www.taxheaven.gr/circulars/52468/egkyklios-e-efka-11-2026</td>
+</tr>
+</tbody>
+</table>
+<p>💡 Οι εγκύκλιοι <strong>10/2020</strong>, <strong>7/2022</strong> και <strong>20/2022</strong> είναι οι τρεις πυλώνες που πρέπει να ξέρει κάθε αρχάριος για ΙΔΑΧ/ΙΔΟΧ Δημοσίου: κύρια ασφάλιση, επικουρική ΤΕΚΑ τακτικού προσωπικού, και επικουρική ΤΕΚΑ μαθητευόμενων.</p>
+<h2 id="3-πλήρης-κατάλογος-εγκυκλίων-εδοεαπ">3. Πλήρης κατάλογος εγκυκλίων ΕΔΟΕΑΠ</h2>
+<p>🔗 <strong>Επίσημοι κατάλογοι:</strong> - ΕΔΟΕΑΠ — Όλες οι Εγκύκλιοι: https://www.edoeap.gr/category/%CF%8C%CE%BB%CE%B5%CF%82-%CE%BF%CE%B9-%CE%B5%CE%B3%CE%BA%CF%8D%CE%BA%CE%BB%CE%B9%CE%BF%CE%B9/ - ΕΔΟΕΑΠ — Εγκύκλιοι ΑΚΑ-ΑΚΕ: https://www.edoeap.gr/category/%CE%B5%CE%B3%CE%BA%CF%8D%CE%BA%CE%BB%CE%B9%CE%BF%CE%B9-%CE%B1%CE%BA%CE%B1-%CE%B1%CE%BA%CE%B5/</p>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+</colgroup>
+<thead>
+<tr class="header">
+<th>Εγκύκλιος</th>
+<th>Θέμα</th>
+<th>Πηγή/Link</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Ανακοίνωση Ιαν. 2018</strong></td>
+<td>Υποβολή κατάστασης εισφορών Δεκεμβρίου 2017 με ποσοστό 15,10% (7,05% ασφαλισμένου + 8,05% εργοδότη)</td>
+<td>edoeap.gr/2018/01/εγκύκλιος-ανακοίνωση</td>
+</tr>
+<tr class="even">
+<td><strong>4/2018</strong></td>
+<td>Απογραφή εργοδοτών ΕΔΟΕΑΠ</td>
+<td>edoeap.gr</td>
+</tr>
+<tr class="odd">
+<td><strong>5/2018</strong></td>
+<td>Υπαγωγή στην ασφάλιση ΕΔΟΕΑΠ (άρθρα 20, 21, 24 Ν.4498/2017) και απεικόνιση στην ΑΚΑ/ΑΚΕ — θεμελιώδης εγκύκλιος</td>
+<td>https://www.edoeap.gr/wp-content/uploads/2018/05/ΕΓΚΥΚΛΙΟΣ-5-2018</td>
+</tr>
+<tr class="even">
+<td><strong>6/2018</strong></td>
+<td>Ηλεκτρονική εφαρμογή υποβολής ΑΚΑ-ΑΚΕ στον ΕΔΟΕΑΠ</td>
+<td>https://www.edoeap.gr/2018/05/εγκύκλιος-νο-6-2018</td>
+</tr>
+<tr class="odd">
+<td><strong>7/2018</strong></td>
+<td>Υπαγωγή στην ασφάλιση ΤΕΑΣ/ΕΤΑΣ και απεικόνιση στην ΑΚΑ/ΑΚΕ</td>
+<td>https://www.edoeap.gr/2018/05/εγκυκλιος-7-2018</td>
+</tr>
+<tr class="even">
+<td><strong>8/2018</strong></td>
+<td>Παράλληλη ασφάλιση, νέοι κωδικοί ειδικότητας 990013/990014, ΚΠΚ 9993/9994</td>
+<td>https://www.edoeap.gr/2018/07/εγκύκλιος-νο-8-2018</td>
+</tr>
+<tr class="odd">
+<td><strong>10/2018</strong></td>
+<td>Κατασκηνωτικό επίδομα (παροχή)</td>
+<td>edoeap.gr</td>
+</tr>
+<tr class="even">
+<td><strong>11/2018</strong></td>
+<td>Ειδική εισφορά 2% επί αμοιβών διαφήμισης/προβολής μέσω διαδικτύου</td>
+<td>https://www.edoeap.gr/2018/07/εγκύκλιος-11-2018</td>
+</tr>
+<tr class="odd">
+<td><strong>1/2019</strong></td>
+<td>Ενημέρωση υπόχρεων ιδιοκτητών ΜΜΕ χωρίς προσωπικό — «ΑΚΕ χωρίς ΑΚΑ»</td>
+<td>edoeap.gr — Εγκύκλιοι ΑΚΑ-ΑΚΕ</td>
+</tr>
+<tr class="even">
+<td><strong>2/2019</strong></td>
+<td>Διευκρινίσεις υποβολής ΑΚΑ/ΑΚΕ</td>
+<td>edoeap.gr</td>
+</tr>
+<tr class="odd">
+<td><strong>1/2022</strong></td>
+<td>Αναπροσαρμογή ποσών/ποσοστών ΕΔΟΕΑΠ 2022</td>
+<td>edoeap.gr</td>
+</tr>
+<tr class="even">
+<td><strong>2/2022</strong></td>
+<td>Αλλαγή ποσοστού μηνιαίας εισφοράς επικουρικής ασφάλισης από 1/1/2023 για ασφαλισμένους σε ΕΤΑΣ και ΤΕΑΣ</td>
+<td>edoeap.gr — Εγκύκλιοι ΑΚΑ-ΑΚΕ</td>
+</tr>
+</tbody>
+</table>
+<h2 id="4-τι-είναι-η-ακα-και-η-ακε">4. Τι είναι η ΑΚΑ και η ΑΚΕ</h2>
+<ul>
+<li><strong>ΑΚΑ (Αναλυτική Κατάσταση Αποδοχών):</strong> αφορά στην ασφάλιση των εργαζομένων — αποδοχές και εισφορές ασφαλισμένου και εργοδότη· το αντίστοιχο της ΑΠΔ, ειδικά για τον ΕΔΟΕΑΠ.</li>
+<li><strong>ΑΚΕ (Αναλυτική Κατάσταση Εσόδων):</strong> δήλωση εργοδοτικής εισφοράς 2% επί ετήσιου κύκλου εργασιών από δραστηριότητα ΜΜΕ.</li>
+</ul>
+<p>Υποβάλλονται ηλεκτρονικά, με τους ίδιους όρους με την ΑΠΔ στον ΕΦΚΑ, μέσω apps.ika.gr/EDOEAPeAPD.</p>
+<h2 id="5-πίνακας-καδ-κωδικός-ειδικότητας-κπκ-ποσοστά-για-απδ-δημοσί">5. Πίνακας: ΚΑΔ – Κωδικός Ειδικότητας – ΚΠΚ – Ποσοστά για ΑΠΔ Δημοσίου ΙΔΑΧ (κύρια ασφάλιση, e-ΕΦΚΑ)</h2>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 16%"/>
+<col style="width: 16%"/>
+<col style="width: 16%"/>
+<col style="width: 16%"/>
+<col style="width: 16%"/>
+<col style="width: 16%"/>
+</colgroup>
+<thead>
+<tr class="header">
+<th>ΚΑΔ</th>
+<th>Κωδικός Ειδικότητας</th>
+<th>ΚΠΚ</th>
+<th>Περιγραφή</th>
+<th>Ασφ/νος</th>
+<th>Εργοδότης</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>0062</strong> <em>(ενδεικτικό, ανά φορέα)</em></td>
+<td>000494</td>
+<td><strong>986</strong></td>
+<td>ΠΕ Μηχανικός Δημοσίου/ΟΤΑ, κύρια σύνταξη + υγεία</td>
+<td>~6,67%</td>
+<td>~13,33%</td>
+</tr>
+<tr class="even">
+<td>Φορέας ανά ΝΠΔΔ/ΟΤΑ</td>
+<td>331000</td>
+<td><strong>101</strong></td>
+<td>ΔΕ κατηγορία (π.χ. Βοηθός βρεφοκόμος), τυπικό ΚΠΚ Δημοσίου</td>
+<td>~6,67%</td>
+<td>~13,33%</td>
+</tr>
+<tr class="odd">
+<td>Δήμος/ΝΠΔΔ</td>
+<td>ανά ειδικότητα ΥΕ/ΔΕ/ΤΕ/ΠΕ</td>
+<td><strong>101</strong> έως <strong>135</strong> (ανάλογα κλάδο)</td>
+<td>Τυπικά ΚΠΚ Δημοσίου ΙΔΑΧ/ΙΔΟΧ — κύρια σύνταξη e-ΕΦΚΑ, υγειονομική περίθαλψη</td>
+<td>~6,67%</td>
+<td>~13,33-15%</td>
+</tr>
+</tbody>
+</table>
+<p>⚠️ <strong>Σημαντική διευκρίνιση:</strong> Τα ΚΠΚ <strong>101, 986, 435</strong> κ.λπ. δεν είναι «ενιαία» — αλλάζουν ανά <strong>ΚΑΔ φορέα</strong>, ειδικότητα, καθεστώς ασφάλισης (πλήρης/μερική, βαρέα, ειδικό μισθολόγιο). Ο ακριβής συνδυασμός για κάθε φορέα Δημοσίου βρίσκεται στον <strong>Οδηγό Σύνδεσης Κωδικών (Ο.ΣΥ.Κ.)</strong> του e-ΕΦΚΑ, επικαιροποιημένο με τις εγκυκλίους 31/2020, 8/2021, 1/2023 και 7/2023.</p>
+<h3 id="πίνακας-τεκα-δημοσίου-ιδαχ-επικουρική-ασφάλιση">Πίνακας: ΤΕΚΑ Δημοσίου ΙΔΑΧ (επικουρική ασφάλιση)</h3>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 14%"/>
+<col style="width: 14%"/>
+<col style="width: 14%"/>
+<col style="width: 14%"/>
+<col style="width: 14%"/>
+<col style="width: 14%"/>
+<col style="width: 14%"/>
+</colgroup>
+<thead>
+<tr class="header">
+<th>ΚΑΔ</th>
+<th>Κωδικός Ειδικότητας</th>
+<th>ΚΠΚ</th>
+<th>Περιγραφή</th>
+<th>Ασφ/νος</th>
+<th>Εργοδότης</th>
+<th>Σύνολο</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>0083</strong></td>
+<td><strong>000725</strong></td>
+<td><em>(αντίστοιχο ΚΠΚ ανά κατηγορία)</em></td>
+<td>Επικουρική Ασφάλιση ΤΕΚΑ Υπαλλήλων Δημοσίου-ΝΠΔΔ-ΟΤΑ (ΝΕΟΙ) — Εξαίρεση Κλάδου Σύνταξης</td>
+<td>3%</td>
+<td>3%</td>
+<td>6%</td>
+</tr>
+<tr class="even">
+<td><strong>0083</strong></td>
+<td><strong>000717</strong></td>
+<td><em>(αντίστοιχο)</em></td>
+<td>Επικουρική Ασφάλιση ΤΕΚΑ προσωπικού ειδικοτήτων άρθρου 36 Ν.1694/1987 - ΚΒΑΕ, εξαίρεση κλάδου σύνταξης</td>
+<td>3%</td>
+<td>3%</td>
+<td>6%</td>
+</tr>
+<tr class="odd">
+<td><strong>0083</strong></td>
+<td><strong>000707</strong></td>
+<td><strong>4161</strong></td>
+<td>Επικουρική ΤΕΚΑ προσωπικού σε πρόγραμμα κοινωφελούς χαρακτήρα ΟΑΕΔ/ΔΥΠΑ (ωφελούμενοι)</td>
+<td>3%</td>
+<td>3%</td>
+<td>6%</td>
+</tr>
+<tr class="even">
+<td><strong>0083</strong></td>
+<td><strong>000744</strong></td>
+<td><strong>1218</strong></td>
+<td>Ασφαλισμένοι ΤΕΚΑ — Σπουδαστές σε προγράμματα μαθητείας</td>
+<td>0%</td>
+<td>6,50% <em>(από 1/1/2022 έως 31/5/2022)</em> → <strong>6,00%</strong> <em>(από 1/6/2022)</em></td>
+<td>6%</td>
+</tr>
+<tr class="odd">
+<td><strong>0083</strong></td>
+<td><strong>000745</strong></td>
+<td><strong>1219</strong></td>
+<td>Ασφαλισμένοι ΤΕΚΑ — Σπουδαστές σε προγράμματα μαθητείας — ΒΑΡΕΑ</td>
+<td>0%</td>
+<td>6,00% + 2,00% (βαρέα)</td>
+<td><strong>8,00%</strong> <em>(από 1/6/2022)</em></td>
+</tr>
+</tbody>
+</table>
+<h2 id="6-μαθητεία-τι-ισχύει-στην-πράξη">6. Μαθητεία — τι ισχύει στην πράξη</h2>
+<ul>
+<li>Νέος ΚΑΔ «0083» (ΤΕΚΑ) και δύο νέοι Κωδικοί Ειδικότητας: 000744 (μαθητεία) και 000745 (μαθητεία-βαρέα).</li>
+<li>Στην ΑΠΔ e-ΕΦΔΑ Κοινών Επιχειρήσεων, χρησιμοποιείται ο κωδικός Ειδικής Περίπτωσης Ασφάλισης «9» — Εξαιρούμενοι από ΙΚΑ-ΕΤΕΑΕΠ λόγω υπαγωγής στην επικουρική άλλου φορέα (ΤΕΚΑ)· η επικουρική πάει <strong>αποκλειστικά</strong> στη διακριτή ΑΠΔ ΤΕΚΑ.</li>
+<li>Η εισφορά ΤΕΚΑ μαθητείας βαρύνει αποκλειστικά τον εργοδότη (0% ασφαλισμένος) — ο μαθητευόμενος <strong>δεν πληρώνει τίποτα</strong> ο ίδιος για την επικουρική.</li>
+<li>Ο μαθητευόμενος θεωρείται μαθητευόμενος και όχι εργαζόμενος, γεγονός που επηρεάζει άλλα εργασιακά δικαιώματα (άδειες, κ.λπ.) αλλά όχι την υποχρέωση ασφάλισης.</li>
+<li>Η ασφάλιση των μαθητευόμενων είναι υποχρεωτική και αυτοδίκαιη από την πρώτη ημέρα του προγράμματος.</li>
+</ul>
+<h2 id="7-ωφελούμενοι-προγραμμάτων-οαεδδυπα-πχ-κοινωφελής-εργασία-σε">7. Ωφελούμενοι Προγραμμάτων ΟΑΕΔ/ΔΥΠΑ (π.χ. Κοινωφελής Εργασία σε Δήμους) — τι ισχύει</h2>
+<p>Οι «ωφελούμενοι» προγραμμάτων <strong>Κοινωφελούς Χαρακτήρα (ΚΟΧ)</strong> της ΔΥΠΑ (πρώην ΟΑΕΔ), που τοποθετούνται σε Δήμους/ΝΠΔΔ, ασφαλίζονται κανονικά ως μισθωτοί, με <strong>δύο παράλληλα αρχεία</strong>:</p>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 16%"/>
+<col style="width: 16%"/>
+<col style="width: 16%"/>
+<col style="width: 16%"/>
+<col style="width: 16%"/>
+<col style="width: 16%"/>
+</colgroup>
+<thead>
+<tr class="header">
+<th>Αρχείο</th>
+<th>ΚΑΔ</th>
+<th>Κωδικός Ειδικότητας</th>
+<th>ΚΠΚ</th>
+<th>Ποσοστά</th>
+<th>Παρατηρήσεις</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ΑΠΔ e-ΕΦΚΑ Κοινών Επιχειρήσεων</td>
+<td><strong>9001</strong> <em>(ενδεικτικό)</em></td>
+<td>π.χ. <strong>916110</strong> (ΥΕ καθαριότητας)</td>
+<td><strong>435</strong></td>
+<td>16,42% ασφαλισμένου + 23,74% εργοδότη</td>
+<td>Ειδική περίπτωση ασφάλισης <strong>9</strong> (πεδίο 31)</td>
+</tr>
+<tr class="even">
+<td>ΑΠΔ ΤΕΚΑ</td>
+<td><strong>0083</strong></td>
+<td><strong>000707</strong></td>
+<td><strong>4161</strong></td>
+<td>3% ασφαλισμένου + 3% εργοδότη</td>
+<td>Ξεχωριστό αρχείο, υποχρεωτικό για νεοεισερχόμενους από 1/1/2022</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Σημαντικές πρακτικές λεπτομέρειες:</strong> - Στο προσωπικό που έχει προσληφθεί σε πρόγραμμα κοινωφελούς χαρακτήρα ΟΑΕΔ/ΔΥΠΑ, ΔΕΝ κρατείται το πάγιο ποσοστό 1% υπέρ ΟΑΕΔ που ισχύει για τακτικούς μισθωτούς. - Το ΚΠΚ/κωδικός ειδικότητας διαφέρει ανά κατηγορία εκπαίδευσης του ωφελούμενου (π.χ. ΠΕ4 Αρχιτέκτονας ΚΠΚ 986, ΔΕ Βοηθός βρεφοκόμος ΚΠΚ 101, ΥΕ καθαριότητας ΚΠΚ 435) — άρα ο εκκαθαριστής πρέπει να ελέγχει κάθε φορά την εκπαιδευτική κατηγορία (ΠΕ/ΤΕ/ΔΕ/ΥΕ) του ωφελούμενου. - Ξεχωριστή, άσχετη κατηγορία είναι η <strong>«κοινωφελής εργασία» ποινικού χαρακτήρα</strong> (άρθρο 31 Ν.4596/2019, εγκύκλιος e-ΕΦΚΑ 11/2026): εδώ χρησιμοποιείται ο κωδικός ειδικότητας 000098 και το ΚΠΚ 210, με ασφάλιση αποκλειστικά για τον κίνδυνο ατυχήματος — πρόκειται για καταδικασθέντες που εκτίουν ποινή με κοινωφελή εργασία, όχι ανέργους σε προγράμματα απασχόλησης. Μην τα συγχέεις.</p>
+<h2 id="8-η-στρατηγική-σε-βήματα">8. Η «στρατηγική» σε βήματα</h2>
+<ol type="1">
+<li><strong>Ταυτοποίησε τη σχέση εργασίας</strong>: τακτικός ΙΔΑΧ/ΙΔΟΧ, μαθητευόμενος, ή ωφελούμενος προγράμματος ΚΟΧ — κάθε κατηγορία έχει δικό της ΚΠΚ/κωδικό ειδικότητας.</li>
+<li><strong>Έλεγξε αν υπάγεται σε ΕΔΟΕΑΠ</strong> (προσωπικό Τύπου/ΜΜΕ Δημοσίου) ή σε <strong>ΤΕΚΑ</strong> (όλοι οι άλλοι νεοεισερχόμενοι από 1/1/2022).</li>
+<li><strong>Χρησιμοποίησε τον Ο.ΣΥ.Κ.</strong> για να επιβεβαιώσεις τον ακριβή συνδυασμό ΚΑΔ-Ειδικότητα-ΚΠΚ του φορέα σου — μην αντιγράφεις κωδικούς από άλλο φορέα.</li>
+<li><strong>Ξεχώρισε τα αρχεία</strong>: ΑΠΔ e-ΕΦΚΑ (κύρια/υγεία) ≠ ΑΠΔ ΤΕΚΑ (επικουρική) ≠ ΑΚΑ/ΑΚΕ ΕΔΟΕΑΠ.</li>
+<li><strong>Μαθητεία και ωφελούμενοι ΚΟΧ</strong>: πρόσεξε ότι η επικουρική τους πάει <em>πάντα</em> σε ΤΕΚΑ (ΚΑΔ 0083) με μηδενική εισφορά ασφαλισμένου στη μαθητεία, αλλά κανονική 3%+3% στους ωφελούμενους ΚΟΧ.</li>
+<li><strong>Έλεγχε ετήσιες αναπροσαρμογές</strong> (νέες εγκύκλιοι e-ΕΦΚΑ 4-6/έτος, ΕΔΟΕΑΠ 1-2/έτος).</li>
+</ol>
+<h2 id="9-πηγές">9. Πηγές</h2>
+<ul>
+<li>e-efka.gov.gr/el/egkyklioi-kai-genika-eggrapha</li>
+<li>teka.gov.gr/egkyklioi-kai-genika-eggrafa-0 και teka.gov.gr/enimerosi</li>
+<li>edoeap.gr — «Όλες οι Εγκύκλιοι» και «Εγκύκλιοι ΑΚΑ-ΑΚΕ»</li>
+<li>diavgeia.gov.gr (πλήρες κείμενο ανά ΑΔΑ)</li>
+<li>Ο.ΣΥ.Κ. e-ΕΦΚΑ (Οδηγός Σύνδεσης Κωδικών ΚΑΔ-Ειδικότητα-ΚΠΚ)</li>
+<li>apps.ika.gr/EDOEAPeAPD (υποβολή ΑΚΑ/ΑΚΕ)</li>
+<li>myteka.gov.gr, teka.gov.gr/sites/default/files/2022-11/APD_TEKA_manual.pdf</li>
+</ul>
+<p><em>Σημείωση: Οι κωδικοί ΚΠΚ/Ειδικότητα ανά ειδικότητα/κλάδο αλλάζουν σχεδόν ετησίως. Πριν από κάθε μισθοδοτική περίοδο, επιβεβαίωσε τους ισχύοντες κωδικούς στον πιο πρόσφατο Ο.ΣΥ.Κ. ή απευθείας στο αρμόδιο υποκατάστημα e-ΕΦΚΑ/ΤΕΚΑ του φορέα σου.</em></p>
+
+  </div>
+  <div class="doc-pager"><button class="pager-btn pager-prev" data-goto="doc-1785434186672"><span class="pager-arrow">←</span><span><span class="pager-label">Προηγούμενο</span><span class="pager-title">ΤΕΚΑ — Ταμείο Επικουρικής Κεφαλαιοποιητικής Ασφάλισης</span></span></button><button class="pager-btn pager-next" data-goto="doc-1785434186668"><span><span class="pager-label">Επόμενο</span><span class="pager-title">Άρθρο 20, Ν.4354/2015 — Υπερωρίες, Νυχτερινά, Εξαιρέσιμα</span></span><span class="pager-arrow">→</span></button></div>
+</section>
+
+<section class="doc-section" id="doc-1785434186668" data-title="Άρθρο 20, Ν.4354/2015 — Υπερωρίες, Νυχτερινά, Εξαιρέσιμα" data-subtitle="Αναλυτική εκπαιδευτική αναφορά — περίοδος 2024 / 2025 / 2026" data-category="Μισθοδοσία &amp; Αμοιβές" hidden>
+  <div class="doc-head">
+    <span class="doc-eyebrow">Μισθοδοσία &amp; Αμοιβές · Έγγραφο 6 από 9</span>
+    <h1 class="doc-title">Άρθρο 20, Ν.4354/2015 — Υπερωρίες, Νυχτερινά, Εξαιρέσιμα</h1>
+    <p class="doc-subtitle">Αναλυτική εκπαιδευτική αναφορά — περίοδος 2024 / 2025 / 2026</p>
+  </div>
+  
+  <div class="doc-body">
+    
+
+
+
+
+<table>
+<colgroup>
+<col style="width: 50%"/>
+<col style="width: 50%"/>
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><p><strong>Αντικείμενο Αναφοράς:</strong></p>
+<ul>
+<li><p>Αποζημίωση καθ' υπέρβαση ωραρίου (Παρ. Α)</p></li>
+<li><p>Αποζημίωση προς συμπλήρωση ωραρίου (Παρ. Β)</p></li>
+<li><p>Ειδικές περιπτώσεις – Γραφεία – ΑΑΔΕ – Εκπαιδευτικοί (Παρ. Γ)</p></li>
+<li><p>Εργασία πέραν του πενθημέρου</p></li>
+<li><p>Ανώτατα όρια ωρών ανά εξάμηνο</p></li>
+<li><p>Τύπος υπολογισμού ωρομισθίου (÷280)</p></li>
+<li><p>Πίνακες παραδειγμάτων 2024–2026</p></li>
+</ul></td>
+<td><p><strong>Νομικό Πλαίσιο:</strong></p>
+<ul>
+<li><p>Άρθ. 20 Ν.4354/2015 (ΦΕΚ Α΄176/16.12.2015)</p></li>
+<li><p>Τροπ. αρ. 71 Ν.4369/2016 (ΦΕΚ Α΄33/27.5.2016) – πέραν πενθημέρου +25%</p></li>
+<li><p>ΥΑ 2/1757/0026/2017 (ΦΕΚ Β΄17) – δικαιολογητικά</p></li>
+<li><p>Άρθ. 13 Ν.4389/2016 – Ειδικό μισθολόγιο ΑΑΔΕ</p></li>
+<li><p>Ν.5045/2023 &amp; Ν.5163/2024 – Αυξήσεις βασικών μισθών</p></li>
+<li><p>ΚΥΑ 8233/27-3-2025 – Κατώτατος 880€ (1.4.2025)</p></li>
+<li><p>Κωδικοποίηση με Ν.5290/2026 (ΦΕΚ Α΄47/30-3-2026)</p></li>
+</ul></td>
+</tr>
+</tbody>
+</table>
+<p>1. ΔΟΜΗ ΚΑΙ ΠΕΔΙΟ ΕΦΑΡΜΟΓΗΣ ΤΟΥ ΑΡΘΡΟΥ 20</p>
+<p>Το άρθρο 20 του Ν.4354/2015 ρυθμίζει αποκλειστικά τις αποζημιώσεις για εργασία εκτός κανονικού ωραρίου των δημοσίων υπαλλήλων και αντικατέστησε το σκόρπιο προηγούμενο νομοθετικό πλαίσιο. Διαρθρώνεται σε τρεις βασικές παραγράφους (Α, Β, Γ):</p>
+<table>
+<colgroup>
+<col style="width: 10%"/>
+<col style="width: 33%"/>
+<col style="width: 55%"/>
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>Παρ.</strong></td>
+<td><strong>Τίτλος</strong></td>
+<td><strong>Περιεχόμενο</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Α</strong></td>
+<td>Αποζημίωση καθ' υπέρβαση ωραρίου (Υπερωρίες)</td>
+<td>Προϋποθέσεις – Ανώτατα όρια ωρών – Ωρομίσθιο – Ποσοστά αμοιβής</td>
+</tr>
+<tr class="odd">
+<td><strong>Β</strong></td>
+<td>Αποζημίωση προς συμπλήρωση ωραρίου</td>
+<td>Νυχτερινά &amp; Εξαιρέσιμα εργαζομένων σε 24ωρη/12ωρη βάση για συμπλήρωση εβδομαδιαίου ωραρίου</td>
+</tr>
+<tr class="even">
+<td><strong>Γ</strong></td>
+<td>Ειδικές περιπτώσεις</td>
+<td>Γραφεία Πρωθυπουργού / Υπουργών / Βουλευτών – Φυλακτικό προσωπικό Υπ.Πολιτισμού – Πέραν πενθημέρου – Εκπαιδευτικοί – ΑΑΔΕ – ΕΚΑΒ κ.λπ.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>ΠΕΔΙΟ ΕΦΑΡΜΟΓΗΣ: Εφαρμόζεται σε όλους τους υπαγόμενους στον Ν.4354/2015 (μόνιμοι, δόκιμοι, ΙΔΑΧ, ΙΔΟΧ) – Δημόσιο, ΝΠΔΔ, ΝΠΙΔ, ΟΤΑ α΄/β΄, Ανεξάρτητες Αρχές. ΔΕΝ εφαρμόζεται αυτοδικαίως σε ειδικά μισθολόγια (ΑΑΔΕ, ΕΛ.ΑΣ., ΛΣ κ.λπ.) εκτός αν ρητά παραπέμπουν σε αυτό.</strong></p>
+<p>2. ΟΡΙΣΜΟΣ ΚΑΙ ΥΠΟΛΟΓΙΣΜΟΣ ΩΡΟΜΙΣΘΙΟΥ</p>
+<p>Η βάση υπολογισμού ΟΛΩΝ των αποζημιώσεων του άρθρου 20 είναι το ωρομίσθιο, το οποίο ορίζεται ΡΗΤΑ στο άρθρο 20 Α§3 ως:</p>
+<p><strong>ΩΡΟΜΙΣΘΙΟ = Βασικός Μισθός ΜΚ ÷ 280</strong></p>
+<p><strong>ΣΗΜΑΝΤΙΚΟ: Στον υπολογισμό λαμβάνεται ΜΟΝΟ ο βασικός μισθός του αντίστοιχου Μισθολογικού Κλιμακίου βάσει εκπαιδευτικής κατηγορίας. ΔΕΝ συνυπολογίζονται επιδόματα (θέσης ευθύνης, οικογενειακό, παραμεθορίων κ.λπ.). Ο διαιρέτης 280 αντιστοιχεί περίπου σε 35 εβδομάδες × 8 ώρες/εβδομάδα.</strong></p>
+<table>
+<colgroup>
+<col style="width: 28%"/>
+<col style="width: 21%"/>
+<col style="width: 17%"/>
+<col style="width: 32%"/>
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>Στοιχείο</strong></td>
+<td><strong>Τύπος / Βάση</strong></td>
+<td><strong>Διαιρέτης</strong></td>
+<td><strong>Παρατήρηση</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Ωρομίσθιο (Άρθ. 20 Α§3)</strong></td>
+<td>Βασικός μισθός ΜΚ ÷ 280</td>
+<td>280</td>
+<td>Βάσει ΜΚ εκπαιδευτικής κατηγορίας – ΟΧΙ επιδόματα</td>
+</tr>
+<tr class="odd">
+<td>Παράδειγμα: ΠΕ – ΜΚ1 (2025)</td>
+<td>1.192 ÷ 280 = 4,257€</td>
+<td>280</td>
+<td>Μεικτό ωρομίσθιο βάσης</td>
+</tr>
+<tr class="even">
+<td>Παράδειγμα: ΠΕ – ΜΚ10 (2025)</td>
+<td>1.723 ÷ 280 = 6,154€</td>
+<td>280</td>
+<td>Μεικτό ωρομίσθιο – 20 έτη υπηρεσίας</td>
+</tr>
+<tr class="odd">
+<td>Παράδειγμα: ΔΕ – ΜΚ1 (2025)</td>
+<td>958 ÷ 280 = 3,421€</td>
+<td>280</td>
+<td>Μεικτό ωρομίσθιο βάσης ΔΕ</td>
+</tr>
+<tr class="even">
+<td>Παράδειγμα: ΥΕ – ΜΚ1 (2025)</td>
+<td>880 ÷ 280 = 3,143€</td>
+<td>280</td>
+<td>Κατώτατο ωρομίσθιο δημοσίου (2025)</td>
+</tr>
+<tr class="odd">
+<td>Παράδειγμα: ΥΕ – ΜΚ1 (2026)</td>
+<td>920 ÷ 280 = 3,286€</td>
+<td>280</td>
+<td>Κατώτατο ωρομίσθιο δημοσίου (2026)</td>
+</tr>
+</tbody>
+</table>
+<p><em>📌 Για υπαλλήλους που δεν υπάγονται στον Ν.4354/2015 αλλά αποσπώνται σε υπηρεσίες Δημοσίου/ΝΠΔΔ/ΝΠΙΔ/ΟΤΑ, ο υπολογισμός γίνεται βάσει του ΜΚ που αντιστοιχεί στα έτη υπηρεσίας τους και τα τυπικά τους προσόντα.</em></p>
+<p>3. ΠΑΡΑΓΡΑΦΟΣ Α – ΑΠΟΖΗΜΙΩΣΗ ΚΑΘ' ΥΠΕΡΒΑΣΗ ΤΟΥ ΥΠΟΧΡΕΩΤΙΚΟΥ ΩΡΑΡΙΟΥ</p>
+<p>3.1 Προϋποθέσεις Καθιέρωσης Υπερωρίας</p>
+<ul>
+<li><p>Επιτρέπεται ΜΟΝΟ για αντιμετώπιση εποχικών, έκτακτων ή επειγουσών υπηρεσιακών αναγκών (όχι μόνιμης φύσης ανάγκες).</p></li>
+<li><p>Απαιτείται απόφαση αρμόδιου οργάνου (Υπουργός / Δήμαρχος / Περιφερειάρχης / ΔΣ / Πρόεδρος ΑΔΑ) με συγκεκριμένα αιτιολογητικά στοιχεία.</p></li>
+<li><p>Η απόφαση δημοσιεύεται στο ΦΕΚ και ισχύει από δημοσίευση.</p></li>
+<li><p>Ανώτατα όρια ωρών ορίζονται ΑΝΑ ΕΞΑΜΗΝΟ – χωρίς δυνατότητα μεταφοράς ωρών μεταξύ α΄ και β΄ εξαμήνου.</p></li>
+<li><p>Η επιβάρυνση καλύπτεται ΜΟΝΟ από τακτικό προϋπολογισμό – όχι από Π.Δ.Ε.</p></li>
+</ul>
+<p>3.2 Ωριαίες Αποζημιώσεις Παρ. Α (Καθ' Υπέρβαση)</p>
+<table>
+<colgroup>
+<col style="width: 31%"/>
+<col style="width: 28%"/>
+<col style="width: 17%"/>
+<col style="width: 22%"/>
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>Είδος Εργασίας (Παρ. Α§3)</strong></td>
+<td><strong>Ωριαία Αποζημίωση</strong></td>
+<td><strong>Συντελεστής</strong></td>
+<td><strong>Νομική Βάση</strong></td>
+</tr>
+<tr class="even">
+<td><strong>α) Απογευματινή υπερωριακή (έως 22:00)</strong></td>
+<td>Ωρομίσθιο × 100% (= 1 × ωρομίσθιο)</td>
+<td><strong>100%</strong></td>
+<td>Άρθ. 20 Α§3 Ν.4354/2015</td>
+</tr>
+<tr class="odd">
+<td><strong>β) Νυχτερινή υπερωριακή (22:00 – 06:00, εργάσιμη)</strong></td>
+<td>Ωρομίσθιο × 130% (+30% προσαύξηση)</td>
+<td><strong>130%</strong></td>
+<td>Άρθ. 20 Α§3 Ν.4354/2015</td>
+</tr>
+<tr class="even">
+<td><strong>γα) Εξαιρέσιμη / Κυριακή Ημερήσια (06:00 – 22:00)</strong></td>
+<td>Ωρομίσθιο × 140% (+40% προσαύξηση)</td>
+<td><strong>140%</strong></td>
+<td>Άρθ. 20 Α§3 Ν.4354/2015</td>
+</tr>
+<tr class="odd">
+<td><strong>γβ) Εξαιρέσιμη / Κυριακή Νυχτερινή (22:00 – 06:00)</strong></td>
+<td>Ωρομίσθιο × 145% (+45% προσαύξηση)</td>
+<td><strong>145%</strong></td>
+<td>Άρθ. 20 Α§3 Ν.4354/2015</td>
+</tr>
+</tbody>
+</table>
+<p><em>📌 ΚΡΙΣΙΜΗ ΔΙΑΚΡΙΣΗ: Η παρ. Α αφορά εργασία ΠΕΡΑΝ ΑΠΟ το υποχρεωτικό ωράριο (υπερωρία). Για εργασία ΓΙΑ ΣΥΜΠΛΗΡΩΣΗ του ωραρίου σε 24ωρες/12ωρες υπηρεσίες εφαρμόζεται η παρ. Β με χαμηλότερους συντελεστές.</em></p>
+<p>3.3 Ανώτατα Όρια Ωρών (Παρ. Α§2) – ανά Εξάμηνο</p>
+<table>
+<colgroup>
+<col style="width: 30%"/>
+<col style="width: 14%"/>
+<col style="width: 14%"/>
+<col style="width: 14%"/>
+<col style="width: 27%"/>
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>Κατηγορία Εργασίας</strong></td>
+<td><strong>Όριο 2023</strong></td>
+<td><strong>Όριο 2024</strong></td>
+<td><strong>Όριο 2025–26</strong></td>
+<td><strong>Παρατήρηση</strong></td>
+</tr>
+<tr class="even">
+<td><strong>α) Απογευματινή υπερωριακή (κανονικές υπηρεσίες)</strong></td>
+<td>120 ώρες</td>
+<td>120 ώρες</td>
+<td>120 ώρες</td>
+<td>Ανά εξάμηνο – χωρίς μεταφορά μεταξύ εξαμήνων</td>
+</tr>
+<tr class="odd">
+<td><strong>β) Νυχτερινή υπερωριακή (υπηρεσίες 24ωρης/12ωρης βάσης)</strong></td>
+<td>96 ώρες</td>
+<td>96 ώρες</td>
+<td>96 ώρες</td>
+<td>Ανά εξάμηνο ανά υπάλληλο</td>
+</tr>
+<tr class="even">
+<td><strong>γ) Εξαιρέσιμα / Κυριακές (υπηρεσίες 24ωρης/12ωρης βάσης)</strong></td>
+<td>96 ώρες</td>
+<td>96 ώρες</td>
+<td>96 ώρες</td>
+<td>Ανά εξάμηνο ανά υπάλληλο</td>
+</tr>
+<tr class="odd">
+<td><strong>δ) Απογευματινή ΕΚΑΒ (πληρώματα ασθενοφόρων)</strong></td>
+<td>200 ώρες</td>
+<td>200 ώρες</td>
+<td>200 ώρες</td>
+<td>Ειδική ρύθμιση ΕΚΑΒ – Άρθ. 20 Α§2α</td>
+</tr>
+<tr class="even">
+<td><strong>ε) Νυχτερινή &amp; Εξαιρέσιμα ΟΤΑ α΄ βαθμ. (καθαριότητα 24ωρη)</strong></td>
+<td>180 ώρες</td>
+<td>180 ώρες</td>
+<td>180 ώρες</td>
+<td>Ειδική ρύθμιση ΟΤΑ καθαριότητας – Άρθ. 20 Α§2β</td>
+</tr>
+<tr class="odd">
+<td><strong>στ) ΑΑΔΕ – Απογευματινή (ειδικό μισθολόγιο)</strong></td>
+<td>150 ώρες</td>
+<td>150 ώρες</td>
+<td>150 ώρες</td>
+<td>Ανά εξάμηνο – Άρθ. 13 Ν.4389/2016</td>
+</tr>
+</tbody>
+</table>
+<p><em>📌 Η ΥΑ 2/1757/0026/2017 (ΦΕΚ Β΄17) καθορίζει αναλυτικά τα δικαιολογητικά για καταβολή: κατάσταση ωρών, βεβαίωση παροχής υπηρεσίας, απόφαση καθιέρωσης (όταν απαιτείται).</em></p>
+<p>4. ΠΑΡΑΓΡΑΦΟΣ Β – ΑΠΟΖΗΜΙΩΣΗ ΠΡΟΣ ΣΥΜΠΛΗΡΩΣΗ ΤΟΥ ΥΠΟΧΡΕΩΤΙΚΟΥ ΩΡΑΡΙΟΥ</p>
+<p>Η παρ. Β αφορά υπαλλήλους που εργάζονται σε υπηρεσίες που λειτουργούν ΒΑΣΕΙ ΝΟΜΟΥ όλες τις ημέρες ή σε 24ωρη/12ωρη βάση (π.χ. νοσοκομεία, πυροσβεστική, ΕΚΑΒ κ.λπ.). Όταν αυτοί εργάζονται νυχτερινές ώρες ή Κυριακές/εξαιρέσιμες ΓΙΑ ΣΥΜΠΛΗΡΩΣΗ (όχι υπέρβαση) του εβδομαδιαίου ωραρίου τους, αμείβονται με τους κατωτέρω μειωμένους συντελεστές:</p>
+<table>
+<colgroup>
+<col style="width: 31%"/>
+<col style="width: 28%"/>
+<col style="width: 17%"/>
+<col style="width: 22%"/>
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>Είδος Εργασίας (Παρ. Β§2)</strong></td>
+<td><strong>Ωριαία Αποζημίωση</strong></td>
+<td><strong>Συντελεστής</strong></td>
+<td><strong>Νομική Βάση</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Νυχτερινή εργάσιμης ημέρας (για συμπλήρωση ωραρίου)</strong></td>
+<td>Ωρομίσθιο × 60% (60% επί ωρομισθίου)</td>
+<td><strong>60%</strong></td>
+<td>Άρθ. 20 Β§2 Ν.4354/2015</td>
+</tr>
+<tr class="odd">
+<td><strong>Ημερήσια ή νυχτερινή Κυριακής / Εξαιρέσιμης (για συμπλήρωση ωραρίου)</strong></td>
+<td>Ωρομίσθιο × 75% (75% επί ωρομισθίου)</td>
+<td><strong>75%</strong></td>
+<td>Άρθ. 20 Β§2 Ν.4354/2015</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>Προϋπόθεση: να υπάρχει ΦΕΚ καθιέρωσης από αρμόδιο όργανο (ίδια διαδικασία με Παρ. Α§1).</p></li>
+<li><p>Η αποζημίωση αφορά ΜΟΝΟ νυχτερινές ώρες εργάσιμων ημερών ή Κυριακές/εξαιρέσιμες – ΟΧΙ απογευματινή εργάσιμη.</p></li>
+<li><p>Ο συντελεστής 60%/75% εφαρμόζεται επί του ωρομισθίου (βασικός μισθός ÷ 280), ΟΧΙ επί συνολικών αποδοχών.</p></li>
+<li><p>Στις αποφάσεις καθορίζεται ο αριθμός υπαλλήλων, χρονικό διάστημα και ώρες απασχόλησης.</p></li>
+</ul>
+<p>5. ΕΡΓΑΣΙΑ ΠΕΝΑΝ ΤΟΥ ΠΕΝΘΗΜΕΡΟΥ (Παρ. Γ§3)</p>
+<p>Η εργασία πέραν του πενθημέρου αποτελεί ξεχωριστή κατηγορία αποζημίωσης που δεν ταυτίζεται με τις υπερωρίες ή τα εξαιρέσιμα. Αφορά εργαζόμενους που καλούνται να εργαστούν την 6η ημέρα της εβδομάδας (πέραν των 5 εργάσιμων ημερών), χωρίς αυτή να συμπίπτει απαραίτητα με Κυριακή ή αργία.</p>
+<p><strong>Νομική βάση: Άρθ. 20 Γ§3 Ν.4354/2015, ΩΣ ΤΡΟΠΟΠΟΙΗΘΗΚΕ από αρ.71 Ν.4369/2016 (ΦΕΚ Α΄33/27.5.2016), το οποίο αντικατέστησε το προηγούμενο εδάφιο που προέβλεπε ίση με την απογευματινή υπερωρία (×100%) – ΧΩΡΙΣ προσαύξηση. Μετά την τροποποίηση ισχύει +25%.</strong></p>
+<table>
+<colgroup>
+<col style="width: 30%"/>
+<col style="width: 28%"/>
+<col style="width: 15%"/>
+<col style="width: 25%"/>
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>Κατηγορία</strong></td>
+<td><strong>Αμοιβή</strong></td>
+<td><strong>Συντελ.</strong></td>
+<td><strong>Νομική Βάση / Παρατήρηση</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Εργασία πέραν πενθημέρου (γενική ρύθμιση)</strong></td>
+<td>Ωρομίσθιο × 100% + 25% = Ωρομίσθιο × 125%</td>
+<td><strong>125%</strong></td>
+<td>Ίδια βάση με απογευματινή υπερωρία +25% (Άρθ. 20 Γ§3 εδ.3, ως τροπ. αρ.71 Ν.4369/2016)</td>
+</tr>
+<tr class="odd">
+<td><strong>Φυλακτικό προσ. &amp; προσ. καθαριότητας Υπ. Πολιτισμού / μουσεία / αρχ. χώροι</strong></td>
+<td>Ωρομίσθιο × 125%</td>
+<td><strong>125%</strong></td>
+<td>Ειδική ρύθμιση – απαιτεί ΦΕΚ δημοσίευση απόφασης</td>
+</tr>
+<tr class="even">
+<td><strong>Κατάστημα κράτησης (σωφρονιστικό προσωπικό)</strong></td>
+<td>Βάσει ειδικής ΚΥΑ</td>
+<td><strong>—</strong></td>
+<td>Ειδικό καθεστώς – παρ. Γ§3 Ν.4354/2015</td>
+</tr>
+<tr class="odd">
+<td><strong>Προσωπικό ΕΚΑΒ (πέραν πενθημέρου)</strong></td>
+<td>Ωρομίσθιο × 125%</td>
+<td><strong>125%</strong></td>
+<td>Εφαρμόζεται το γενικό καθεστώς</td>
+</tr>
+</tbody>
+</table>
+<p><em>📌 Προσοχή: Πριν το Ν.4369/2016, η αμοιβή πέραν πενθημέρου ήταν ίδια με την απογευματινή υπερωρία (×100%). Από 27.5.2016, αυξήθηκε σε ×125% (+25% προσαύξηση). Η τροποποίηση αφορά κυρίως φυλακτικό προσωπικό μουσείων, αρχαιολογικών χώρων και καταστημάτων κράτησης, αλλά ισχύει και γενικά.</em></p>
+<p>6. ΕΙΔΙΚΕΣ ΠΕΡΙΠΤΩΣΕΙΣ ΠΑΡΑΓΡΑΦΟΥ Γ</p>
+<p>6.1 Γραφεία Πολιτικής Ηγεσίας &amp; Βουλευτών (Παρ. Γ§2)</p>
+<p>Για υπαλλήλους που αποσπώνται ή διατίθενται σε γραφεία πολιτικής ηγεσίας ισχύουν εκ του νόμου καθορισμένα ανώτατα μηνιαία όρια ωρών (χωρίς ΦΕΚ), με αποζημίωση βάσει παρ. Α§3:</p>
+<table>
+<colgroup>
+<col style="width: 28%"/>
+<col style="width: 12%"/>
+<col style="width: 12%"/>
+<col style="width: 12%"/>
+<col style="width: 34%"/>
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>Γραφείο / Φορέας</strong></td>
+<td><strong>Απογευμ. Υπερωρία</strong></td>
+<td><strong>Νυχτ. Υπερωρία</strong></td>
+<td><strong>Κυριακή/ Εξαιρ.</strong></td>
+<td><strong>Παρατήρηση</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Προεδρία Κυβέρνησης / Προεδρία Δημοκρατίας (Άρθ. 20 Γ§2α)</strong></td>
+<td>20 ώρες/μήνα</td>
+<td>7 ώρες/μήνα</td>
+<td>8 ώρες/μήνα</td>
+<td>Απογ. + νυχτ. + εξαιρ. (06:00–22:00) – ωρομίσθιο κατά Α§3</td>
+</tr>
+<tr class="odd">
+<td><strong>Γραφεία Υπουργών / Αν. Υπουργών / Υφυπουργών (Άρθ. 20 Γ§2α)</strong></td>
+<td>20 ώρες/μήνα</td>
+<td>7 ώρες/μήνα</td>
+<td>8 ώρες/μήνα</td>
+<td>Ίδιο με ανωτέρω</td>
+</tr>
+<tr class="even">
+<td><strong>Γραφεία Γεν. Γραμματέων / Ειδ. Γραμματέων (Άρθ. 20 Γ§2β)</strong></td>
+<td>15 ώρες/μήνα</td>
+<td>7 ώρες/μήνα</td>
+<td>8 ώρες/μήνα</td>
+<td>Ελαφρώς μικρότερη απογευματινή υπερωρία</td>
+</tr>
+<tr class="odd">
+<td><strong>Γραφεία Βουλευτών / Ευρωβουλευτών / Πολιτικών Κομμάτων (Άρθ. 20 Γ§2γ)</strong></td>
+<td>14 ώρες/μήνα</td>
+<td>5 ώρες/μήνα</td>
+<td>6 ώρες/μήνα</td>
+<td>Χαμηλότερα όρια – δαπάνη από φορέα καταγωγής υπαλλήλου</td>
+</tr>
+</tbody>
+</table>
+<p><em>📌 Η δαπάνη βαρύνει τον προϋπολογισμό του φορέα απόσπασης (ΟΧΙ τον Κρατικό), εκτός αν ορίζεται διαφορετικά. Για υπαλλήλους ΟΤΑ/ΝΠΔΔ που αποσπώνται, η αποζημίωση καταβάλλεται από τον φορέα οργανικής θέσης.</em></p>
+<p>6.2 Εκπαιδευτικό Προσωπικό Α/θμιας &amp; Β/θμιας (Παρ. Γ§1)</p>
+<p>Για εκπαιδευτικούς ισχύει ΕΙΔΙΚΗ σταθερή αμοιβή ανά ώρα – ΔΕΝ υπολογίζεται βάσει ωρομισθίου (÷280):</p>
+<table>
+<colgroup>
+<col style="width: 31%"/>
+<col style="width: 19%"/>
+<col style="width: 17%"/>
+<col style="width: 31%"/>
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>Κατηγορία</strong></td>
+<td><strong>Αμοιβή</strong></td>
+<td><strong>Όριο</strong></td>
+<td><strong>Παρατήρηση</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Εκπαιδευτικοί Α/θμιας &amp; Β/θμιας Επιμίσθιο διδασκαλίας</strong></td>
+<td><strong>10€ / ώρα</strong></td>
+<td>Έως 20 ώρες/μήνα</td>
+<td>Σταθερό ποσό ανά ώρα διδασκαλίας – Άρθ. 20 Γ§1</td>
+</tr>
+<tr class="odd">
+<td>Υπολογισμός (ανεξ. ΜΚ)</td>
+<td><strong>10€ × ώρες</strong></td>
+<td>Ανεξάρτητο ΜΚ</td>
+<td>ΔΕΝ εφαρμόζεται διαιρέτης 1/280</td>
+</tr>
+<tr class="even">
+<td>Μέγιστη μηνιαία αμοιβή</td>
+<td><strong>10€ × 20 = 200€</strong></td>
+<td>200€/μήνα</td>
+<td>Ανώτατο όριο αποζημίωσης διδασκαλίας</td>
+</tr>
+<tr class="odd">
+<td>Προαιρετική διδασκαλία (εκτός ωραρίου)</td>
+<td><strong>10€ / ώρα</strong></td>
+<td>Έως 20 ώρες/μήνα</td>
+<td>Ίδιο καθεστώς</td>
+</tr>
+<tr class="even">
+<td>Υποχρεωτική διδασκαλία (εντός ωραρίου πλαισίου)</td>
+<td><strong>10€ / ώρα</strong></td>
+<td>Έως 20 ώρες/μήνα</td>
+<td>Εφόσον δεν καλύπτεται από βασικό ωράριο</td>
+</tr>
+</tbody>
+</table>
+<p><em>📌 Η αμοιβή 10€/ώρα ΔΕΝ αναπροσαρμόζεται αυτόματα με τις αυξήσεις βασικών μισθών, καθώς είναι σταθερό ποσό νόμου. Απαιτεί ρητή νομοθετική παρέμβαση για αλλαγή.</em></p>
+<p>6.3 Κατηγορίες Χωρίς Δικαίωμα Υπερωριακής Αποζημίωσης</p>
+<table>
+<colgroup>
+<col style="width: 37%"/>
+<col style="width: 62%"/>
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>Κατηγορία Προσώπου</strong></td>
+<td><strong>Ρύθμιση / Απαγόρευση</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Γεν. &amp; Αναπλ. Γεν. Γραμματείς Υπουργείου</strong></td>
+<td>Απαγορεύεται η υπερωριακή αποζημίωση – Άρθ. 20 Α§3 εδ.τελ.</td>
+</tr>
+<tr class="odd">
+<td><strong>Ειδικοί Γραμματείς Υπουργείου</strong></td>
+<td>Απαγορεύεται η υπερωριακή αποζημίωση</td>
+</tr>
+<tr class="even">
+<td><strong>Ειδικοί Σύμβουλοι / Ειδικοί Συνεργάτες (Κεντρική Διοίκηση)</strong></td>
+<td>Απαγορεύεται – ΕΞΑΙΡΟΥΝΤΑΙ μόνο αυτοί ΟΤΑ α΄/β΄ και Αποκεντρωμένων</td>
+</tr>
+<tr class="odd">
+<td><strong>Επιστημονικοί Συνεργάτες (Κεντρική Διοίκηση)</strong></td>
+<td>Απαγορεύεται – ΕΞΑΙΡΟΥΝΤΑΙ μόνο αυτοί ΟΤΑ α΄/β΄ και Αποκεντρωμένων</td>
+</tr>
+<tr class="even">
+<td><strong>Αποσπασμένοι χωρίς κάλυψη οργανικής θέσης</strong></td>
+<td>Δεν δικαιούνται αποζημίωσης εκτός ειδικής πρόβλεψης</td>
+</tr>
+</tbody>
+</table>
+<p><em>📌 ΕΞΑΙΡΕΣΗ: Ειδικοί Σύμβουλοι, Ειδικοί Συνεργάτες και Επιστημονικοί Συνεργάτες ΟΤΑ α΄/β΄ και Αποκεντρωμένων Διοικήσεων ΕΠΙΤΡΕΠΕΤΑΙ να λαμβάνουν υπερωριακή αποζημίωση κατά παρέκκλιση του γενικού κανόνα.</em></p>
+<p>7. ΔΙΑΔΙΚΑΣΤΙΚΕΣ ΠΡΟΫΠΟΘΕΣΕΙΣ &amp; ΕΓΚΡΙΣΗ</p>
+<table>
+<colgroup>
+<col style="width: 21%"/>
+<col style="width: 37%"/>
+<col style="width: 41%"/>
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>Στάδιο / Απαίτηση</strong></td>
+<td><strong>Περιεχόμενο</strong></td>
+<td><strong>Παρατήρηση</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Έγκριση</strong></td>
+<td>Απόφαση αρμόδιου Υπουργού (Κεντρ. Διοίκηση) Δημάρχου / Περιφερειάρχη (ΟΤΑ) Δ.Σ. / Διοίκηση (ΝΠΔΔ/ΝΠΙΔ) Προέδρου (Ανεξ. Αρχές) Διοικητή ΑΑΔΕ (ΑΑΔΕ)</td>
+<td>Δεν απαιτείται σύμπραξη Υπ. Οικονομικών εκτός αύξησης πιστώσεων</td>
+</tr>
+<tr class="odd">
+<td><strong>Δημοσίευση</strong></td>
+<td>ΦΕΚ (Εφημερίδα Κυβερνήσεως)</td>
+<td>Ισχύει από δημοσίευση – εξαιρ. αναδρομή μόνο για συγκεκριμένες περιπτώσεις</td>
+</tr>
+<tr class="even">
+<td><strong>Χρονική Περίοδος</strong></td>
+<td>Ανά εξάμηνο (α΄ και β΄ εξάμηνο)</td>
+<td>Δεν επιτρέπεται αυξομείωση ωρών μεταξύ εξαμήνων</td>
+</tr>
+<tr class="odd">
+<td><strong>Αύξηση Πιστώσεων</strong></td>
+<td>Μόνο με απόφαση Υπ. Οικονομικών</td>
+<td>Μετά από αιτιολογημένη πρόταση διατάκτη – ΟΤΑ εξαιρούνται</td>
+</tr>
+<tr class="even">
+<td><strong>Δικαιολογητικά καταβολής</strong></td>
+<td>ΥΑ 2/1757/0026/2017 (ΦΕΚ Β΄17/12-1-2017)</td>
+<td>Κατάσταση ωρών, υπογεγραμμένη βεβαίωση παροχής, απόφαση έγκρισης</td>
+</tr>
+<tr class="odd">
+<td><strong>Ανώτατο Όριο Αποδοχών</strong></td>
+<td>Αρ. 28 Ν.4354/2015</td>
+<td>Το σύνολο αποδοχών συμπεριλ. υπερωριών δεν υπερβαίνει ανώτατο όριο</td>
+</tr>
+<tr class="even">
+<td><strong>Ασφαλιστικές Εισφορές</strong></td>
+<td>Υπόκεινται σε κρατήσεις</td>
+<td>Εισφορές ΕΦΚΑ επί υπερωριακής αποζημίωσης – φορολογητέα αποδοχή</td>
+</tr>
+</tbody>
+</table>
+<p><em>📌 Η μη δημοσίευση στο ΦΕΚ ή η καταβολή πέραν της εγκεκριμένης απόφασης συνιστά άκυρη δαπάνη κατά το αρ.91 Ν.4270/2014 και δεν εκκαθαρίζεται από την Ελεγκτική Υπηρεσία. Τα δικαιολογητικά πληρωμής ορίζονται στην ΥΑ 2/1757/0026/2017.</em></p>
+<p>8. ΣΥΓΚΡΙΤΙΚΟΣ ΠΙΝΑΚΑΣ ΑΠΟΖΗΜΙΩΣΕΩΝ 2024 – 2025 – 2026</p>
+<p>Οι αποζημιώσεις αυξάνονται αυτόματα με κάθε αύξηση του βασικού μισθού (÷280), χωρίς να χρειάζεται ειδική νομοθετική ρύθμιση. Οι πίνακες αναφέρονται στα εισαγωγικά ΜΚ κάθε κατηγορίας:</p>
+<table>
+<colgroup>
+<col style="width: 24%"/>
+<col style="width: 10%"/>
+<col style="width: 19%"/>
+<col style="width: 19%"/>
+<col style="width: 25%"/>
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>Κατηγορία &amp; Τύπος Εργασίας</strong></td>
+<td><strong>Τύπος</strong></td>
+<td><strong>2024 (από 1.1.2024)</strong></td>
+<td><strong>2025 (από 1.4.2025)</strong></td>
+<td><strong>2026 (από 1.1.2026)</strong></td>
+</tr>
+<tr class="even">
+<td>ΠΕ ΜΚ1 – Απογευμ. Υπερωρία</td>
+<td>÷280</td>
+<td>4,15€/ώρα (Βασ. 1.162€)</td>
+<td><strong>4,26€/ώρα (Βασ. 1.192€)</strong></td>
+<td>4,40€/ώρα (Βασ. 1.232€, 2026)</td>
+</tr>
+<tr class="odd">
+<td>ΠΕ ΜΚ1 – Νυχτερινή (×130%)</td>
+<td>÷280</td>
+<td>5,40€/ώρα</td>
+<td><strong>5,53€/ώρα</strong></td>
+<td>5,72€/ώρα</td>
+</tr>
+<tr class="even">
+<td>ΠΕ ΜΚ1 – Κυριακή Ημερ. (×140%)</td>
+<td>÷280</td>
+<td>5,81€/ώρα</td>
+<td><strong>5,96€/ώρα</strong></td>
+<td>6,16€/ώρα</td>
+</tr>
+<tr class="odd">
+<td>ΔΕ ΜΚ1 – Απογευμ. Υπερωρία</td>
+<td>÷280</td>
+<td>3,31€/ώρα (Βασ. 928€)</td>
+<td><strong>3,42€/ώρα (Βασ. 958€)</strong></td>
+<td>3,56€/ώρα (Βασ. 998€, 2026)</td>
+</tr>
+<tr class="even">
+<td>ΔΕ ΜΚ1 – Νυχτερινή (×130%)</td>
+<td>÷280</td>
+<td>4,31€/ώρα</td>
+<td><strong>4,45€/ώρα</strong></td>
+<td>4,63€/ώρα</td>
+</tr>
+<tr class="odd">
+<td>ΔΕ ΜΚ1 – Κυριακή Ημερ. (×140%)</td>
+<td>÷280</td>
+<td>4,64€/ώρα</td>
+<td><strong>4,79€/ώρα</strong></td>
+<td>4,98€/ώρα</td>
+</tr>
+<tr class="even">
+<td>ΥΕ ΜΚ1 – Απογευμ. Υπερωρία</td>
+<td>÷280</td>
+<td>3,04€/ώρα (Βασ. 850€)</td>
+<td><strong>3,14€/ώρα (Βασ. 880€)</strong></td>
+<td>3,29€/ώρα (Βασ. 920€, 2026)</td>
+</tr>
+<tr class="odd">
+<td>ΥΕ ΜΚ1 – Νυχτερινή (×130%)</td>
+<td>÷280</td>
+<td>3,95€/ώρα</td>
+<td><strong>4,08€/ώρα</strong></td>
+<td>4,28€/ώρα</td>
+</tr>
+<tr class="even">
+<td>ΥΕ ΜΚ1 – Κυριακή Ημερ. (×140%)</td>
+<td>÷280</td>
+<td>4,25€/ώρα</td>
+<td><strong>4,40€/ώρα</strong></td>
+<td>4,61€/ώρα</td>
+</tr>
+<tr class="odd">
+<td>ΠΕ ΜΚ1 – Πέραν Πενθημέρου (×125%)</td>
+<td>÷280</td>
+<td>5,18€/ώρα</td>
+<td><strong>5,32€/ώρα</strong></td>
+<td>5,50€/ώρα</td>
+</tr>
+<tr class="even">
+<td>ΔΕ ΜΚ1 – Πέραν Πενθημέρου (×125%)</td>
+<td>÷280</td>
+<td>4,14€/ώρα</td>
+<td><strong>4,28€/ώρα</strong></td>
+<td>4,46€/ώρα</td>
+</tr>
+<tr class="odd">
+<td>ΥΕ ΜΚ1 – Πέραν Πενθημέρου (×125%)</td>
+<td>÷280</td>
+<td>3,80€/ώρα</td>
+<td><strong>3,93€/ώρα</strong></td>
+<td>4,11€/ώρα</td>
+</tr>
+<tr class="even">
+<td>ΠΕ ΜΚ1 – Προς Συμπλ. Νυχτ. (×60%)</td>
+<td>÷280</td>
+<td>2,49€/ώρα</td>
+<td><strong>2,55€/ώρα</strong></td>
+<td>2,64€/ώρα</td>
+</tr>
+<tr class="odd">
+<td>ΠΕ ΜΚ1 – Προς Συμπλ. Εξαιρ. (×75%)</td>
+<td>÷280</td>
+<td>3,11€/ώρα</td>
+<td><strong>3,19€/ώρα</strong></td>
+<td>3,30€/ώρα</td>
+</tr>
+</tbody>
+</table>
+<p><em>📌 Τα ποσά είναι ΜΕΙΚΤΑ. Υπόκεινται σε εισφορές ΕΦΚΑ και φόρο εισοδήματος. Ο υπολογισμός βάσει ΜΚ ανώτερων κλιμακίων γίνεται αναλογικά (π.χ. ΠΕ ΜΚ10 = 1.723÷280 = 6,154€ ωρομίσθιο × συντελεστή).</em></p>
+<p>9. ΑΝΑΛΥΤΙΚΟΙ ΠΙΝΑΚΕΣ ΠΑΡΑΔΕΙΓΜΑΤΩΝ ΥΠΟΛΟΓΙΣΜΟΥ (2025)</p>
+<p>Όλα τα ποσά βάσει βασικών μισθών από 1.4.2025 (ΚΥΑ 8233/27-3-2025):</p>
+<table>
+<colgroup>
+<col style="width: 24%"/>
+<col style="width: 24%"/>
+<col style="width: 24%"/>
+<col style="width: 25%"/>
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>█ Απογευματινή Υπερωρία (×100%)</td>
+<td>█ Νυχτερινή / Πέραν Πενθ. (×130%/×125%)</td>
+<td>█ Κυριακή/Εξαιρ. (×140%/×145%)</td>
+<td>█ Προς Συμπλήρωση (×60%/×75%)</td>
+</tr>
+</tbody>
+</table>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 17%"/>
+<col style="width: 12%"/>
+<col style="width: 12%"/>
+<col style="width: 10%"/>
+<col style="width: 12%"/>
+<col style="width: 12%"/>
+<col style="width: 21%"/>
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>Κατ.</strong></td>
+<td><strong>ΜΚ</strong></td>
+<td><strong>Βασ. Μισθός (2025)</strong></td>
+<td><strong>Ωρομίσθιο (÷280)</strong></td>
+<td><strong>Συντ.</strong></td>
+<td><strong>Αποζ./ώρα (€)</strong></td>
+<td><strong>Σενάριο / Εξήγηση</strong></td>
+</tr>
+<tr class="even">
+<td><strong>ΠΕ</strong></td>
+<td>ΜΚ1</td>
+<td>1.192€</td>
+<td>4,26€</td>
+<td><strong>100%</strong></td>
+<td><strong>4,26€</strong></td>
+<td>Απογευματ. υπερωρία (ΜΚ1, 2025)</td>
+</tr>
+<tr class="odd">
+<td><strong>ΠΕ</strong></td>
+<td>ΜΚ1</td>
+<td>1.192€</td>
+<td>4,26€</td>
+<td><strong>130%</strong></td>
+<td><strong>5,53€</strong></td>
+<td>Νυχτερινή υπερωρία (22:00–06:00)</td>
+</tr>
+<tr class="even">
+<td><strong>ΠΕ</strong></td>
+<td>ΜΚ1</td>
+<td>1.192€</td>
+<td>4,26€</td>
+<td><strong>140%</strong></td>
+<td><strong>5,96€</strong></td>
+<td>Κυριακή ημερήσια (06:00–22:00)</td>
+</tr>
+<tr class="odd">
+<td><strong>ΠΕ</strong></td>
+<td>ΜΚ1</td>
+<td>1.192€</td>
+<td>4,26€</td>
+<td><strong>145%</strong></td>
+<td><strong>6,17€</strong></td>
+<td>Κυριακή νυχτερινή (22:00–06:00)</td>
+</tr>
+<tr class="even">
+<td><strong>ΠΕ</strong></td>
+<td>ΜΚ10</td>
+<td>1.723€</td>
+<td>6,15€</td>
+<td><strong>100%</strong></td>
+<td><strong>6,15€</strong></td>
+<td>Απογευματ. υπερωρία (ΜΚ10, 2025)</td>
+</tr>
+<tr class="odd">
+<td><strong>ΠΕ</strong></td>
+<td>ΜΚ10</td>
+<td>1.723€</td>
+<td>6,15€</td>
+<td><strong>130%</strong></td>
+<td><strong>7,99€</strong></td>
+<td>Νυχτερινή υπερωρία</td>
+</tr>
+<tr class="even">
+<td><strong>ΠΕ</strong></td>
+<td>ΜΚ10</td>
+<td>1.723€</td>
+<td>6,15€</td>
+<td><strong>140%</strong></td>
+<td><strong>8,61€</strong></td>
+<td>Κυριακή ημερήσια</td>
+</tr>
+<tr class="odd">
+<td><strong>ΠΕ</strong></td>
+<td>ΜΚ10</td>
+<td>1.723€</td>
+<td>6,15€</td>
+<td><strong>145%</strong></td>
+<td><strong>8,92€</strong></td>
+<td>Κυριακή νυχτερινή</td>
+</tr>
+<tr class="even">
+<td><strong>ΔΕ</strong></td>
+<td>ΜΚ1</td>
+<td>958€</td>
+<td>3,42€</td>
+<td><strong>100%</strong></td>
+<td><strong>3,42€</strong></td>
+<td>Απογευματ. υπερωρία (ΜΚ1, 2025)</td>
+</tr>
+<tr class="odd">
+<td><strong>ΔΕ</strong></td>
+<td>ΜΚ1</td>
+<td>958€</td>
+<td>3,42€</td>
+<td><strong>130%</strong></td>
+<td><strong>4,45€</strong></td>
+<td>Νυχτερινή υπερωρία</td>
+</tr>
+<tr class="even">
+<td><strong>ΔΕ</strong></td>
+<td>ΜΚ1</td>
+<td>958€</td>
+<td>3,42€</td>
+<td><strong>140%</strong></td>
+<td><strong>4,79€</strong></td>
+<td>Κυριακή ημερήσια</td>
+</tr>
+<tr class="odd">
+<td><strong>ΔΕ</strong></td>
+<td>ΜΚ1</td>
+<td>958€</td>
+<td>3,42€</td>
+<td><strong>145%</strong></td>
+<td><strong>4,96€</strong></td>
+<td>Κυριακή νυχτερινή</td>
+</tr>
+<tr class="even">
+<td><strong>ΔΕ</strong></td>
+<td>ΜΚ7</td>
+<td>1.318€</td>
+<td>4,71€</td>
+<td><strong>100%</strong></td>
+<td><strong>4,71€</strong></td>
+<td>Απογευματ. υπερωρία (ΜΚ7, 2025)</td>
+</tr>
+<tr class="odd">
+<td><strong>ΔΕ</strong></td>
+<td>ΜΚ7</td>
+<td>1.318€</td>
+<td>4,71€</td>
+<td><strong>130%</strong></td>
+<td><strong>6,12€</strong></td>
+<td>Νυχτερινή υπερωρία</td>
+</tr>
+<tr class="even">
+<td><strong>ΔΕ</strong></td>
+<td>ΜΚ7</td>
+<td>1.318€</td>
+<td>4,71€</td>
+<td><strong>140%</strong></td>
+<td><strong>6,59€</strong></td>
+<td>Κυριακή ημερήσια</td>
+</tr>
+<tr class="odd">
+<td><strong>ΔΕ</strong></td>
+<td>ΜΚ7</td>
+<td>1.318€</td>
+<td>4,71€</td>
+<td><strong>145%</strong></td>
+<td><strong>6,83€</strong></td>
+<td>Κυριακή νυχτερινή</td>
+</tr>
+<tr class="even">
+<td><strong>ΥΕ</strong></td>
+<td>ΜΚ1</td>
+<td>880€</td>
+<td>3,14€</td>
+<td><strong>100%</strong></td>
+<td><strong>3,14€</strong></td>
+<td>Απογευματ. υπερωρία (ΜΚ1, 2025)</td>
+</tr>
+<tr class="odd">
+<td><strong>ΥΕ</strong></td>
+<td>ΜΚ1</td>
+<td>880€</td>
+<td>3,14€</td>
+<td><strong>130%</strong></td>
+<td><strong>4,08€</strong></td>
+<td>Νυχτερινή υπερωρία</td>
+</tr>
+<tr class="even">
+<td><strong>ΥΕ</strong></td>
+<td>ΜΚ1</td>
+<td>880€</td>
+<td>3,14€</td>
+<td><strong>140%</strong></td>
+<td><strong>4,40€</strong></td>
+<td>Κυριακή ημερήσια</td>
+</tr>
+<tr class="odd">
+<td><strong>ΥΕ</strong></td>
+<td>ΜΚ1</td>
+<td>880€</td>
+<td>3,14€</td>
+<td><strong>145%</strong></td>
+<td><strong>4,55€</strong></td>
+<td>Κυριακή νυχτερινή</td>
+</tr>
+<tr class="even">
+<td><strong>ΠΕ</strong></td>
+<td>ΜΚ1</td>
+<td>1.192€</td>
+<td>4,26€</td>
+<td><strong>125%</strong></td>
+<td><strong>5,32€</strong></td>
+<td>ΠΕΡΑΝ ΠΕΝΘΗΜΕΡΟΥ (2025)</td>
+</tr>
+<tr class="odd">
+<td><strong>ΠΕ</strong></td>
+<td>ΜΚ10</td>
+<td>1.723€</td>
+<td>6,15€</td>
+<td><strong>125%</strong></td>
+<td><strong>7,69€</strong></td>
+<td>ΠΕΡΑΝ ΠΕΝΘΗΜΕΡΟΥ (2025)</td>
+</tr>
+<tr class="even">
+<td><strong>ΔΕ</strong></td>
+<td>ΜΚ1</td>
+<td>958€</td>
+<td>3,42€</td>
+<td><strong>125%</strong></td>
+<td><strong>4,28€</strong></td>
+<td>ΠΕΡΑΝ ΠΕΝΘΗΜΕΡΟΥ (2025)</td>
+</tr>
+<tr class="odd">
+<td><strong>ΥΕ</strong></td>
+<td>ΜΚ1</td>
+<td>880€</td>
+<td>3,14€</td>
+<td><strong>125%</strong></td>
+<td><strong>3,93€</strong></td>
+<td>ΠΕΡΑΝ ΠΕΝΘΗΜΕΡΟΥ (2025)</td>
+</tr>
+<tr class="even">
+<td><strong>ΠΕ</strong></td>
+<td>ΜΚ1</td>
+<td>1.192€</td>
+<td>4,26€</td>
+<td><strong>60%</strong></td>
+<td><strong>2,55€</strong></td>
+<td>ΠΡΟΣ ΣΥΜΠΛ. – Νυχτερινή εργάσιμης</td>
+</tr>
+<tr class="odd">
+<td><strong>ΠΕ</strong></td>
+<td>ΜΚ1</td>
+<td>1.192€</td>
+<td>4,26€</td>
+<td><strong>75%</strong></td>
+<td><strong>3,19€</strong></td>
+<td>ΠΡΟΣ ΣΥΜΠΛ. – Εξαιρέσιμη/Κυριακή</td>
+</tr>
+<tr class="even">
+<td><strong>ΔΕ</strong></td>
+<td>ΜΚ1</td>
+<td>958€</td>
+<td>3,42€</td>
+<td><strong>60%</strong></td>
+<td><strong>2,05€</strong></td>
+<td>ΠΡΟΣ ΣΥΜΠΛ. – Νυχτερινή εργάσιμης</td>
+</tr>
+<tr class="odd">
+<td><strong>ΔΕ</strong></td>
+<td>ΜΚ1</td>
+<td>958€</td>
+<td>3,42€</td>
+<td><strong>75%</strong></td>
+<td><strong>2,57€</strong></td>
+<td>ΠΡΟΣ ΣΥΜΠΛ. – Εξαιρέσιμη/Κυριακή</td>
+</tr>
+<tr class="even">
+<td><strong>ΥΕ</strong></td>
+<td>ΜΚ1</td>
+<td>880€</td>
+<td>3,14€</td>
+<td><strong>60%</strong></td>
+<td><strong>1,89€</strong></td>
+<td>ΠΡΟΣ ΣΥΜΠΛ. – Νυχτερινή εργάσιμης</td>
+</tr>
+<tr class="odd">
+<td><strong>ΥΕ</strong></td>
+<td>ΜΚ1</td>
+<td>880€</td>
+<td>3,14€</td>
+<td><strong>75%</strong></td>
+<td><strong>2,36€</strong></td>
+<td>ΠΡΟΣ ΣΥΜΠΛ. – Εξαιρέσιμη/Κυριακή</td>
+</tr>
+</tbody>
+</table>
+<p>10. ΠΙΝΑΚΑΣ ΣΥΝΟΨΗΣ ΟΛΩΝ ΤΩΝ ΣΥΝΤΕΛΕΣΤΩΝ</p>
+<table>
+<colgroup>
+<col style="width: 6%"/>
+<col style="width: 31%"/>
+<col style="width: 17%"/>
+<col style="width: 17%"/>
+<col style="width: 26%"/>
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>#</strong></td>
+<td><strong>Είδος Εργασίας</strong></td>
+<td><strong>Αμοιβή</strong></td>
+<td><strong>Κατηγορία</strong></td>
+<td><strong>Νομική Βάση</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Α</strong></td>
+<td><strong>Απογευματινή Υπερωρία (έως 22:00)</strong></td>
+<td><strong>× 100% ωρομ.</strong></td>
+<td>ΚΑΘ' ΥΠΕΡΒΑΣΗ</td>
+<td>Άρθ. 20 Ν.4354/2015</td>
+</tr>
+<tr class="odd">
+<td><strong>Β</strong></td>
+<td><strong>Νυχτερινή Υπερωρία εργάσιμης (22:00–06:00)</strong></td>
+<td><strong>× 130% ωρομ.</strong></td>
+<td>ΚΑΘ' ΥΠΕΡΒΑΣΗ</td>
+<td>Άρθ. 20 Ν.4354/2015</td>
+</tr>
+<tr class="even">
+<td><strong>Γ</strong></td>
+<td><strong>Κυριακή / Εξαιρ. Ημερήσια (06:00–22:00)</strong></td>
+<td><strong>× 140% ωρομ.</strong></td>
+<td>ΚΑΘ' ΥΠΕΡΒΑΣΗ</td>
+<td>Άρθ. 20 Ν.4354/2015</td>
+</tr>
+<tr class="odd">
+<td><strong>Δ</strong></td>
+<td><strong>Κυριακή / Εξαιρ. Νυχτερινή (22:00–06:00)</strong></td>
+<td><strong>× 145% ωρομ.</strong></td>
+<td>ΚΑΘ' ΥΠΕΡΒΑΣΗ</td>
+<td>Άρθ. 20 Ν.4354/2015</td>
+</tr>
+<tr class="even">
+<td><strong>Ε</strong></td>
+<td><strong>Πέραν Πενθημέρου</strong></td>
+<td><strong>× 125% ωρομ.</strong></td>
+<td>ΠΕΝΑΝ ΠΕΝΘ.</td>
+<td>Άρθ. 20 Ν.4354/2015</td>
+</tr>
+<tr class="odd">
+<td><strong>ΣΤ</strong></td>
+<td><strong>Νυχτερινή Εργάσιμης (προς συμπλήρωση)</strong></td>
+<td><strong>× 60% ωρομ.</strong></td>
+<td>ΠΡΟΣ ΣΥΜΠΛ.</td>
+<td>Άρθ. 20 Ν.4354/2015</td>
+</tr>
+<tr class="even">
+<td><strong>Ζ</strong></td>
+<td><strong>Κυριακή / Εξαιρ. (προς συμπλήρωση)</strong></td>
+<td><strong>× 75% ωρομ.</strong></td>
+<td>ΠΡΟΣ ΣΥΜΠΛ.</td>
+<td>Άρθ. 20 Ν.4354/2015</td>
+</tr>
+<tr class="odd">
+<td><strong>Η</strong></td>
+<td><strong>Επιμίσθιο εκπαιδευτικών</strong></td>
+<td><strong>10€ / ώρα (σταθερό)</strong></td>
+<td>ΕΙΔΙΚΗ ΠΕΡΙΠΤ.</td>
+<td>Άρθ. 20 Ν.4354/2015</td>
+</tr>
+</tbody>
+</table>
+<p>11. ΚΡΙΣΙΜΕΣ ΠΑΡΑΤΗΡΗΣΕΙΣ </p>
+<ul>
+<li><p><strong>ΩΡΟΜΙΣΘΙΟ: Πάντα = Βασικός Μισθός ΜΚ ÷ 280. Ποτέ με επιδόματα ή σύνολο αποδοχών.</strong></p></li>
+<li><p><strong>ΑΥΤΟΜΑΤΗ ΑΥΞΗΣΗ: Με κάθε αύξηση βασικού μισθού (π.χ. +30€ από 1.4.2025) αυξάνεται και το ωρομίσθιο και επομένως ΟΛΕΣ οι υπερωριακές αποζημιώσεις χωρίς νέα νομοθετική ρύθμιση.</strong></p></li>
+<li><p>ΕΞΑΜΗΝΟ ≠ ΕΤΟΣ: Τα ανώτατα όρια ωρών ισχύουν ανά εξάμηνο. Δεν μπορούν να μεταφερθούν αχρησιμοποίητες ώρες από το α΄ στο β΄ εξάμηνο.</p></li>
+<li><p>ΠΑΡΑ Β vs ΠΑΡΑ Α: Ο υπάλληλος που εργάζεται νυχτερινά ΓΙΑ ΣΥΜΠΛΗΡΩΣΗ 8ωρου (σε 24ωρη υπηρεσία) λαμβάνει ×60%, ΟΧΙ ×130%. Ο ×130% ισχύει μόνο αν ξεπεράσει το ωράριο.</p></li>
+<li><p>ΠΕΝΑΝ ΠΕΝΘΗΜΕΡΟΥ: Από 27.5.2016 αμείβεται ×125% (ΟΧΙ ×100% που ίσχυε πριν). Διαφορετικό από Κυριακή/εξαιρέσιμη (×140%/×145%).</p></li>
+<li><p>ΕΚΠΑΙΔΕΥΤΙΚΟΙ: Σταθερή αμοιβή 10€/ώρα (διδακτικό επιμίσθιο) – ανεξάρτητη από ΜΚ και ÷280 – μέχρι 20 ώρες/μήνα.</p></li>
+<li><p>ΑΠΑΓΟΡΕΥΣΕΙΣ: Γεν./Αναπλ. Γεν. Γραμματείς, Ειδικοί Γραμματείς Υπ. = ΜΗΔΕΝ υπερωριακή αποζημίωση.</p></li>
+<li><p>ΑΑΔΕ: Ειδικό καθεστώς – Άρθ. 13 Ν.4389/2016. Η υπερωρία υπολογίζεται επί ειδικού ωρομισθίου (βασικός μισθός + ειδική αμοιβή, ΟΧΙ μόνο βασικός) – διαφορά από γενικό καθεστώς.</p></li>
+<li><p>ΦΟΡΟΛΟΓΗΣΗ: Οι υπερωριακές αποζημιώσεις φορολογούνται ως εισόδημα από μισθωτή εργασία. Ισχύουν εισφορές ΕΦΚΑ. Δεν εξαιρούνται λόγω φύσης εργασίας.</p></li>
+<li><p>ΑΝΩΤΑΤΟ ΟΡΙΟ: Το σύνολο αποδοχών (συμπεριλ. υπερωριών) δεν μπορεί να υπερβεί το ανώτατο όριο αποδοχών αρ. 28 Ν.4354/2015.</p></li>
+</ul>
+<p><em>Πηγές: Άρθ. 20 Ν.4354/2015 (ΦΕΚ Α΄176)  – Ν.4369/2016 αρ.71 (ΦΕΚ Α΄33) – ΥΑ 2/1757/0026/2017 (ΦΕΚ Β΄17) – minfin.gr (FAQ αρ.20) – Ν.5163/2024 – ΚΥΑ 8233/27-3-2025 – Ν.5290/2026 (κωδικοποίηση, ΦΕΚ Α΄47/30-3-2026).</em></p>
+<p><em><strong>Ημερομηνία σύνταξης: Μάιος 2026 | Ισχύουσα περίοδος: 1.4.2025 – σήμερα (2026)</strong></em></p>
+
+  </div>
+  <div class="doc-pager"><button class="pager-btn pager-prev" data-goto="doc-1785434186684"><span class="pager-arrow">←</span><span><span class="pager-label">Προηγούμενο</span><span class="pager-title">ΑΠΔ Δημοσίου, ΤΕΚΑ, ΕΔΟΕΑΠ, Μαθητεία &amp; Ωφελούμενοι</span></span></button><button class="pager-btn pager-next" data-goto="doc-1785434186676"><span><span class="pager-label">Επόμενο</span><span class="pager-title">Μισθοδοσία Δημάρχων, Αιρετών &amp; Αρχιερέων</span></span><span class="pager-arrow">→</span></button></div>
+</section>
+
+<section class="doc-section" id="doc-1785434186676" data-title="Μισθοδοσία Δημάρχων, Αιρετών &amp; Αρχιερέων" data-subtitle="Η εξέλιξη από το 2020 έως σήμερα — οδηγός για αρχάριους" data-category="Μισθοδοσία &amp; Αμοιβές" hidden>
+  <div class="doc-head">
+    <span class="doc-eyebrow">Μισθοδοσία &amp; Αμοιβές · Έγγραφο 7 από 9</span>
+    <h1 class="doc-title">Μισθοδοσία Δημάρχων, Αιρετών &amp; Αρχιερέων</h1>
+    <p class="doc-subtitle">Η εξέλιξη από το 2020 έως σήμερα — οδηγός για αρχάριους</p>
+  </div>
+  <nav class="mini-nav" aria-label="Ενότητες εγγράφου"><span class="mini-nav-label">Σε αυτή τη σελίδα</span><a href="#1-η-βασική-λογική-το-μισθολογικό-ανώτατο-όριο" data-doc-anchor>1. Η βασική λογική: το &quot;Μισθολογικό Ανώτατο Όριο&quot;</a><a href="#2-δήμαρχοι-και-αιρετοί-οτα-το-καθεστώς-20202025" data-doc-anchor>2. Δήμαρχοι και Αιρετοί ΟΤΑ: το καθεστώς 2020–2025</a><a href="#3-το-νέο-καθεστώς-από-το-2026-ν-53142026" data-doc-anchor>3. Το νέο καθεστώς από το 2026: Ν. 5314/2026</a><a href="#4-αρχιερείς-της-εκκλησίας-το-καθεστώς-20202025" data-doc-anchor>4. Αρχιερείς της Εκκλησίας: το καθεστώς 2020–2025</a><a href="#5-το-νέο-καθεστώς-για-τους-αρχιερείς-από-172026" data-doc-anchor>5. Το νέο καθεστώς για τους Αρχιερείς από 1/7/2026</a><a href="#6-συνοπτική-σύγκριση-2020-vs-2026" data-doc-anchor>6. Συνοπτική Σύγκριση: 2020 vs. 2026</a><a href="#7-τα-βασικά-συμπεράσματα-σαν-να-ήσουν-επενδυτής" data-doc-anchor>7. Τα βασικά συμπεράσματα, σαν να ήσουν επενδυτής</a><a href="#ενδεικτικές-πηγές-νομοθεσία" data-doc-anchor>Ενδεικτικές πηγές / νομοθεσία</a></nav>
+  <div class="doc-body">
+    
+
+
+<p>Φαντάσου ότι μπαίνεις σήμερα σε ένα μάθημα οικονομικών, αλλά αντί για μετοχές και ομόλογα, θα μιλήσουμε για κάτι πιο κοντινό σου: πόσα χρήματα παίρνει κάθε μήνα ένας <strong>Δήμαρχος</strong>, ένας <strong>Περιφερειάρχης</strong> ή ένας <strong>Αρχιερέας</strong> της Εκκλησίας. Θα το εξηγήσω όπως θα εξηγούσα μια επενδυτική στρατηγική σε έναν φίλο 18 ετών: με απλά λόγια, βήμα-βήμα, χωρίς νομικίστικα.</p>
+<h2 id="1-η-βασική-λογική-το-μισθολογικό-ανώτατο-όριο">1. Η βασική λογική: το "Μισθολογικό Ανώτατο Όριο"</h2>
+<p>Πριν μπούμε σε νούμερα, πρέπει να καταλάβεις ένα <strong>θεμέλιο κανόνα</strong> που ισχύει σχεδόν παντού στο Δημόσιο: κανένας αιρετός ή αξιωματούχος δεν έχει έναν "τυχαίο" μισθό. Ο μισθός του είναι πάντα ένα <strong>ποσοστό (%)</strong> πάνω σε μια σταθερή "κορυφή αναφοράς".</p>
+<p>Αυτή η κορυφή λέγεται <strong>"αποδοχές Γενικού Γραμματέα Υπουργείου"</strong>, και είναι σαν τον "δείκτη S&amp;P 500" του Δημοσίου: όταν αλλάζει αυτό το νούμερο, αλλάζουν αυτόματα -σαν ντόμινο- όλοι οι μισθοί που συνδέονται με αυτό.</p>
+<table>
+<colgroup>
+<col style="width: 100%"/>
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><p><strong>🧮 Σκέψου το σαν σκάλα</strong></p>
+<p>Η κορυφή της σκάλας = μισθός Γενικού Γραμματέα Υπουργείου (σήμερα 5.121 € μικτά).</p>
+<p>Κάθε αξίωμα παίρνει ένα σκαλί πιο κάτω, εκφρασμένο ως ποσοστό της κορυφής (π.χ. 90%, 62%, 25%).</p>
+<p>Όταν ανεβαίνει η κορυφή, ανεβαίνουν όλα τα σκαλιά μαζί της.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Αυτή η λογική εξηγεί γιατί, όποτε διαβάζεις για "αυξήσεις σε μισθούς αξιωματούχων", συνήθως δεν αλλάζει ένα-ένα νούμερο· αλλάζει το <strong>ποσοστό</strong> ή η <strong>κορυφή αναφοράς</strong>, και όλα τα υπόλοιπα προσαρμόζονται αυτόματα.</p>
+<h2 id="2-δήμαρχοι-και-αιρετοί-οτα-το-καθεστώς-20202025">2. Δήμαρχοι και Αιρετοί ΟΤΑ: το καθεστώς 2020–2025</h2>
+<p>Από το 2019 και μέχρι τα μέσα του 2026, η αμοιβή («<strong>αντιμισθία</strong>») των δημάρχων καθοριζόταν βάσει <strong>πληθυσμού του δήμου</strong>, σύμφωνα με τον Κώδικα Δήμων και Κοινοτήτων (Ν. 3852/2010, όπως ίσχυε) και σχετική Κοινή Υπουργική Απόφαση.</p>
+<table>
+<colgroup>
+<col style="width: 55%"/>
+<col style="width: 45%"/>
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Πληθυσμός Δήμου</strong></th>
+<th><strong>Αντιμισθία Δημάρχου (% επί Γεν. Γραμματέα Υπουργείου)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Άνω των 100.000 κατοίκων</td>
+<td>100%</td>
+</tr>
+<tr class="even">
+<td>20.000 – 100.000 κατοίκων</td>
+<td>80%</td>
+</tr>
+<tr class="odd">
+<td>Κάτω των 20.000 κατοίκων</td>
+<td>60%</td>
+</tr>
+</tbody>
+</table>
+<p>Γύρω από τον δήμαρχο υπήρχαν κι άλλοι ρόλοι, καθένας με δικό του ποσοστό — αυτή τη φορά <strong>επί της αντιμισθίας του δημάρχου</strong> (όχι του Γενικού Γραμματέα):</p>
+<ul>
+<li><p><strong>Αντιδήμαρχοι (έμμισθοι):</strong> 50% της αντιμισθίας του δημάρχου.</p></li>
+<li><p><strong>Πρόεδροι Δημοτικών Συμβουλίων:</strong> 21% της αντιμισθίας του δημάρχου.</p></li>
+<li><p><strong>Γενικοί Γραμματείς Δήμων:</strong> 65% της αντιμισθίας του δημάρχου.</p></li>
+<li><p><strong>Περιφερειάρχες:</strong> 90% των αποδοχών του Γενικού Γραμματέα Υπουργείου.</p></li>
+</ul>
+<p>Ισχύει επίσης ένας κανόνας-δίχτυ ασφαλείας: αν η αντιμισθία βγει μικρότερη από τις κανονικές αποδοχές της υπαλληλικής θέσης του αιρετού, τότε συμπληρώνεται μέχρι το ύψος αυτών των αποδοχών — ποτέ δεν "χάνει" λόγω του αξιώματος.</p>
+<h2 id="3-το-νέο-καθεστώς-από-το-2026-ν-53142026">3. Το νέο καθεστώς από το 2026: Ν. 5314/2026</h2>
+<p>Τον Ιούλιο του 2026 τέθηκε σε ισχύ ο <strong>νέος Κώδικας Τοπικής Αυτοδιοίκησης (Ν. 5314/2026)</strong>, με εξειδίκευση μέσω Κοινών Υπουργικών Αποφάσεων που δημοσιεύτηκαν στο ΦΕΚ Β' 4182/8.7.2026. Ο βασικός στόχος ήταν να "αποκατασταθούν" οι μειώσεις της περιόδου των μνημονίων, με αυξήσεις που φτάνουν έως και 25%.</p>
+<table>
+<colgroup>
+<col style="width: 38%"/>
+<col style="width: 31%"/>
+<col style="width: 31%"/>
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Αξίωμα</strong></th>
+<th><strong>Παλιό ποσοστό</strong></th>
+<th><strong>Νέο ποσοστό (2026)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Δήμαρχος (&lt; 20.000 κατ.)</td>
+<td>60%</td>
+<td>62%</td>
+</tr>
+<tr class="even">
+<td>Αντιδήμαρχος (έμμισθος)</td>
+<td>50% δημάρχου</td>
+<td>55% δημάρχου</td>
+</tr>
+<tr class="odd">
+<td>Περιφερειάρχης</td>
+<td>90% Γεν. Γραμματέα</td>
+<td>100% Γεν. Γραμματέα</td>
+</tr>
+<tr class="even">
+<td>Πρόεδρος Περιφ. Συμβουλίου</td>
+<td>—</td>
+<td>25% περιφερειάρχη</td>
+</tr>
+</tbody>
+</table>
+<table>
+<colgroup>
+<col style="width: 100%"/>
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><p><strong>🧮 Παράδειγμα υπολογισμού (2026)</strong></p>
+<p>Μισθός Γεν. Γραμματέα Υπουργείου = 5.121 € μικτά.</p>
+<p>Δήμαρχος μικρού δήμου (&lt;20.000 κατ.): 62% × 5.121 € ≈ 3.175 € μικτά.</p>
+<p>Αντιδήμαρχος του ίδιου δήμου: 55% × 3.175 € ≈ 1.746 € μικτά (≈ 1.352 € καθαρά).</p>
+<p>Περιφερειάρχης: 100% × 5.121 € = 5.121 € μικτά.</p></td>
+</tr>
+</tbody>
+</table>
+<h2 id="4-αρχιερείς-της-εκκλησίας-το-καθεστώς-20202025">4. Αρχιερείς της Εκκλησίας: το καθεστώς 2020–2025</h2>
+<p>Η Εκκλησία της Ελλάδος έχει ένα ξεχωριστό, αλλά παρόμοιο σε λογική, σύστημα. Μέχρι το 2026, οι αποδοχές των <strong>Αρχιερέων</strong> (Αρχιεπίσκοπος, Μητροπολίτες, Επίσκοποι) καθορίζονταν με <strong>σταθερά ποσά</strong> βάσει του Ν. 4472/2017 (άρθρο 145), προσαυξημένα με μικρά επιδόματα σπουδών.</p>
+<table>
+<colgroup>
+<col style="width: 60%"/>
+<col style="width: 40%"/>
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Βαθμίδα</strong></th>
+<th><strong>Βασικές μηνιαίες αποδοχές (μικτά)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Αρχιεπίσκοπος Αθηνών</td>
+<td>≈ 2.840 – 2.915 €</td>
+</tr>
+<tr class="even">
+<td>Μητροπολίτης / Τιτουλάριος Μητροπολίτης</td>
+<td>≈ 2.210 – 2.475 €</td>
+</tr>
+<tr class="odd">
+<td>Τιτουλάριος &amp; Βοηθός Επίσκοπος</td>
+<td>≈ 1.820 €</td>
+</tr>
+</tbody>
+</table>
+<p>Πάνω σε αυτά τα βασικά ποσά προστίθονταν μικρά <strong>επιδόματα μεταπτυχιακών/διδακτορικών τίτλων</strong> (45–75 € περίπου) και αποζημίωση εξόδων παράστασης. Η μισθοδοσία τους καλυπτόταν από τον κρατικό προϋπολογισμό, μέσω της Ενιαίας Αρχής Πληρωμών.</p>
+<h2 id="5-το-νέο-καθεστώς-για-τους-αρχιερείς-από-172026">5. Το νέο καθεστώς για τους Αρχιερείς από 1/7/2026</h2>
+<p>Με το άρθρο 56 πολυνομοσχεδίου του Υπουργείου Εθνικής Οικονομίας &amp; Οικονομικών, που τροποποίησε το άρθρο 145 του Ν. 4472/2017, οι αποδοχές των Αρχιερέων συνδέθηκαν -όπως και οι δήμαρχοι- με το <strong>ανώτατο μισθολογικό όριο του Δημοσίου</strong> (5.191 €, βάσει άρθρου 28 Ν. 4354/2015). Τα επιδόματα καταργήθηκαν.</p>
+<table>
+<colgroup>
+<col style="width: 52%"/>
+<col style="width: 24%"/>
+<col style="width: 24%"/>
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Βαθμίδα</strong></th>
+<th><strong>Νέο ποσοστό</strong></th>
+<th><strong>Νέες μηνιαίες αποδοχές (μικτά)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Αρχιεπίσκοπος / Μητροπολίτης / Τιτουλάριος Μητροπολίτης</td>
+<td>90% ανώτατου ορίου</td>
+<td>4.671,90 €</td>
+</tr>
+<tr class="even">
+<td>Τιτουλάριος &amp; Βοηθός Επίσκοπος</td>
+<td>70% αποδοχών Μητροπολίτη</td>
+<td>3.270,33 €</td>
+</tr>
+</tbody>
+</table>
+<table>
+<colgroup>
+<col style="width: 100%"/>
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><p><strong>🧮 Πόσο άλλαξε στην πράξη;</strong></p>
+<p>Αρχιεπίσκοπος: από ≈2.840–2.915 € σε 4.671,90 € μικτά → αύξηση περίπου 60–64%.</p>
+<p>Μητροπολίτης: από ≈2.400–2.475 € σε 4.671,90 € μικτά → αύξηση περίπου 89–95% (σχεδόν διπλασιασμός).</p>
+<p>Καθαρός μισθός (μετά κρατήσεις) και για τους δύο: περίπου 3.200 €.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Ένα ενδιαφέρον σημείο: μέχρι το 2026, ο μισθός του Μητροπολίτη ήταν χαμηλότερος από αυτόν του Αρχιεπισκόπου. Με τη νέα ρύθμιση, <strong>εξισώθηκαν πλήρως</strong> — και οι δύο παίρνουν πλέον το ίδιο ποσό.</p>
+<h2 id="6-συνοπτική-σύγκριση-2020-vs-2026">6. Συνοπτική Σύγκριση: 2020 vs. 2026</h2>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 41%"/>
+<col style="width: 29%"/>
+<col style="width: 29%"/>
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Αξίωμα</strong></th>
+<th><strong>Αποδοχές έως 2025 (μικτά)</strong></th>
+<th><strong>Αποδοχές από 2026 (μικτά)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Δήμαρχος μεγάλου δήμου (&gt;100.000 κατ.)</td>
+<td>≈ 4.100 – 4.500 €*</td>
+<td>5.121 €</td>
+</tr>
+<tr class="even">
+<td>Δήμαρχος μικρού δήμου (&lt;20.000 κατ.)</td>
+<td>≈ 3.070 €*</td>
+<td>3.175 €</td>
+</tr>
+<tr class="odd">
+<td>Περιφερειάρχης</td>
+<td>≈ 3.685 €*</td>
+<td>5.121 €</td>
+</tr>
+<tr class="even">
+<td>Αρχιεπίσκοπος</td>
+<td>≈ 2.840 – 2.915 €</td>
+<td>4.671,90 €</td>
+</tr>
+<tr class="odd">
+<td>Μητροπολίτης</td>
+<td>≈ 2.400 – 2.475 €</td>
+<td>4.671,90 €</td>
+</tr>
+<tr class="even">
+<td>Τιτουλάριος/Βοηθός Επίσκοπος</td>
+<td>≈ 1.820 €</td>
+<td>3.270,33 €</td>
+</tr>
+</tbody>
+</table>
+<p><em>* Υπολογισμένα βάσει των ποσοστών 2020–2025 επί του τότε ισχύοντος μισθού Γενικού Γραμματέα Υπουργείου· ενδεικτικά ποσά.</em></p>
+<h2 id="7-τα-βασικά-συμπεράσματα-σαν-να-ήσουν-επενδυτής">7. Τα βασικά συμπεράσματα, σαν να ήσουν επενδυτής</h2>
+<p>Αν έβλεπες αυτό το σύστημα σαν <strong>χαρτοφυλάκιο επενδύσεων</strong>, αυτά θα ήταν τα 3 βασικά "μαθήματα":</p>
+<ul>
+<li><p><strong>1. Όλα συνδέονται με έναν "δείκτη αναφοράς".</strong> Ο μισθός του Γενικού Γραμματέα Υπουργείου λειτουργεί σαν βασικός δείκτης — ό,τι συμβεί εκεί, μεταφέρεται παντού.</p></li>
+<li><p><strong>2. Οι μεταρρυθμίσεις έρχονται σε "κύματα".</strong> Το 2019 υπήρξε μια αναδιάρθρωση, και το 2026 μια δεύτερη, μεγαλύτερη — και τα δύο δικαιολογήθηκαν ως "αποκατάσταση" προηγούμενων μειώσεων.</p></li>
+<li><p><strong>3. Ποσοστό δεν σημαίνει σταθερό ποσό.</strong> Το ίδιο ποσοστό (π.χ. 90%) μπορεί να αποδώσει πολύ διαφορετικά ευρώ ανάλογα με το πού βρίσκεται η "κορυφή αναφοράς" εκείνη τη στιγμή — γι' αυτό οι αυξήσεις "90%" σε κάποιους αρχιερείς δεν σήμαιναν αλλαγή ποσοστού, αλλά αλλαγή κορυφής αναφοράς.</p></li>
+</ul>
+<p>Με άλλα λόγια: αν καταλάβεις τη λογική "ποσοστό επί κορυφής αναφοράς", μπορείς να προβλέψεις πώς θα κινηθεί σχεδόν κάθε μισθός στο Δημόσιο — ακόμα και αν δεν θυμάσαι όλα τα ακριβή νούμερα.</p>
+<h2 id="ενδεικτικές-πηγές-νομοθεσία">Ενδεικτικές πηγές / νομοθεσία</h2>
+<ul>
+<li><p>Ν. 3852/2010 (Κώδικας Δήμων και Κοινοτήτων - Καλλικράτης), άρθρα 92-93, όπως ίσχυε.</p></li>
+<li><p>Ν. 4472/2017, άρθρο 145 (αποδοχές Αρχιερέων), πριν και μετά την τροποποίηση του 2026.</p></li>
+<li><p>Ν. 4354/2015, άρθρο 28 (ανώτατο όριο αποδοχών Δημοσίου).</p></li>
+<li><p>Ν. 5314/2026 (νέος Κώδικας Τοπικής Αυτοδιοίκησης).</p></li>
+<li><p>ΦΕΚ Β' 4182/8.7.2026 (Κοινές Υπουργικές Αποφάσεις για αντιμισθίες αιρετών ΟΤΑ).</p></li>
+</ul>
+
+  </div>
+  <div class="doc-pager"><button class="pager-btn pager-prev" data-goto="doc-1785434186668"><span class="pager-arrow">←</span><span><span class="pager-label">Προηγούμενο</span><span class="pager-title">Άρθρο 20, Ν.4354/2015 — Υπερωρίες, Νυχτερινά, Εξαιρέσιμα</span></span></button><button class="pager-btn pager-next" data-goto="doc-1785434186661"><span><span class="pager-label">Επόμενο</span><span class="pager-title">Διοικητική Ταξινόμηση Δημοσίου Τομέα</span></span><span class="pager-arrow">→</span></button></div>
+</section>
+
+<section class="doc-section" id="doc-1785434186661" data-title="Διοικητική Ταξινόμηση Δημοσίου Τομέα" data-subtitle="" data-category="Προϋπολογισμός &amp; Ταξινομήσεις" hidden>
+  <div class="doc-head">
+    <span class="doc-eyebrow">Προϋπολογισμός &amp; Ταξινομήσεις · Έγγραφο 8 από 9</span>
+    <h1 class="doc-title">Διοικητική Ταξινόμηση Δημοσίου Τομέα</h1>
+    
+  </div>
+  <nav class="mini-nav" aria-label="Ενότητες εγγράφου"><span class="mini-nav-label">Σε αυτή τη σελίδα</span><a href="#1-τι-είναι-η-διοικητική-ταξινόμηση-με-απλά-λόγια" data-doc-anchor>1. Τι είναι η Διοικητική Ταξινόμηση — με απλά λόγια</a><a href="#2-νομική-βάση-πού-στηρίζεται" data-doc-anchor>2. Νομική βάση — πού στηρίζεται</a><a href="#3-η-δομή-τα-επίπεδα-της-διοικητικής-ταξινόμησης" data-doc-anchor>3. Η δομή — τα «επίπεδα» της Διοικητικής Ταξινόμησης</a><a href="#4-ποιους-φορείς-καλύπτει" data-doc-anchor>4. Ποιους φορείς καλύπτει</a><a href="#5-πώς-αλλάζει-κάθε-χρόνο-οι-τροποποιήσεις" data-doc-anchor>5. Πώς αλλάζει κάθε χρόνο — οι Τροποποιήσεις</a><a href="#6-links-για-την-διοικητική-ταξινόμηση" data-doc-anchor>6. Links για την Διοικητική Ταξινόμηση</a><a href="#7-link-για-την-οικονομική-ταξινόμηση-σε-excel-όπως-ζητήθηκε" data-doc-anchor>7. Link για την Οικονομική Ταξινόμηση σε Excel (όπως ζητήθηκε)</a><a href="#8-πρακτικός-οδηγός-τι-να-κάνεις-βήμα-βήμα" data-doc-anchor>8. Πρακτικός Οδηγός — τι να κάνεις βήμα-βήμα</a><a href="#9-σύνοψη-τα-3-πράγματα-που-πρέπει-να-θυμάσαι" data-doc-anchor>9. Σύνοψη — τα 3 πράγματα που πρέπει να θυμάσαι</a></nav>
+  <div class="doc-body">
+<!--
+<p><em>Σαν να σου εξηγεί ένας έμπειρος οικονομικός σύμβουλος τη «στρατηγική» πίσω από το πώς το Δημόσιο οργανώνει «ποιος πληρώνει τι».</em></p>
+-->
+<h2 id="1-τι-είναι-η-διοικητική-ταξινόμηση-με-απλά-λόγια">1. Τι είναι η Διοικητική Ταξινόμηση — με απλά λόγια</h2>
+<p>Στην προηγούμενη αναφορά είδαμε την <strong>Οικονομική Ταξινόμηση</strong> — το «λεξιλόγιο» που δείχνει <strong>τι είδους</strong> ποσό είναι μια δαπάνη ή ένα έσοδο (μισθός, ενοίκιο, φόρος).</p>
+<p>Η <strong>Διοικητική Ταξινόμηση</strong> είναι το <strong>συμπλήρωμά</strong> της: δείχνει <strong>ποιος φορέας</strong> κάνει τη συναλλαγή.</p>
+<ul>
+<li>Αντανακλά την οργανωτική και ιεραρχική δομή των φορέων της Κεντρικής Διοίκησης</li>
+<li>Απαντά στο ερώτημα: <em>«ποιο Υπουργείο, ποια Υπηρεσία, ποιος φορέας το πλήρωσε ή το εισέπραξε;»</em></li>
+<li>Λειτουργεί <strong>παράλληλα</strong> με την Οικονομική Ταξινόμηση — χρειάζεσαι <strong>και τους δύο</strong> κωδικούς μαζί για να «κλειδώσει» πλήρως μια εγγραφή προϋπολογισμού</li>
+</ul>
+<p>💡 <strong>Απλή αναλογία:</strong> Αν η Οικονομική Ταξινόμηση είναι το «τι αγόρασες», η Διοικητική Ταξινόμηση είναι «ποιο κατάστημα/τμήμα έκανε την αγορά». Χρειάζεσαι και τα δύο για να βγάλει νόημα η απόδειξη.</p>
+<h2 id="2-νομική-βάση-πού-στηρίζεται">2. Νομική βάση — πού στηρίζεται</h2>
+<!--
+<ul>
+<li><strong>Ν. 4270/2014</strong> «Αρχές δημοσιονομικής διαχείρισης και εποπτείας» — το βασικό νομοθέτημα</li>
+<li><strong>Π.Δ. 54/2018</strong> «Ορισμός του περιεχομένου και του χρόνου έναρξης εφαρμογής του Λογιστικού Πλαισίου της Γενικής Κυβέρνησης»</li>
+<li><strong>Υ.Α. 2/58493/ΔΠΓΚ/31.7.2018</strong> «Οικονομική και Διοικητική Ταξινόμηση του Κρατικού Προϋπολογισμού» (ΦΕΚ Β’ 3240) — <strong>Παράρτημα Β’</strong> αυτής της απόφασης περιέχει ειδικά τη Διοικητική Ταξινόμηση</li>
+</ul>
+-->
+<!--  https://search.et.gr/fek/?fekId=505364 -->
+	<ul>
+  <li>
+    <strong><a href="https://ia37rg02wpsa01.blob.core.windows.net/fek/01/2014/20140100143.pdf" target="_blank">Ν. 4270/2014</a></strong> 
+    «Αρχές δημοσιονομικής διαχείρισης και εποπτείας» — το βασικό νομοθέτημα
+  </li>
+  <li>
+    <strong><a href="https://ia37rg02wpsa01.blob.core.windows.net/fek/01/2014/20140100103.pdf" target="_blank">Π.Δ. 54/2018</a></strong> 
+    «Ορισμός του περιεχομένου και του χρόνου έναρξης εφαρμογής του Λογιστικού Πλαισίου της Γενικής Κυβέρνησης»
+  </li>
+  <li>
+    <strong><a href="https://www.kodiko.gr/nomothesia/document/688105/yp.-apofasi-2-58493-dpgk-2018" target="_blank">Υ.Α. 2/58493/ΔΠΓΚ/31.7.2018</a></strong> 
+    «Οικονομική και Διοικητική Ταξινόμηση του Κρατικού Προϋπολογισμού» (ΦΕΚ Β’ 3240) — 
+    <strong>Παράρτημα Β’</strong> αυτής της απόφασης περιέχει ειδικά τη Διοικητική Ταξινόμηση
+  </li>
+</ul>
+
+
+<!--   -->
+
+<p>⚠️ <strong>Σημαντική διευκρίνιση:</strong> Το 2022, με την Υ.Α. 2/181062/ΔΠΓΚ/17.11.2022, <strong>επικαιροποιήθηκε μόνο η Οικονομική Ταξινόμηση</strong>. Η Διοικητική Ταξινόμηση <strong>συνεχίζει να διέπεται</strong> από την αρχική απόφαση του 2018 (Παράρτημα Β’), όπως έχει τροποποιηθεί έκτοτε.</p>
+<h2 id="3-η-δομή-τα-επίπεδα-της-διοικητικής-ταξινόμησης">3. Η δομή — τα «επίπεδα» της Διοικητικής Ταξινόμησης</h2>
+<p>Η Διοικητική Ταξινόμηση ενσωματώνει τουλάχιστον τρία επίπεδα πληροφοριών, σαν σκαλοπάτια από το γενικό στο ειδικό:</p>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+</colgroup>
+<thead>
+<tr class="header">
+<th>Επίπεδο</th>
+<th>Τι δείχνει</th>
+<th>Παράδειγμα</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>1ο επίπεδο — Φορέας</strong></td>
+<td>Το <strong>Υπουργείο</strong> ή η <strong>Ανεξάρτητη Αρχή</strong></td>
+<td><code>1041</code> = Υπουργείο Ναυτιλίας και Νησιωτικής Πολιτικής</td>
+</tr>
+<tr class="even">
+<td><strong>2ο επίπεδο — Ειδικός Φορέας</strong></td>
+<td>Η <strong>Υπηρεσία/Γενική Γραμματεία/Σώμα</strong> μέσα στο Υπουργείο</td>
+<td><code>202</code> = Αρχηγείο Λιμενικού Σώματος-Ελληνικής Ακτοφυλακής</td>
+</tr>
+<tr class="odd">
+<td><strong>3ο επίπεδο — Αναλυτικός Λογαριασμός</strong></td>
+<td>Συνδυάζεται με τον οικονομικό κωδικό για πλήρη εγγραφή</td>
+<td>π.χ. συνδυασμός με ΚΑΕ 2420301001</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Πρακτικό παράδειγμα ολόκληρης εγγραφής:</strong> <code>Φορέας 1041 → Ειδικός Φορέας 202 → Οικονομικός Κωδικός 2420301001</code> = <em>«Υπουργείο Ναυτιλίας, Αρχηγείο Λιμενικού Σώματος, δαπάνη για αμοιβές/έξοδα συντήρησης κτιρίων»</em></p>
+<p>💡 Όσο πιο «βαθιά» πηγαίνεις στα επίπεδα, τόσο πιο <strong>ακριβής</strong> γίνεται η εικόνα του «ποιος έκανε τι».</p>
+<h2 id="4-ποιους-φορείς-καλύπτει">4. Ποιους φορείς καλύπτει</h2>
+<p>Η Διοικητική Ταξινόμηση εφαρμόζεται ενιαία σε:</p>
+<ul>
+<li><strong>Τακτικό Προϋπολογισμό</strong></li>
+<li><strong>Προϋπολογισμό Δημοσίων Επενδύσεων (ΠΔΕ)</strong></li>
+</ul>
+<p>Και τα δύο «κομμάτια» του προϋπολογισμού χρησιμοποιούν <strong>τον ίδιο</strong> κώδικα Φορέα/Ειδικού Φορέα — αυτό επιτρέπει να συγκρίνεις εύκολα πόσα ξοδεύει ο ίδιος φορέας είτε από τακτικό προϋπολογισμό είτε από επενδυτικά κονδύλια.</p>
+<p><strong>Δομή φορέων που καλύπτονται:</strong></p>
+<ul>
+<li>Υπουργεία</li>
+<li>Αποκεντρωμένες Υπηρεσίες/Γενικές Γραμματείες</li>
+<li>Ανεξάρτητες Αρχές</li>
+<li>Σώματα Ασφαλείας (π.χ. Λιμενικό Σώμα, Αστυνομία)</li>
+<li>ΝΠΔΔ (με ξεχωριστή, αντίστοιχη λογική ταξινόμησης)</li>
+</ul>
+<h2 id="5-πώς-αλλάζει-κάθε-χρόνο-οι-τροποποιήσεις">5. Πώς αλλάζει κάθε χρόνο — οι Τροποποιήσεις</h2>
+<p>Ακριβώς όπως η Οικονομική Ταξινόμηση, και η Διοικητική <strong>ενημερώνεται συνεχώς</strong>:</p>
+<ul>
+<li>Κάθε τροποποίηση παίρνει έναν <strong>ελληνικό κεφαλαίο χαρακτηρισμό</strong> (Α’, Β’, Γ’ … έως Ξ’, ΞΑ’, ΞΒ’, ΞΓ’ για το 2026)</li>
+<li>Οι τροποποιήσεις <strong>προσθέτουν νέους Ειδικούς Φορείς</strong> (π.χ. όταν δημιουργείται νέα Γενική Γραμματεία), <strong>καταργούν παλιούς</strong>, ή <strong>αλλάζουν την περιγραφή/υπαγωγή</strong> υπαρχόντων</li>
+<li>Κάθε νέα κυβερνητική αναδιάρθρωση (συγχώνευση Υπουργείων, δημιουργία νέας Γραμματείας) <strong>συνήθως συνοδεύεται</strong> από τροποποίηση της Διοικητικής Ταξινόμησης</li>
+</ul>
+<p>⚠️ <strong>Στρατηγική συμβουλή:</strong> Όταν αλλάζει η δομή μιας κυβέρνησης (π.χ. νέος ανασχηματισμός), <strong>πάντα</strong> έλεγξε αν έχει εκδοθεί νέα τροποποίηση της Διοικητικής Ταξινόμησης — αλλιώς κινδυνεύεις να χρησιμοποιείς <strong>παρωχημένο κωδικό Φορέα</strong>.</p>
+<h2 id="6-links-για-την-διοικητική-ταξινόμηση">6. Links για την Διοικητική Ταξινόμηση</h2>
+<p>🔗 <strong>Επίσημο αρχείο Excel (Διοικητική Ταξινόμηση, τρέχουσα τροποποίηση ΞΓ’, 2026):</strong>
+<a href="https://minfin.gov.gr/wp-content/uploads/2025/08/ΞΓ_ΔΙΟΙΚΗΤΙΚΗ-ΤΑΞΙΝΟΜΗΣΗ.xlsx" target="_blank"> https://minfin.gov.gr/wp-content/uploads/2025/08/ΞΓ_ΔΙΟΙΚΗΤΙΚΗ-ΤΑΞΙΝΟΜΗΣΗ.xlsx</a>
+
+ </p>
+ 
+<p>🔗 <strong>Επίσημη σελίδα με το πλήρες ιστορικό τροποποιήσεων:</strong> 
+<a href="https://minfin.gov.gr/oikonomiki-kai-dioikitiki-taxinomisi-kratikou-proypologismou/" target="_blank">https://minfin.gov.gr/oikonomiki-kai-dioikitiki-taxinomisi-kratikou-proypologismou/</a>
+ 
+</p>
+
+
+<p>🔗 <strong>Σελίδα οικονομικού έτους 2026 (Διοικητική + Οικονομική μαζί):</strong> 
+<a href=" https://minfin.gov.gr/oikonomiki-kai-dioikitiki-taxinomisi-kratikou-proypologismou-oikonomikou-etous-2026/" target="_blank"> https://minfin.gov.gr/oikonomiki-kai-dioikitiki-taxinomisi-kratikou-proypologismou-oikonomikou-etous-2026/</a>
+ 
+</p>
+
+<h2 id="7-link-για-την-οικονομική-ταξινόμηση-σε-excel-όπως-ζητήθηκε">7. Link για την Οικονομική Ταξινόμηση σε Excel  </h2>
+<p>📊 <strong>Επίσημο αρχείο Excel (Οικονομικό Έτος 2026, 28η τροποποίηση — ΕΣΟΔΑ &amp; ΕΞΟΔΑ):</strong>
+<a href="https://minfin.gov.gr/wp-content/uploads/2025/08/28η_Παράρτημα-Οικονομικής-Ταξινόμησης-έτους-2026-ΕΣΟΔΑ-ΕΞΟΔΑ.xlsx" target="_blank"> https://minfin.gov.gr/wp-content/uploads/2025/08/28η_Παράρτημα-Οικονομικής-Ταξινόμησης-έτους-2026-ΕΣΟΔΑ-ΕΞΟΔΑ.xlsx</a>
+ 
+ 
+ </p>
+<p>💡 <strong>Γιατί σου δίνω και τα δύο μαζί:</strong> Επειδή στην πράξη <strong>ποτέ δεν χρησιμοποιείς μόνο τη Διοικητική</strong> — κάθε εγγραφή προϋπολογισμού χρειάζεται τον συνδυασμό <strong>Διοικητικού + Οικονομικού</strong> κωδικού για να είναι πλήρης. 
+
+</p>
+<h2 id="8-πρακτικός-οδηγός-τι-να-κάνεις-βήμα-βήμα">8. Πρακτικός Οδηγός — τι να κάνεις βήμα-βήμα</h2>
+<ol type="1">
+<li><strong>Κατέβασε και τα δύο αρχεία Excel</strong> (Διοικητική + Οικονομική) από τους παραπάνω συνδέσμους.</li>
+<li><strong>Βρες τον κωδικό Φορέα</strong> του δικού σου Υπουργείου/φορέα στο αρχείο Διοικητικής Ταξινόμησης.</li>
+<li><strong>Εντόπισε τον Ειδικό Φορέα</strong> που αντιστοιχεί στη συγκεκριμένη Υπηρεσία/Γενική Γραμματεία σου.</li>
+<li><strong>Συνδύασε</strong> με τον κατάλληλο οικονομικό κωδικό (ΚΑΕ) από το άλλο αρχείο.</li>
+<li><strong>Έλεγξε αν υπάρχει νεότερη τροποποίηση</strong> πριν καταχωρίσεις οποιαδήποτε εγγραφή — ειδικά μετά από κυβερνητική αναδιάρθρωση.</li>
+<li><strong>Κράτα σημειωμένη την ημερομηνία</strong> της τροποποίησης που χρησιμοποίησες, για να μπορείς να επαληθεύσεις αργότερα αν άλλαξε κάτι.</li>
+</ol>
+<h2 id="9-σύνοψη-τα-3-πράγματα-που-πρέπει-να-θυμάσαι">9. Σύνοψη — τα 3 πράγματα που πρέπει να θυμάσαι</h2>
+<ul>
+<li>Η Διοικητική Ταξινόμηση δείχνει <strong>ποιος φορέας</strong> (Υπουργείο → Ειδικός Φορέας) κάνει μια συναλλαγή, ενώ η Οικονομική δείχνει <strong>τι είδους</strong> συναλλαγή είναι.</li>
+<li>Έχει <strong>τουλάχιστον τρία επίπεδα ανάλυσης</strong> και είναι <strong>ενιαία</strong> για Τακτικό Προϋπολογισμό και ΠΔΕ.</li>
+<li>Ενημερώνεται με <strong>διαδοχικές τροποποιήσεις</strong> (Α’, Β’, Γ’ …) — πάντα κατέβαζε την πιο πρόσφατη εκδοχή, ειδικά μετά από αλλαγές στη δομή της κυβέρνησης.</li>
+</ul>
+<p><em>Σημείωση: Όπως και η Οικονομική Ταξινόμηση, η Διοικητική Ταξινόμηση του Κρατικού Προϋπολογισμού είναι εντελώς διαφορετικό σύστημα από τους ασφαλιστικούς κωδικούς (ΚΑΔ/ΚΠΚ) του e-ΕΦΚΑ/ΤΕΚΑ. Το ένα είναι δημοσιονομικό/λογιστικό σύστημα του Υπουργείου Οικονομικών, το άλλο ασφαλιστικό σύστημα του e-ΕΦΚΑ — μην τα συγχέεις.</em></p>
+
+  </div>
+  <div class="doc-pager"><button class="pager-btn pager-prev" data-goto="doc-1785434186676"><span class="pager-arrow">←</span><span><span class="pager-label">Προηγούμενο</span><span class="pager-title">Μισθοδοσία Δημάρχων, Αιρετών &amp; Αρχιερέων</span></span></button><button class="pager-btn pager-next" data-goto="doc-1785434186664"><span><span class="pager-label">Επόμενο</span><span class="pager-title">Οικονομική Ταξινόμηση Δημοσίου Τομέα</span></span><span class="pager-arrow">→</span></button></div>
+</section>
+
+<section class="doc-section" id="doc-1785434186664" data-title="Οικονομική Ταξινόμηση Δημοσίου Τομέα" data-subtitle="" data-category="Προϋπολογισμός &amp; Ταξινομήσεις" hidden>
+  <div class="doc-head">
+    <span class="doc-eyebrow">Προϋπολογισμός &amp; Ταξινομήσεις · Έγγραφο 9 από 9</span>
+    <h1 class="doc-title">Οικονομική Ταξινόμηση Δημοσίου Τομέα</h1>
+    
+  </div>
+  <nav class="mini-nav" aria-label="Ενότητες εγγράφου"><span class="mini-nav-label">Σε αυτή τη σελίδα</span><a href="#1-τι-είναι-η-οικονομική-ταξινόμηση-με-απλά-λόγια" data-doc-anchor>1. Τι είναι η Οικονομική Ταξινόμηση — με απλά λόγια</a><a href="#2-οικονομική-vs-διοικητική-ταξινόμηση-μην-τις-μπερδεύεις" data-doc-anchor>2. Οικονομική vs Διοικητική Ταξινόμηση — μην τις μπερδεύεις</a><a href="#3-η-δομή-της-οικονομικής-ταξινόμησης-πώς-χτίζεται-ο-κωδικός" data-doc-anchor>3. Η δομή της Οικονομικής Ταξινόμησης — πώς «χτίζεται» ο κωδικός</a><a href="#4-οι-μεγάλες-κατηγορίες-το-σκελετό-που-πρέπει-να-απομνημονεύ" data-doc-anchor>4. Οι Μεγάλες Κατηγορίες — το «σκελετό» που πρέπει να απομνημονεύσεις</a><a href="#5-ποιους-φορείς-καλύπτει-το-εύρος-εφαρμογής" data-doc-anchor>5. Ποιους φορείς καλύπτει — το εύρος εφαρμογής</a><a href="#6-πώς-αλλάζει-κάθε-χρόνο-οι-τροποποιήσεις" data-doc-anchor>6. Πώς αλλάζει κάθε χρόνο — οι «Τροποποιήσεις»</a><a href="#7-link-για-την-οικονομική-ταξινόμηση-σε-excel" data-doc-anchor>7. Link για την Οικονομική Ταξινόμηση σε Excel</a><a href="#8-πρακτικός-οδηγός-τι-να-κάνεις-βήμα-βήμα" data-doc-anchor>8. Πρακτικός Οδηγός — τι να κάνεις βήμα-βήμα</a><a href="#9-σύνοψη-τα-3-πράγματα-που-πρέπει-να-θυμάσαι" data-doc-anchor>9. Σύνοψη — τα 3 πράγματα που πρέπει να θυμάσαι</a></nav>
+  <div class="doc-body">
+ <!--   
+<p><em>Σαν να σου εξηγεί ένας έμπειρος οικονομικός σύμβουλος τη «στρατηγική» πίσω από το πώς το Δημόσιο μετράει τα λεφτά του.</em></p>
+-->
+<h2 id="1-τι-είναι-η-οικονομική-ταξινόμηση-με-απλά-λόγια">1. Τι είναι η Οικονομική Ταξινόμηση — με απλά λόγια</h2>
+<p>Φαντάσου το Δημόσιο σαν μια τεράστια επιχείρηση με χιλιάδες «υποκαταστήματα» (Υπουργεία, Δήμους, Νοσοκομεία). Για να μπορεί κανείς να καταλάβει <strong>πού πηγαίνει κάθε ευρώ</strong>, χρειάζεται ένα κοινό «λεξιλόγιο» αριθμών.</p>
+<p>Αυτό ακριβώς είναι η <strong>Οικονομική Ταξινόμηση</strong>: ένα σύστημα κωδικών που:</p>
+<ul>
+<li>Κατατάσσει <strong>κάθε έσοδο και κάθε έξοδο</strong> του Κρατικού Προϋπολογισμού σε συγκεκριμένη κατηγορία</li>
+<li>Επιτρέπει σύγκριση στοιχείων <strong>μεταξύ διαφορετικών φορέων</strong> (ένα Υπουργείο με έναν Δήμο, π.χ.)</li>
+<li>Είναι η βάση για την κατάρτιση των <strong>δημοσιονομικών αναφορών</strong> που στέλνει η Ελλάδα στην Ευρωπαϊκή Ένωση</li>
+</ul>
+<p><strong>Νομική βάση:</strong> Η ισχύουσα ταξινόμηση στηρίζεται στο <strong>Π.Δ. 54/2018</strong> (άρθρα 4 και 12) και επικαιροποιήθηκε με την <strong>Υπουργική Απόφαση 2/181062/ΔΠΓΚ/17.11.2022</strong> «Οικονομική ταξινόμηση του κρατικού προϋπολογισμού και ανάπτυξη του βασικού σχεδίου λογαριασμών του λογιστικού πλαισίου της Γενικής Κυβέρνησης».</p>
+<h2 id="2-οικονομική-vs-διοικητική-ταξινόμηση-μην-τις-μπερδεύεις">2. Οικονομική vs Διοικητική Ταξινόμηση — μην τις μπερδεύεις</h2>
+<p>Υπάρχουν <strong>δύο διαφορετικοί «χάρτες»</strong> που συνδυάζονται:</p>
+<ul>
+<li><strong>Οικονομική Ταξινόμηση:</strong> δείχνει <strong>τη φύση</strong> της συναλλαγής — π.χ. «μισθός», «ενοίκιο», «φόρος». Απαντά στο ερώτημα <em>«τι είδους ποσό είναι αυτό;»</em></li>
+<li><strong>Διοικητική Ταξινόμηση:</strong> δείχνει <strong>ποιος φορέας</strong> το εισπράττει ή το πληρώνει — π.χ. «Υπουργείο Παιδείας», «Δήμος Αθηναίων». Απαντά στο ερώτημα <em>«ποιος το κάνει;»</em></li>
+</ul>
+<p>💡 <strong>Πρακτικό παράδειγμα:</strong> Όταν ένα Υπουργείο πληρώνει τον μισθό ενός υπαλλήλου, χρειάζονται <strong>και οι δύο</strong> κωδικοί μαζί — ο οικονομικός (τι είδους δαπάνη) και ο διοικητικός (ποιο Υπουργείο) — για να «κλειδώσει» πλήρως η εγγραφή στον προϋπολογισμό.</p>
+<h2 id="3-η-δομή-της-οικονομικής-ταξινόμησης-πώς-χτίζεται-ο-κωδικός">3. Η δομή της Οικονομικής Ταξινόμησης — πώς «χτίζεται» ο κωδικός</h2>
+<p>Η ταξινόμηση αναπτύσσεται σε <strong>βαθμούς ανάλυσης</strong>, σαν σκαλοπάτια που πηγαίνουν από το γενικό στο ειδικό:</p>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+</colgroup>
+<thead>
+<tr class="header">
+<th>Βαθμός</th>
+<th>Τι δείχνει</th>
+<th>Ψηφία</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>1ος βαθμός</strong></td>
+<td><strong>Ομάδα λογαριασμών</strong> (π.χ. «Παροχές σε εργαζομένους»)</td>
+<td>1 ψηφίο</td>
+</tr>
+<tr class="even">
+<td><strong>2ος βαθμός</strong></td>
+<td>Υποκατηγορία μέσα στην ομάδα</td>
+<td>επιπλέον ψηφία</td>
+</tr>
+<tr class="odd">
+<td><strong>3ος-4ος βαθμός</strong></td>
+<td>Ακόμα πιο αναλυτική κατηγορία</td>
+<td>επιπλέον ψηφία</td>
+</tr>
+</tbody>
+</table>
+<p>Όσο <strong>περισσότερα ψηφία</strong> έχει ένας κωδικός, τόσο <strong>πιο συγκεκριμένο</strong> είναι το είδος εσόδου/εξόδου που περιγράφει — ακριβώς όπως ένας ταχυδρομικός κώδικας γίνεται πιο ακριβής όσο προσθέτεις ψηφία.</p>
+<h2 id="4-οι-μεγάλες-κατηγορίες-το-σκελετό-που-πρέπει-να-απομνημονεύ">4. Οι Μεγάλες Κατηγορίες — το «σκελετό» που πρέπει να απομνημονεύσεις</h2>
+<h3 id="πλευρά-εσόδων">Πλευρά Εσόδων</h3>
+<ul>
+<li><strong>Ι. Φόροι</strong> — το μεγαλύτερο κομμάτι των κρατικών εσόδων</li>
+<li><strong>ΙΙΙ. Μεταβιβάσεις</strong> — επιχορηγήσεις, χρηματοδοτήσεις από ΕΕ κ.λπ.</li>
+<li><strong>IV. Πωλήσεις αγαθών και υπηρεσιών</strong></li>
+<li><strong>V. Λοιπά τρέχοντα έσοδα</strong></li>
+<li><strong>VII. Πωλήσεις τιμαλφών</strong></li>
+</ul>
+<h3 id="πλευρά-εξόδων">Πλευρά Εξόδων</h3>
+<ul>
+<li><strong>Ι. Παροχές σε εργαζομένους</strong> — εδώ πάνε οι μισθοί, τα επιδόματα, οι ασφαλιστικές εισφορές εργοδότη</li>
+<li><strong>ΙV. Αγορές αγαθών και υπηρεσιών</strong> — π.χ. προμήθειες, συντηρήσεις</li>
+<li><strong>V. Επιδοτήσεις</strong></li>
+<li><strong>VI. Τόκοι</strong> (σε ακαθάριστη βάση) — εξυπηρέτηση δημόσιου χρέους</li>
+<li><strong>VII. Λοιπές Δαπάνες</strong> — π.χ. κοινωνικές παροχές, επιχορηγήσεις σε φορείς</li>
+<li><strong>VIII. Πιστώσεις υπό κατανομή</strong> (πλην ΠΔΕ και Ταμείου Ανάκαμψης)</li>
+</ul>
+<p>⚠️ <strong>Σημαντικό για όποιον κάνει μισθοδοσία Δημοσίου:</strong> Η κατηγορία <strong>«Παροχές σε εργαζομένους»</strong> είναι αυτή που σε αφορά άμεσα — εκεί κατατάσσονται όλοι οι μισθολογικοί κωδικοί (ΚΑΕ) που χρησιμοποιείς καθημερινά.</p>
+<h2 id="5-ποιους-φορείς-καλύπτει-το-εύρος-εφαρμογής">5. Ποιους φορείς καλύπτει — το εύρος εφαρμογής</h2>
+<p>Η κοινή Οικονομική Ταξινόμηση εφαρμόζεται σταδιακά σε <strong>όλη τη Γενική Κυβέρνηση</strong>:</p>
+<ul>
+<li><strong>Κεντρική Διοίκηση</strong> (Υπουργεία, Βουλή) — εφαρμόζεται ήδη από <strong>1.1.2019</strong></li>
+<li><strong>ΝΠΔΔ</strong> (Νομικά Πρόσωπα Δημοσίου Δικαίου)</li>
+<li><strong>ΟΤΑ α’ βαθμού</strong> (Δήμοι)</li>
+<li><strong>ΟΤΑ β’ βαθμού</strong> (Περιφέρειες)</li>
+</ul>
+<p>Η επέκταση σε ΝΠΔΔ και ΟΤΑ γίνεται σταδιακά — να θυμάσαι ότι <strong>δεν  εφαρμόζουν όλοι οι φορείς την ίδια εκδοχή ταυτόχρονα</strong>, οπότε πάντα να ελέγχεις ποια εκδοχή ισχύει για τον φορέα σου.</p>
+<h2 id="6-πώς-αλλάζει-κάθε-χρόνο-οι-τροποποιήσεις">6. Πώς αλλάζει κάθε χρόνο — οι «Τροποποιήσεις»</h2>
+<p>Η Οικονομική Ταξινόμηση <strong>δεν είναι στατική</strong> — ενημερώνεται συνεχώς με διαδοχικές <strong>Τροποποιήσεις Υπουργικών Αποφάσεων</strong>, αριθμημένες με ελληνικά κεφαλαία γράμματα (Α’, Β’, Γ’ … έως και δεκάδες τροποποιήσεις τον χρόνο).</p>
+<ul>
+<li>Κάθε τροποποίηση μπορεί να <strong>προσθέσει νέους κωδικούς</strong>, να <strong>καταργήσει παλιούς</strong>, ή να <strong>αλλάξει την περιγραφή</strong> υπαρχόντων</li>
+<li>Το Υπουργείο Εθνικής Οικονομίας και Οικονομικών αναρτά <strong>ξεχωριστό Παράρτημα ανά οικονομικό έτος</strong> με το πλήρες, ενημερωμένο σύνολο κωδικών</li>
+<li>Η πιο πρόσφατη πλήρης έκδοση για το 2026 είναι η <strong>«28η τροποποίηση»</strong></li>
+</ul>
+<p>💡 <strong>Στρατηγική συμβουλή:</strong> Ποτέ μην κρατάς «αποθηκευμένο» έναν παλιό πίνακα κωδικών από περσινή χρονιά — κατέβασε πάντα το <strong>πιο πρόσφατο Παράρτημα</strong> πριν καταρτίσεις προϋπολογισμό ή κάνεις εγγραφή.</p>
+<h2 id="7-link-για-την-οικονομική-ταξινόμηση-σε-excel">7. Link για την Οικονομική Ταξινόμηση σε Excel</h2>
+<p>📊 <strong>Επίσημο αρχείο Excel (Οικονομικό Έτος 2026, 28η τροποποίηση — ΕΣΟΔΑ &amp; ΕΞΟΔΑ):</strong></p>
+<p><strong>https://minfin.gov.gr/wp-content/uploads/2025/08/28η_Παράρτημα-Οικονομικής-Ταξινόμησης-έτους-2026-ΕΣΟΔΑ-ΕΞΟΔΑ.xlsx</strong></p>
+<p>🔗 <strong>Επίσημη σελίδα του Υπουργείου</strong> (εκεί βρίσκεις πάντα την πιο πρόσφατη εκδοχή, καθώς και το ιστορικό όλων των τροποποιήσεων): https://minfin.gov.gr/oikonomiki-kai-dioikitiki-taxinomisi-kratikou-proypologismou/</p>
+<p>🔗 <strong>Αρχείο για το τρέχον έτος</strong> (αν θέλεις τη σελίδα με όλες τις τροποποιήσεις έτους 2026 μαζί): https://minfin.gov.gr/oikonomiki-kai-dioikitiki-taxinomisi-kratikou-proypologismou-oikonomikou-etous-2026/</p>
+<p>🔗 <strong>Κώδικας Κατάταξης Εσόδων και Εξόδων</strong> (ιστορικό υπόβαθρο, πριν την ταξινόμηση του Π.Δ. 54/2018): https://minfin.gov.gr/kodikas-katataxis-esodon-kai-exodon/</p>
+<p>⚠️ Το αρχείο excel ανανεώνεται σε κάθε νέα τροποποίηση — ο παραπάνω σύνδεσμος αντιστοιχεί στη 28η τροποποίηση (Αύγουστος 2025). Αν έχει περάσει καιρός από τότε που διαβάζεις αυτό το κείμενο, καλό είναι να ελέγξεις στην επίσημη σελίδα μήπως υπάρχει νεότερη έκδοση.</p>
+<h2 id="8-πρακτικός-οδηγός-τι-να-κάνεις-βήμα-βήμα">8. Πρακτικός Οδηγός — τι να κάνεις βήμα-βήμα</h2>
+<ol type="1">
+<li><strong>Κατέβασε το πιο πρόσφατο Excel</strong> από τον παραπάνω σύνδεσμο.</li>
+<li><strong>Εντόπισε τις καρτέλες</strong> — συνήθως υπάρχουν ξεχωριστές καρτέλες για Έσοδα και Έξοδα.</li>
+<li><strong>Ψάξε με Ctrl+F</strong> τη λέξη-κλειδί που σε ενδιαφέρει (π.χ. «μισθοί», «επίδομα», «ασφαλιστικές εισφορές»).</li>
+<li><strong>Σημείωσε τον πλήρη κωδικό</strong> (όλα τα ψηφία) — μην κρατάς μόνο τα πρώτα ψηφία, γιατί χάνεις την ακρίβεια.</li>
+<li><strong>Έλεγξε αν αντιστοιχεί σε φορέα Κεντρικής Διοίκησης ή ΝΠΔΔ/ΟΤΑ</strong> — μπορεί να υπάρχουν μικρές διαφοροποιήσεις.</li>
+<li><strong>Επανέλεγξε πριν από κάθε νέο οικονομικό έτος</strong> — οι κωδικοί ανανεώνονται σχεδόν κάθε χρόνο.</li>
+</ol>
+<h2 id="9-σύνοψη-τα-3-πράγματα-που-πρέπει-να-θυμάσαι">9. Σύνοψη — τα 3 πράγματα που πρέπει να θυμάσαι</h2>
+<ul>
+<li>Η Οικονομική Ταξινόμηση είναι το <strong>«λεξιλόγιο»</strong> που δείχνει τι είδους έσοδο ή έξοδο είναι κάθε ποσό, ενώ η Διοικητική Ταξινόμηση δείχνει <strong>ποιος φορέας</strong> το κάνει.</li>
+<li>Στηρίζεται στο <strong>Π.Δ. 54/2018</strong> και ενημερώνεται με <strong>διαδοχικές τροποποιήσεις</strong> κάθε χρόνο.</li>
+<li>Το <strong>πλήρες, επίσημο αρχείο σε Excel</strong> βρίσκεται πάντα στο minfin.gov.gr — αυτό είναι η πιο αξιόπιστη πηγή, όχι κάποιο παλιό αντίγραφο.</li>
+</ul>
+<p><em>Σημείωση: Η Οικονομική Ταξινόμηση αφορά τον Κρατικό Προϋπολογισμό γενικά και δεν πρέπει να συγχέεται με τους ασφαλιστικούς κωδικούς (ΚΑΔ/ΚΠΚ) του e-ΕΦΚΑ/ΤΕΚΑ  — πρόκειται για δύο εντελώς διαφορετικά συστήματα κωδικοποίησης, το ένα δημοσιονομικό/λογιστικό και το άλλο ασφαλιστικό.</em></p>
+
+  </div>
+  <div class="doc-pager"><button class="pager-btn pager-prev" data-goto="doc-1785434186661"><span class="pager-arrow">←</span><span><span class="pager-label">Προηγούμενο</span><span class="pager-title">Διοικητική Ταξινόμηση Δημοσίου Τομέα</span></span></button></div>
+</section>
+
+</main>
+
+<button class="back-to-top" id="backToTop" aria-label="Επιστροφή στην κορυφή">↑</button>
+
+<footer class="site-footer">
+  Ενιαία σελίδα αναφοράς · δημιουργήθηκε από συγκέντρωση επιμέρους εγγράφων &nbsp;·&nbsp; Ιούλιος 2026
+</footer>
+
+<script>
+(function(){
+  var tocBar = document.getElementById('tocBar');
+  var tocPanel = document.getElementById('tocPanel');
+  function toggleTOC(){
+    var expanded = tocPanel.classList.toggle('expanded');
+    tocBar.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+  }
+  tocBar.addEventListener('click', toggleTOC);
+  tocBar.addEventListener('keydown', function(e){
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggleTOC(); }
+  });
+
+  var items = Array.prototype.slice.call(document.querySelectorAll('.toc-item'));
+  var sections = Array.prototype.slice.call(document.querySelectorAll('.doc-section'));
+  var introPanel = document.getElementById('introPanel');
+
+  function showDoc(id, collapseToc){
+    sections.forEach(function(s){ s.hidden = (s.id !== id); });
+    introPanel.hidden = true;
+    items.forEach(function(it){
+      var active = it.getAttribute('data-target') === id;
+      it.classList.toggle('active', active);
+      it.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+    if(collapseToc){
+      tocPanel.classList.remove('expanded');
+      tocBar.setAttribute('aria-expanded', 'false');
+    }
+    window.scrollTo({top: 0, behavior:'smooth'});
+    history.replaceState(null, '', '#' + id);
+  }
+
+  items.forEach(function(it){
+    it.addEventListener('click', function(){
+      showDoc(it.getAttribute('data-target'), true);
+    });
+  });
+
+  document.querySelectorAll('[data-goto]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      showDoc(btn.getAttribute('data-goto'), false);
+    });
+  });
+
+  // in-page anchor clicks: ensure target section visible, then let browser scroll
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('[data-doc-anchor]');
+    if(!a) return;
+    // section already visible (anchors live inside the visible section), default jump works
+  });
+
+  // search filter
+  var search = document.getElementById('tocSearch');
+  search.addEventListener('input', function(){
+    var q = search.value.trim().toLowerCase();
+    items.forEach(function(it){
+      var text = it.textContent.toLowerCase();
+      it.parentElement.classList.toggle('hidden-by-search', q.length > 0 && text.indexOf(q) === -1);
+    });
+    document.querySelectorAll('.toc-group').forEach(function(g){
+      var visible = g.querySelectorAll('li:not(.hidden-by-search)').length;
+      g.style.display = visible === 0 ? 'none' : '';
+    });
+  });
+
+  // back to top
+  var backBtn = document.getElementById('backToTop');
+  window.addEventListener('scroll', function(){
+    backBtn.classList.toggle('show', window.scrollY > 420);
+  });
+  backBtn.addEventListener('click', function(){
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+
+  // deep link on load
+  if(location.hash){
+    var id = location.hash.slice(1);
+    if(document.getElementById(id) && document.getElementById(id).classList.contains('doc-section')){
+      showDoc(id, true);
+    }
+  }
+})();
+</script>
+</body>
+</html>
